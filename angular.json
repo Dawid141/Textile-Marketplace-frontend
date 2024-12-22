@@ -27,6 +27,8 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -62,7 +64,8 @@
               "buildTarget": "textile-marketplace-frontend:build:production"
             },
             "development": {
-              "buildTarget": "textile-marketplace-frontend:build:development"
+              "buildTarget": "textile-marketplace-frontend:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -85,6 +88,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css"
             ],
             "scripts": []
