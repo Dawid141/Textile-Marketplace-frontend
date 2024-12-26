@@ -23,7 +23,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const token = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbl90eXBlIjoiQVVUSCIsInN1YiI6InRlc3RhbXpuc2VzQGdtYWlsLmNvbSIsImlhdCI6MTczNTEyMzIwMiwiZXhwIjoxNzM1MjA5NjAyfQ.c-xeCqU3E_1_cjPeFuS7e2gvRWV79JHZk0mu0kPb8eH-owFgxYWZNF2b0kNZzoMGdJLyhVuO1bgyPd3olYK5YA";
+    const token = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbl90eXBlIjoiQVVUSCIsInN1YiI6InRlc3RhbXpuc2VzQGdtYWlsLmNvbSIsImlhdCI6MTczNTI0NDI2OCwiZXhwIjoxNzM1MzMwNjY4fQ.mV61VX1DzPe4CRVACuPJ0aNvWNxDNb-_L6fTQdaXbcFNCJM4b40K3dPG4mOGKSuYva2wm5n6yBj4tT2nhkwFww";
 
     this.myAccountService.getUserByData(token).subscribe(
       (response: any) => {

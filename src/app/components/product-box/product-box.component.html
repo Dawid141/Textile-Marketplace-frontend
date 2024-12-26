@@ -1,1 +1,22 @@
-<p>product-box works!</p>
+<mat-card [ngClass]="{'text-center': !fullWidthMode}">
+  <div [ngClass]="{'flex ': fullWidthMode}">
+    <img class=" mx-auto h-[250px] p-3 "
+    [ngClass]="{'h-250px mt-5': !fullWidthMode, 'h-[370px]': fullWidthMode}"
+    src="http://via.placeholder.com/150"
+    />
+    <div class="w-full"
+         [ngClass]="{'px-6 flex flex-col justify-between': fullWidthMode}">
+      <div [ngClass]="{'p-4': fullWidthMode}">
+        <h5>Shoes</h5>
+        <p class="truncate hover:whitespace-normal">Snickers</p>
+        <p>Description</p>
+      </div>
+      <div class="flex justify-between p-2 mb-4">
+        <span class="text-red-400"> {{'150' | currency}} / m²</span>
+        <button>
+          <mat-icon class="text-gray-500">shopping_bag</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</mat-card>
