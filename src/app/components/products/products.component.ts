@@ -10,13 +10,29 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
+import {ProductsHeaderComponent} from '../products-header/products-header.component';
+import {ProductSidebarFilterComponent} from '../product-sidebar-filter/product-sidebar-filter.component';
+
+const ROWS_HEIGHT: { [id:number] : number } = {1: 300, 3: 335, 4: 350};
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, MatDrawer, MatDrawerContainer,MatSidenavModule, MatGridListModule, MatMenuModule, MatButtonModule,MatCardModule,MatIconModule,MatExpansionModule,MatListModule,MatToolbarModule,MatTableModule],
+  imports: [FormsModule, MatDrawer, MatDrawerContainer, MatSidenavModule, MatGridListModule, MatMenuModule, MatButtonModule, MatCardModule, MatIconModule, MatExpansionModule, MatListModule, MatToolbarModule, MatTableModule, ProductsHeaderComponent, ProductSidebarFilterComponent],
   templateUrl: './products.component.html',
   standalone: true
 })
 export class ProductsComponent {
 
+  cols = 3;
+  category: string | undefined;
+  rowHeight = ROWS_HEIGHT[this.cols];
+
+  colCountChange(colsNumber: number) {
+    this.cols = colsNumber;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+  }
+
+  onShowCategory(newCategory: string) {
+    this.category = newCategory;
+  }
 }
