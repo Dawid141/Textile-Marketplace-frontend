@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {MatCard} from '@angular/material/card';
 import {CurrencyPipe, NgClass, NgOptimizedImage} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
+import {MatMiniFabButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-box',
@@ -10,7 +11,8 @@ import {MatIcon} from '@angular/material/icon';
     NgOptimizedImage,
     CurrencyPipe,
     MatIcon,
-    NgClass
+    NgClass,
+    MatMiniFabButton
   ],
   templateUrl: './product-box.component.html',
   standalone: true,

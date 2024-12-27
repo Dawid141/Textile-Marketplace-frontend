@@ -3,13 +3,15 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Iuser } from '../../models/interface/myAccount';
 import { MyaccountService } from '../../services/myaccount.service';
 import {NgIf} from '@angular/common';
+import {UserOrdersPanelComponent} from '../user-orders-panel/user-orders-panel.component';
 
 @Component({
   selector: 'app-my-account',
   imports: [
     MatGridList,
     MatGridTile,
-    NgIf
+    NgIf,
+    UserOrdersPanelComponent
   ],
   templateUrl: './my-account.component.html',
   standalone: true,
@@ -23,7 +25,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const token = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbl90eXBlIjoiQVVUSCIsInN1YiI6InRlc3RhbXpuc2VzQGdtYWlsLmNvbSIsImlhdCI6MTczNTI0NDI2OCwiZXhwIjoxNzM1MzMwNjY4fQ.mV61VX1DzPe4CRVACuPJ0aNvWNxDNb-_L6fTQdaXbcFNCJM4b40K3dPG4mOGKSuYva2wm5n6yBj4tT2nhkwFww";
+    const token = "eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbl90eXBlIjoiQVVUSCIsInN1YiI6InRlc3RhbXpuc2VzQGdtYWlsLmNvbSIsImlhdCI6MTczNTMyNjQwNywiZXhwIjoxNzM1NDEyODA3fQ.PRsJQktBLZcAzsXFNB9yejTT-AzRQ6H572NM4c4vS_7Qgdl_brhwIBymAMczkUq4iLOBf8wdeYoU7N2jRMtiJQ";
 
     this.myAccountService.getUserByData(token).subscribe(
       (response: any) => {

@@ -10,11 +10,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
-import {ProductsHeaderComponent} from '../products-header/products-header.component';
-import {ProductSidebarFilterComponent} from '../product-sidebar-filter/product-sidebar-filter.component';
-import {ProductBoxComponent} from '../product-box/product-box.component';
+import {ProductsHeaderComponent} from './products-header/products-header.component';
+import {ProductSidebarFilterComponent} from './product-sidebar-filter/product-sidebar-filter.component';
+import {ProductBoxComponent} from './product-box/product-box.component';
 
-const ROWS_HEIGHT: { [id:number] : number } = {1: 400, 3: 370, 4: 350};
+const ROWS_HEIGHT: { [id:number] : number } = {1: 400, 3: 370, 4: 380};
 
 @Component({
   selector: 'app-products',
