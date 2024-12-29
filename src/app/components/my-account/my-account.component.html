@@ -1,0 +1,29 @@
+<div class="min-h-full max-w-7xl mx-auto border-x mt-5">
+  <mat-grid-list cols="2" rowHeight="23vh" gutterSize="1.5vw">
+    <!-- First tile: wide across both columns -->
+    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
+      <div>
+        <h3>Welcome to Your Account</h3>
+        <p>Subscription details</p>
+      </div>
+    </mat-grid-tile>
+
+    <!-- Third tile: another smaller one -->
+    <mat-grid-tile [colspan]="1" [rowspan]="3" [style.background]="'lightgray'">
+      <div class="h-full w-full flex justify-center items-center  bg-gray-200">
+      </div>
+    </mat-grid-tile>
+
+    <!-- Second tile: smaller one that displays user data -->
+    <mat-grid-tile class="p-2" [colspan]="1" [rowspan]="2" [style.background]="'lightgreen' ">
+      <div *ngIf="userDataList" >
+        <h3>User Information</h3>
+        <p><strong>Username:</strong> {{ userDataList?.username }}</p>
+        <p><strong>Email:</strong> {{ userDataList?.email }}</p>
+        <p><strong>First Name:</strong> {{ userDataList?.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ userDataList?.lastName }}</p>
+        <p><strong>NIP:</strong> {{ userDataList?.nip }}</p>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,31 @@
+<mat-toolbar color="teal-300" class="max-w-7xl mx-auto border-x justify-between " mat-align-tabs="center">
+    <button mat-flat-button class="mx-16">
+      Add Offer
+    </button>
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs">
+    <a
+      mat-tab-link
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive"
+    >
+      {{ link.label }}
+    </a>
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+  <div>
+    <button mat-icon-button class="mx-2" routerLink="/my-account">
+      <mat-icon>
+        account_circle
+      </mat-icon>
+    </button>
+    <button mat-icon-button class="mx-2">
+      <mat-icon>
+        login
+      </mat-icon>
+    </button>
+  </div>
+
+</mat-toolbar>
+

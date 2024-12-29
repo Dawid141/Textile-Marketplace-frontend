@@ -1,0 +1,51 @@
+<mat-drawer-container style="background-color: #eceff5;"
+  [autosize]="true"
+  class="min-h-full max-w-7xl mx-auto border-x "
+>
+  <mat-drawer mode="side" opened class="p-6" >
+      <app-product-sidebar-filter (showCategory)="onShowCategory($event)"></app-product-sidebar-filter>
+    </mat-drawer>
+  <mat-drawer-content class="p-6" >
+    <app-products-header (columnsCountChange)="colCountChange($event)" ></app-products-header>
+    <mat-grid-list
+      gutterSize="16"
+      [cols]="cols"
+      [rowHeight]="rowHeight"
+    >
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <app-product-box class="w-full" [fullWidthMode] = "cols === 1"></app-product-box>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </mat-drawer-content>
+</mat-drawer-container>
