@@ -24,7 +24,8 @@ export class MasterComponent {
   navLinks = [
     { path: '/main-page', label: 'Main Page' },
     { path: '/products', label: 'Produkty' },
-    { path: '/my-account', label: 'Account Page' },
+    // { path: '/my-account', label: 'My Account' },
+    { path: '/my-orders', label: 'My Orders' },
     { path: '/contact', label: 'Contact' },
   ];
 

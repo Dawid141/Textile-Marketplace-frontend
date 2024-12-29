@@ -3,6 +3,7 @@ import {ProductsComponent} from './components/products-main-site/products.compon
 import {MyAccountComponent} from './components/my-account/my-account.component';
 import {ContactComponent} from './components/contact/contact.component';
 import {MainPageComponent} from './components/main-page/main-page.component';
+import {MyOrdersComponent} from './components/my-orders/my-orders.component';
 
 export const routes: Routes = [{
   path: 'products',
@@ -16,6 +17,9 @@ export const routes: Routes = [{
   },
   {
     path: 'contact', component: ContactComponent
+  },
+  {
+    path: 'my-orders', component: MyOrdersComponent
   }
 ];
 

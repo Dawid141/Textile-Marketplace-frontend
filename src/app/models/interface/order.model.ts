@@ -1,9 +1,9 @@
 export interface Order {
-  data: Array<OrderData>;
+  data: Array<OrderData>; //scrape from DB
 }
 
 export interface OrderListing {
-  listingData: Array<OrderListingDetails>;
+  listingData: Array<OrderListingDetails>; //for display
 }
 
 export interface OrderData {
@@ -17,6 +17,7 @@ export interface OrderData {
 export interface OrderListingDetails {
   id: number;
   orderQuantity: number;
+  productImage : string;
   listingId: number;
   listingName: string;
   newOrderPrice: number;

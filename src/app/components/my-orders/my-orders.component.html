@@ -1,0 +1,91 @@
+<mat-card class="max-w-7xl mx-auto" *ngIf="order.data.length">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+
+    <ng-container matColumnDef="productImage">
+      <th mat-header-cell *matHeaderCellDef>Product</th>
+      <td mat-cell *matCellDef="let element">
+          <img src="{{element.productImage}}" alt="productImage" class="w-[100px] my-5"/>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <button mat-raised-button routerLink="/products">
+          Continue Shopping
+        </button>
+      </td>
+    </ng-container>
+  <!--this will be link that will redirect to offer page-->
+    <ng-container matColumnDef="listingName">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">
+        <p class="truncate max-w-xs block">{{element.listingName}}</p>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderQuantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.orderQuantity}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="oldOrderPrice">
+      <th mat-header-cell *matHeaderCellDef>Old Price</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.oldOrderPrice | currency}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="newOrderPrice">
+      <th mat-header-cell *matHeaderCellDef>New Price</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.newOrderPrice | currency}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="orderStatus">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.orderStatus)">
+        {{ element.orderStatus }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" class="align-middle space-x-2">
+        <!-- Approved Button -->
+        <button mat-fab class="!bg-green-500 !text-white">
+          <mat-icon>check</mat-icon>
+        </button>
+
+        <!-- Rejected Button -->
+        <button mat-fab class="!bg-red-500 !text-white">
+          <mat-icon>close</mat-icon>
+        </button>
+
+        <!-- Negotiate Button -->
+        <button mat-fab extended class="!bg-blue-500 !text-white">
+          <mat-icon>chat</mat-icon>
+          Negotiate
+        </button>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
+  </table>
+</mat-card>
+<mat-card class="max-w-7xl mx-auto" *ngIf=!(order.data.length)>
+  <p>
+    You don't have any orders :(
+    <button mat-raised-button routerLink="/products">
+      Go to marketplace
+    </button>
+  </p>
+</mat-card>
