@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {ProductsComponent} from './components/products/products.component';
+import {RouterOutlet} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MasterComponent} from './components/master/master.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,MasterComponent,ProductsComponent],
+  imports: [RouterOutlet, ReactiveFormsModule, MasterComponent],
   templateUrl: './app.component.html',
   standalone: true,
   styleUrl: './app.component.css'
