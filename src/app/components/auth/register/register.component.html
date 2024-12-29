@@ -1,0 +1,67 @@
+<div class="login-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <!-- Email Field -->
+    <div class="email-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput id="email" formControlName="email" type="email" />
+        <mat-error *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Password Field -->
+    <div class="password-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput id="password" formControlName="password" type="password" />
+        <mat-error *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Username Field -->
+    <div class="username-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput id="username" formControlName="username" type="text" />
+        <mat-error *ngIf="registerForm.get('username')?.errors?.['required']">Username is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- First Name Field -->
+    <div class="first-name-field">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput id="firstName" formControlName="firstName" type="text" />
+        <mat-error *ngIf="registerForm.get('firstName')?.errors?.['required']">First Name is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Last Name Field -->
+    <div class="last-name-field">
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput id="lastName" formControlName="lastName" type="text" />
+        <mat-error *ngIf="registerForm.get('lastName')?.errors?.['required']">Last Name is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- NIP Field -->
+    <div class="nip-field">
+      <mat-form-field appearance="fill">
+        <mat-label>NIP</mat-label>
+        <input matInput id="nip" formControlName="nip" type="text" />
+        <mat-error *ngIf="registerForm.get('nip')?.errors?.['required']">NIP is required.</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-button">
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+        Register
+      </button>
+    </div>
+
+  </form>
+</div>
