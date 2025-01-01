@@ -3,6 +3,7 @@ import {MatCard} from '@angular/material/card';
 import {CurrencyPipe, NgClass, NgOptimizedImage} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatMiniFabButton} from '@angular/material/button';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-product-box',
@@ -12,7 +13,8 @@ import {MatMiniFabButton} from '@angular/material/button';
     CurrencyPipe,
     MatIcon,
     NgClass,
-    MatMiniFabButton
+    MatMiniFabButton,
+    RouterLink
   ],
   templateUrl: './product-box.component.html',
   standalone: true,

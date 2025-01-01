@@ -1,10 +1,10 @@
-<mat-card class="max-w-7xl mx-auto" *ngIf="order.data.length">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+<mat-card class="max-w-7xl mx-auto" *ngIf=(order.data.length)>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full justi">
 
-    <ng-container matColumnDef="productImage">
+    <ng-container matColumnDef="productImage" class="mb-1">
       <th mat-header-cell *matHeaderCellDef>Product</th>
       <td mat-cell *matCellDef="let element">
-          <img src="{{element.productImage}}" alt="productImage" class="w-[100px] my-5"/>
+          <img src="{{element.productImage}}" alt="productImage" class="w-[150px] my-5 mx-10"/>
       </td>
       <td mat-footer-cell *matFooterCellDef>
         <button mat-raised-button routerLink="/products">
@@ -81,11 +81,13 @@
     <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
   </table>
 </mat-card>
-<mat-card class="max-w-7xl mx-auto" *ngIf=!(order.data.length)>
-  <p>
-    You don't have any orders :(
-    <button mat-raised-button routerLink="/products">
+<mat-card class="max-w-7xl mx-auto items-center p-1" *ngIf=!(order.data.length)>
+  <div>
+    <a class="mx-10">
+      You don't have any orders :(
+    </a>
+    <button class="mx-10" mat-raised-button routerLink="/products">
       Go to marketplace
     </button>
-  </p>
+  </div>
 </mat-card>

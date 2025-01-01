@@ -5,11 +5,11 @@ import {Component, OnInit} from '@angular/core';
   selector: 'app-user-orders-panel',
   imports: [
   ],
-  templateUrl: './user-orders-panel.component.html',
+  templateUrl: './my-offers.component.html',
   standalone: true,
-  styleUrl: './user-orders-panel.component.css'
+  styleUrl: './my-offers.component.css'
 })
-export class UserOrdersPanelComponent implements OnInit {
+export class MyOffersComponent implements OnInit {
 
 ngOnInit() {
 }

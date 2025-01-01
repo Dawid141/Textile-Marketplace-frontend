@@ -3,15 +3,13 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Iuser } from '../../models/interface/myAccount';
 import { MyaccountService } from '../../services/myaccount.service';
 import {NgIf} from '@angular/common';
-import {UserOrdersPanelComponent} from '../user-orders-panel/user-orders-panel.component';
 
 @Component({
   selector: 'app-my-account',
   imports: [
     MatGridList,
     MatGridTile,
-    NgIf,
-    UserOrdersPanelComponent
+    NgIf
   ],
   templateUrl: './my-account.component.html',
   standalone: true,
