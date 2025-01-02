@@ -60,7 +60,9 @@ export class MyOrdersComponent implements OnInit {
       productImage : "http://via.placeholder.com/150",
       listingName: 'linen',
       id: 1,
+      listingQuantity: 10,
       orderQuantity: 2,
+      brand:'Drutex.SA',
       listingId: 1, //link here to the product offer
       newOrderPrice: 15,
       oldOrderPrice: 20,
@@ -70,7 +72,9 @@ export class MyOrdersComponent implements OnInit {
         productImage : "http://via.placeholder.com/150",
         listingName: 'linen',
         id: 2,
+        listingQuantity: 15,
         orderQuantity: 5,
+        brand:'Butex.SA',
         listingId: 1, //link here to the product offer
         newOrderPrice: 24,
         oldOrderPrice: 222,
@@ -80,7 +84,9 @@ export class MyOrdersComponent implements OnInit {
         productImage : "http://via.placeholder.com/150",
         listingName: 'linen',
         id: 1,
+        listingQuantity: 120,
         orderQuantity: 2,
+        brand:'Drutex.SA',
         listingId: 1, //link here to the product offer
         newOrderPrice: 15,
         oldOrderPrice: 20,
@@ -90,8 +96,10 @@ export class MyOrdersComponent implements OnInit {
   displayColumns: Array<string> = [
     'productImage',
     'listingName',
-    'orderQuantity',
+    'brand',
+    'listingQuantity',
     'oldOrderPrice',
+    'orderQuantity',
     'newOrderPrice',
     'orderStatus',
     'Action'

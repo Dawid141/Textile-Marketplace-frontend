@@ -58,7 +58,7 @@
           <div class="flex items-center mt-2">
             <p class="text-lg mr-2">Quantity:</p>
             <button id="decreaseQty" type="button" class="bg-red-500 text-white px-2 py-1 rounded" (click)="decreaseQuantity()">-</button>
-            <input id="quantityInput" type="number" formControlName="quantity" class="w-12 mx-2 text-center border rounded" min="1" [max]="listingData.quantity" readonly>
+            <input id="quantityInput" type="number" formControlName="quantity" class="w-24 mx-2 text-center border rounded" min="1" [max]="listingData.quantity">
             <button id="increaseQty" type="button" class="bg-green-500 text-white px-2 py-1 rounded" (click)="increaseQuantity()">+</button>
           </div>
         </div>

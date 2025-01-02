@@ -18,8 +18,10 @@ export interface OrderListingDetails {
   id: number;
   orderQuantity: number;
   productImage : string;
+  brand: string;
   listingId: number;
   listingName: string;
+  listingQuantity: number;
   newOrderPrice: number;
   oldOrderPrice: number;
   orderStatus: string;

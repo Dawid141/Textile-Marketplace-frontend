@@ -70,7 +70,6 @@ export class SingleOfferComponent implements OnInit {
   };
 
   properties = [
-    { label: 'Price', value: this.listingData.price },
     { label: 'Quantity', value: this.listingData.quantity },
     { label: 'Width', value: this.listingData.width },
     { label: 'Material', value: this.listingData.materialType },
