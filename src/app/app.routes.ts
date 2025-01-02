@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import {ProductsComponent} from './components/products-main-site/products.component';
 import {MyAccountComponent} from './components/my-account/my-account.component';
 import {ContactComponent} from './components/contact/contact.component';
-import {SingleOfferComponent} from './components/single-offer/single-offer/single-offer.component';
+import {SingleOfferComponent} from './components/single-offer/single-offer.component';
 import {MyOrdersComponent} from './components/my-orders/my-orders.component';
 import {RegisterComponent} from './components/auth/register/register.component';
 import {LoginComponent} from './components/auth/login/login.component';

@@ -1,8 +1,8 @@
-<mat-toolbar class="max-w-7xl mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
+<mat-toolbar class="w-full mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
     <button mat-flat-button class="mx-16" >
       Add Offer
     </button>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs ml-20">
     <a
       mat-tab-link
       *ngFor="let link of navLinks"
@@ -20,12 +20,12 @@
         account_circle
       </mat-icon>
     </button>
-    <button mat-icon-button class="mx-2">
+    <button mat-icon-button >
       <mat-icon>
         login
       </mat-icon>
     </button>
   </div>
-
 </mat-toolbar>
+
 
