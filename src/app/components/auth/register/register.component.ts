@@ -31,14 +31,21 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required]),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
-    nip: new FormControl('', [Validators.required])
+    nip: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
   });
 
   constructor(private router: Router, private authService: AuthService, private _snackbar: MatSnackBar) {}
 
   onSubmit() {
+    if (this.registerForm.invalid) {
+      console.error("Invalid form submission");
+      this._snackbar.open("Please fill in all required fields correctly.", "Ok");
+      return;
+    }
+
     const formData: RegisterRequest = this.registerForm.value as RegisterRequest;
     console.log(formData);
+
     this.authService.register(formData).pipe(
       tap(response => {
         console.log(response);

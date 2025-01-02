@@ -6,6 +6,8 @@ import {MatInput} from '@angular/material/input';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../../services/auth.service';
 import {catchError, of, tap} from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-password-reset',
@@ -28,7 +30,7 @@ export class SubmitPasswordResetComponent {
     email: new FormControl('', [Validators.required])
   })
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
 
   onSubmit() {
     let email = this.passwordResetForm.controls['email'].value;
@@ -37,11 +39,14 @@ export class SubmitPasswordResetComponent {
     this.authService.sendResetPasswordEmail(email).pipe(tap(
       response => {
         console.log(response);
+        this._snackBar.open("Please check your inbox in order to reset your password.")
+        this.router.navigate(['/login'])
         this.isSuccessful = true;
       }),
       catchError(err => {
         console.log(err)
-        // TODO unsuccessful popup or sth
+        this.router.navigate(['/login'])
+        this._snackBar.open("Please check your inbox in order to reset your password.")
         return of(null);
       }
     )).subscribe()

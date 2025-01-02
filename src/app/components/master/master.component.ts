@@ -9,11 +9,14 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButtonModule, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatToolbar} from '@angular/material/toolbar';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {PermissionService} from '../../services/permission.service';
+import {JwtService} from '../../services/jwt-service.service';
+import {MatTooltip} from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-master',
   imports: [
-    MatTabNavPanel,ProductsComponent, ContactComponent, MyAccountComponent, SingleOfferComponent, CommonModule, MatTabGroup, MatTab, MatIcon, MatFabButton, MatTabNav, MatTabLink, MatTabNavPanel, MatButtonModule, MatToolbar, RouterLink, MatIconButton, RouterLinkActive
+    MatTabNavPanel, CommonModule, MatIcon, MatTabNav, MatTabLink, MatTabNavPanel, MatButtonModule, MatToolbar, RouterLink, MatIconButton, RouterLinkActive, MatTooltip
   ],
     templateUrl: './master.component.html',
     standalone: true,
@@ -21,11 +24,19 @@ import {RouterLink, RouterLinkActive} from '@angular/router';
 })
 
 export class MasterComponent {
+
+  constructor(public permissionService: PermissionService, protected jwtService: JwtService) {
+  }
+
   navLinks = [
     { path: '/products', label: 'Main Page' },
     { path: '/my-offers', label: 'My Offers' },
     { path: '/my-orders', label: 'My Orders' },
     { path: '/contact', label: 'Contact' },
   ];
+
+  isLinkDisabled(path: string): boolean {
+    return (path === '/my-orders' || path === '/my-offers') && this.permissionService.isExpired();
+  }
 
 }
