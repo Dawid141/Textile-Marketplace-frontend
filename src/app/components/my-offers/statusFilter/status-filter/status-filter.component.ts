@@ -43,21 +43,20 @@ import {
 })
 export class StatusFilterComponent implements OnInit {
 
-  @Output() showCategory = new EventEmitter<string[]>();
-  categories = ['ACCEPTED', 'REJECTED','NEGOTIATION','PENDING'];
-  selectedCategories: { [key: string]: boolean } = {};
-  displayedColumns: string[] = ['category'];
+  @Output() showStatus = new EventEmitter<string[]>();
+  statuses = ['ACCEPTED', 'REJECTED', 'NEGOTIATION', 'PENDING'];
+  selectedStatuses: { [key: string]: boolean } = {};
+  displayedColumns: string[] = ['status'];
 
   ngOnInit(): void {
-    // Initialize selected categories object with false values
-    this.categories.forEach(category => {
-      this.selectedCategories[category] = false;
+    // Initialize selected statuses object with false values
+    this.statuses.forEach(status => {
+      this.selectedStatuses[status] = false;
     });
   }
 
-  onCategoryChange(): void {
-    // Emit selected categories as an array of strings
-    const selected = Object.keys(this.selectedCategories).filter(category => this.selectedCategories[category]);
-    this.showCategory.emit(selected);
+  onStatusChange(): void {
+    const selected = Object.keys(this.selectedStatuses).filter(status => this.selectedStatuses[status]);
+    this.showStatus.emit(selected);
   }
 }

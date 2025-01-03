@@ -2,15 +2,15 @@
   <!-- Side Panel -->
   <mat-sidenav-container class="w-72">
     <mat-sidenav mode="side" opened class="!bg-gray-200">
-      <app-status-filter></app-status-filter>
+      <app-status-filter (showStatus)="onStatusFilterChange($event)"></app-status-filter>
     </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>
   </mat-sidenav-container>
 
   <!-- Main Content -->
   <mat-card class="w-full mx-auto min-h-full mt-2" *ngIf="groupedData.length">
-    <div *ngFor="let group of groupedData">
-      <div class="border-1 p-4 mb-4 border-black rounded-lg shadow-md" [ngClass]="{
+    <div *ngFor="let group of filteredData">
+    <div class="border-1 p-4 mb-4 border-black rounded-lg shadow-md" [ngClass]="{
       }">
         <table mat-table [dataSource]="group.items" class="mat-elevation-z8 w-full">
           <ng-container matColumnDef="productImage" class="mb-1">
@@ -63,31 +63,36 @@
               {{ element.orderStatus }}
             </td>
           </ng-container>
-
           <ng-container matColumnDef="Action">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" class="align-middle space-x-1">
               <button mat-mini-fab
-                      class="!bg-green-500 !text-white"
-                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
-                      [ngClass]="{'!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                      [ngClass]="{
+              '!bg-green-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'),
+              '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'
+            }"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'">
                 <mat-icon>check</mat-icon>
               </button>
               <button mat-mini-fab
-                      class="!bg-red-500 !text-white"
-                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
-                      [ngClass]="{'!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                      [ngClass]="{
+              '!bg-red-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'),
+              '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'
+            }"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'">
                 <mat-icon>close</mat-icon>
               </button>
               <button mat-mini-fab
-                      class="!bg-blue-500 !text-white"
-                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION'"
-                      [ngClass]="{'!bg-gray-300': element.orderStatus === 'NEGOTIATION', '!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                      [ngClass]="{
+              '!bg-blue-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION'),
+              '!bg-gray-300 text-gray-500': element.orderStatus === 'NEGOTIATION',
+              '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'
+            }"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION'">
                 <mat-icon>chat</mat-icon>
               </button>
             </td>
           </ng-container>
-
 
           <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
@@ -96,8 +101,8 @@
     </div>
   </mat-card>
 
-  <mat-card class="w-full mx-auto items-center p-1 min-h-full" *ngIf="!groupedData.length">
-    <div class="mt-96">
+  <mat-card class="w-full mx-auto items-center p-1 min-h-full" *ngIf="!filteredData.length">
+  <div class="mt-96">
       <a class="mx-10">You don't have any offers created</a>
       <button class="mx-10" mat-raised-button routerLink="/products">Create offer</button>
     </div>

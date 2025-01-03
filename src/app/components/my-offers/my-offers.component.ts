@@ -74,6 +74,18 @@ export class MyOffersComponent implements OnInit {
       {
         productImage : "http://via.placeholder.com/150",
         listingName: 'linen',
+        id: 6,
+        listingQuantity: 100,
+        orderQuantity: 2,
+        brand:'Drutex.SA',
+        listingId: 1, //link here to the product offer
+        newOrderPrice: 15,
+        oldOrderPrice: 20,
+        orderStatus: 'PENDING',
+      },
+      {
+        productImage : "http://via.placeholder.com/150",
+        listingName: 'linen',
         id: 2,
         listingQuantity: 100,
         orderQuantity: 5,
@@ -121,6 +133,8 @@ export class MyOffersComponent implements OnInit {
       }]};
 
   groupedData: any[] = [];
+  filteredData: any[] = [];
+  selectedStatuses: string[] = [];
 
   dataSource: Array<OrderListingDetails> = [];
   displayColumns: Array<string> = [
@@ -136,10 +150,11 @@ export class MyOffersComponent implements OnInit {
 
   ngOnInit() {
     this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
+    this.filteredData = this.groupedData;
   }
 
   groupByListingId(data: OrderListingDetails[]): any[] {
-    const grouped: { [key: number]: { listingId: number; items: OrderListingDetails[] } } = {}; // Typowanie obiektu
+    const grouped: { [key: number]: { listingId: number; items: OrderListingDetails[] } } = {};
 
     data.forEach((current) => {
       if (!grouped[current.listingId]) {
@@ -152,6 +167,23 @@ export class MyOffersComponent implements OnInit {
     });
 
     return Object.values(grouped);
+  }
+
+  onStatusFilterChange(selectedStatuses: string[]): void {
+    this.selectedStatuses = selectedStatuses;
+
+    if (this.selectedStatuses.length > 0) {
+      this.filteredData = this.groupedData
+        .map((group: { listingId: number; items: OrderListingDetails[] }) => ({
+          ...group,
+          items: group.items.filter((item: OrderListingDetails) =>
+            this.selectedStatuses.includes(item.orderStatus)
+          )
+        }))
+        .filter(group => group.items.length > 0);
+    } else {
+      this.filteredData = this.groupedData;
+    }
   }
 
   getStatusClass(status: string): string {
