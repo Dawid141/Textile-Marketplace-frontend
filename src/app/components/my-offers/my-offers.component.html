@@ -1,113 +1,108 @@
-<div class="min-h-full max-w-7xl mx-auto border-x mt-5 flex">
+<div class="min-h-full max-w-7xl mx-auto border-x flex ">
   <!-- Side Panel -->
   <mat-sidenav-container class="w-72">
     <mat-sidenav mode="side" opened class="!bg-gray-200">
-      <p class="p-4">Side Panel Content</p>
+      <app-status-filter></app-status-filter>
     </mat-sidenav>
-    <mat-sidenav-content>
-    </mat-sidenav-content>
+    <mat-sidenav-content></mat-sidenav-content>
   </mat-sidenav-container>
 
   <!-- Main Content -->
-  <mat-card class="w-full mx-auto min-h-full" *ngIf=(orderListingDetails.listingData.length)>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+  <mat-card class="w-full mx-auto min-h-full mt-2" *ngIf="groupedData.length">
+    <div *ngFor="let group of groupedData">
+      <div class="border-1 p-4 mb-4 border-black rounded-lg shadow-md" [ngClass]="{
+      }">
+        <table mat-table [dataSource]="group.items" class="mat-elevation-z8 w-full">
+          <ng-container matColumnDef="productImage" class="mb-1">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Product</th>
+            <td mat-cell *matCellDef="let element">
+              <img src="{{ element.productImage }}" alt="productImage" class="w-[100px] my-3 ml-2 " />
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="productImage" class="mb-1">
-        <th mat-header-cell *matHeaderCellDef class="text-center">Product</th>
-        <td mat-cell *matCellDef="let element">
-          <img src="{{element.productImage}}" alt="productImage" class="w-[125px] my-3 ml-6"/>
-        </td>
-        <td mat-footer-cell *matFooterCellDef>
-        </td>
-      </ng-container>
-      <!--this will be link that will redirect to offer page-->
-      <ng-container matColumnDef="listingName">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let element">
-          <p class="truncate max-w-xs block">{{element.listingName}}</p>
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="listingName">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">
+              <p class="truncate max-w-16 block" matTooltip="{{ element.listingName }}">
+                {{ element.listingName }}
+              </p>
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="listingQuantity">
-        <th mat-header-cell *matHeaderCellDef>Listing Quantity</th>
-        <td mat-cell *matCellDef="let element"  class="text-center">
-          {{element.listingQuantity}}
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="listingQuantity">
+            <th mat-header-cell *matHeaderCellDef>Listing Quantity</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              {{ element.listingQuantity }}
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="oldOrderPrice">
-        <th mat-header-cell *matHeaderCellDef>Old Price</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.oldOrderPrice | currency}}
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="oldOrderPrice">
+            <th mat-header-cell *matHeaderCellDef>Old Price</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.oldOrderPrice | currency }}
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="orderQuantity">
-        <th mat-header-cell *matHeaderCellDef >Ordered Quantity</th>
-        <td mat-cell *matCellDef="let element"  class="text-center">
-          {{element.orderQuantity}}
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="orderQuantity">
+            <th mat-header-cell *matHeaderCellDef>Ordered Quantity</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              {{ element.orderQuantity }}
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="newOrderPrice">
-        <th mat-header-cell *matHeaderCellDef>New Price</th>
-        <td mat-cell *matCellDef="let element">
-          {{element.newOrderPrice | currency}}
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="newOrderPrice">
+            <th mat-header-cell *matHeaderCellDef>New Price</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.newOrderPrice | currency }}
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="orderStatus">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.orderStatus)">
-          {{ element.orderStatus }}
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="orderStatus">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.orderStatus)">
+              {{ element.orderStatus }}
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="Action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" class="align-middle space-x-2">
-          <!-- Approved Button -->
-          <button mat-mini-fab class="!bg-green-500 !text-white">
-            <mat-icon>check</mat-icon>
-          </button>
-
-          <!-- Rejected Button -->
-          <button mat-mini-fab class="!bg-red-500 !text-white">
-            <mat-icon>close</mat-icon>
-          </button>
-
-          <!-- Negotiate Button -->
-          <button mat-mini-fab class="!bg-blue-500 !text-white">
-            <mat-icon>chat</mat-icon>
-          </button>
-        </td>
-        <td mat-footer-cell *matFooterCellDef></td>
-      </ng-container>
+          <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="align-middle space-x-1">
+              <button mat-mini-fab
+                      class="!bg-green-500 !text-white"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
+                      [ngClass]="{'!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-mini-fab
+                      class="!bg-red-500 !text-white"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
+                      [ngClass]="{'!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                <mat-icon>close</mat-icon>
+              </button>
+              <button mat-mini-fab
+                      class="!bg-blue-500 !text-white"
+                      [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION'"
+                      [ngClass]="{'!bg-gray-300': element.orderStatus === 'NEGOTIATION', '!bg-gray-400': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'}">
+                <mat-icon>chat</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
 
-      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
-    </table>
+          <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+        </table>
+      </div>
+    </div>
   </mat-card>
-  <mat-card class="w-full mx-auto items-center p-1 min-h-full" *ngIf=!(orderListingDetails.listingData.length)>
+
+  <mat-card class="w-full mx-auto items-center p-1 min-h-full" *ngIf="!groupedData.length">
     <div class="mt-96">
-      <a class="mx-10">
-        You don't have any offers created
-      </a>
-      <button class="mx-10" mat-raised-button routerLink="/products">
-        Create offer <!-- same link as Add Offer button-->
-      </button>
+      <a class="mx-10">You don't have any offers created</a>
+      <button class="mx-10" mat-raised-button routerLink="/products">Create offer</button>
     </div>
   </mat-card>
 </div>
-
 
 <footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto">
   <p class="text-sm text-gray-600">

@@ -25,4 +25,5 @@ export interface OrderListingDetails {
   newOrderPrice: number;
   oldOrderPrice: number;
   orderStatus: string;
+  isGrouped?: boolean;
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderListing, OrderListingDetails} from '../../models/interface/order.model';
 import {MatSidenav, MatSidenavContainer, MatSidenavModule} from '@angular/material/sidenav';
-import {CurrencyPipe, NgClass, NgIf} from '@angular/common';
+import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
 import {MatCard} from '@angular/material/card';
 import {
@@ -15,6 +15,8 @@ import {
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
+import {MatTooltip} from '@angular/material/tooltip';
+import {StatusFilterComponent} from './statusFilter/status-filter/status-filter.component';
 
 
 @Component({
@@ -46,6 +48,9 @@ import {RouterLink} from '@angular/router';
     MatFooterCellDef,
     NgClass,
     MatMiniFabButton,
+    NgForOf,
+    MatTooltip,
+    StatusFilterComponent,
 
   ],
   templateUrl: './my-offers.component.html',
@@ -79,6 +84,30 @@ export class MyOffersComponent implements OnInit {
         orderStatus: 'ACCEPTED',
       },
       {
+        productImage : "http://via.placeholder.com/250",
+        listingName: 'super duper test d             ddddddddddddddd',
+        id: 5,
+        listingQuantity: 21,
+        orderQuantity: 37,
+        brand:'dupa.sa',
+        listingId: 5, //link here to the product offer
+        newOrderPrice: 24,
+        oldOrderPrice: 20,
+        orderStatus: 'NEGOTIATION',
+      },
+      {
+        productImage : "http://via.placeholder.com/150",
+        listingName: 'idkidktest',
+        id: 4,
+        listingQuantity: 20,
+        orderQuantity: 15,
+        brand:'Futex.SA',
+        listingId: 2, //link here to the product offer
+        newOrderPrice: 21,
+        oldOrderPrice: 28,
+        orderStatus: 'PENDING',
+      },
+      {
         productImage : "http://via.placeholder.com/150",
         listingName: 'linen',
         id: 3,
@@ -90,6 +119,8 @@ export class MyOffersComponent implements OnInit {
         oldOrderPrice: 20,
         orderStatus: 'REJECTED',
       }]};
+
+  groupedData: any[] = [];
 
   dataSource: Array<OrderListingDetails> = [];
   displayColumns: Array<string> = [
@@ -104,21 +135,37 @@ export class MyOffersComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.dataSource = this.orderListingDetails.listingData;
+    this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
+  }
+
+  groupByListingId(data: OrderListingDetails[]): any[] {
+    const grouped: { [key: number]: { listingId: number; items: OrderListingDetails[] } } = {}; // Typowanie obiektu
+
+    data.forEach((current) => {
+      if (!grouped[current.listingId]) {
+        grouped[current.listingId] = {
+          listingId: current.listingId,
+          items: [],
+        };
+      }
+      grouped[current.listingId].items.push(current);
+    });
+
+    return Object.values(grouped);
   }
 
   getStatusClass(status: string): string {
     switch (status) {
       case 'PENDING':
-        return 'text-yellow-500'; // Tailwind yellow
+        return 'text-yellow-500';
       case 'NEGOTIATION':
-        return 'text-blue-500'; // Tailwind blue
+        return 'text-blue-500';
       case 'ACCEPTED':
-        return 'text-green-500'; // Tailwind green
+        return 'text-green-500';
       case 'REJECTED':
-        return 'text-red-500'; // Tailwind red
+        return 'text-red-500';
       default:
-        return 'text-gray-500'; // Default gray
+        return 'text-gray-500';
     }
   }
 }
