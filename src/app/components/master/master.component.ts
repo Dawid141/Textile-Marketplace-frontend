@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {ProductsComponent} from '../products-main-site/products.component';
 import {ContactComponent} from '../contact/contact.component';
 import {MyAccountComponent} from '../my-account/my-account.component';
-import {SingleOfferComponent} from '../single-offer/single-offer/single-offer.component';
+import {SingleOfferComponent} from '../single-offer/single-offer.component';
 import {CommonModule} from '@angular/common';
 import {MatTab, MatTabGroup, MatTabLink, MatTabNav, MatTabNavPanel} from '@angular/material/tabs';
 import {MatIcon} from '@angular/material/icon';

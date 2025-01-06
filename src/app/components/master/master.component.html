@@ -1,13 +1,12 @@
-<mat-toolbar class="max-w-7xl mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
-    <button
-      mat-flat-button class="mx-16"
+<mat-toolbar class="w-full mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
+    <button mat-flat-button class="mx-16" 
       [disabled]="this.permissionService.isExpired()"
       matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!this.permissionService.isExpired()"
     >
       Add Offer
     </button>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs ml-20">
     <a
       mat-tab-link
       *ngFor="let link of navLinks"
@@ -41,6 +40,6 @@
       </mat-icon>
     </button>
   </div>
-
 </mat-toolbar>
+
 

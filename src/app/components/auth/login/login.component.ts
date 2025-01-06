@@ -22,6 +22,7 @@ import {LoginResponse} from '../../../models/interface/loginResponse';
     MatButton
   ],
   templateUrl: './login.component.html',
+  standalone: true,
   styleUrl: './login.component.css'
 })
 export class LoginComponent {

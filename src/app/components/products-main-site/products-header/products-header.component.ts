@@ -21,7 +21,7 @@ import {MatIcon} from '@angular/material/icon';
 export class ProductsHeaderComponent {
   @Output() columnsCountChange = new EventEmitter<number>();
   sort = 'desc';
-  itemsShowCount = 10;
+  itemsShowCount = 12;
 
   SortUpdated(newSort: string) {
     this.sort = newSort;

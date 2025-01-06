@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatCard} from '@angular/material/card';
-import {CurrencyPipe, NgClass, NgOptimizedImage} from '@angular/common';
+import {CurrencyPipe, NgClass, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatMiniFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
@@ -14,13 +14,17 @@ import {RouterLink} from '@angular/router';
     MatIcon,
     NgClass,
     MatMiniFabButton,
-    RouterLink
+    RouterLink,
+    NgForOf,
+    NgIf
   ],
   templateUrl: './product-box.component.html',
   standalone: true,
-  styleUrl: './product-box.component.css'
+  styleUrls: ['./product-box.component.css']
 })
-export class ProductBoxComponent {
+export class ProductBoxComponent implements OnInit {
   @Input() fullWidthMode = true;
+  @Input() products: any[] = [];
 
+  ngOnInit() {}
 }
