@@ -4,7 +4,7 @@ export interface listingData {
   productName: string;
   materialType: string;
   colour: string;
-  composition: string;
+  fabricType: string;
   safety: string;
   technology: string;
   shortDescription: string;

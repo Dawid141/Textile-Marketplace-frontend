@@ -49,7 +49,6 @@ export class StatusFilterComponent implements OnInit {
   displayedColumns: string[] = ['status'];
 
   ngOnInit(): void {
-    // Initialize selected statuses object with false values
     this.statuses.forEach(status => {
       this.selectedStatuses[status] = false;
     });

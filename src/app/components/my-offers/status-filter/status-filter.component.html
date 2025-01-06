@@ -1,0 +1,12 @@
+<div class="mb-4">
+  <h2 class="text-2xl font-semibold mt-4 mx-4">STATUS</h2>
+</div>
+
+<div *ngFor="let status of statuses" class="mb-2 flex items-center space-x-2">
+  <mat-checkbox
+    [(ngModel)]="selectedStatuses[status]"
+    (change)="onStatusChange()"
+    class="text-lg">
+    {{ status }}
+  </mat-checkbox>
+</div>

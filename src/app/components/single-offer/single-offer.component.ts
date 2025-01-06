@@ -5,7 +5,6 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {sellerData} from '../../models/interface/sellerDetails';
 import {MatList, MatListItem} from '@angular/material/list';
-import {MatDivider} from '@angular/material/divider';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
@@ -21,7 +20,6 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
     NgClass,
     MatList,
     MatListItem,
-    MatDivider,
     CurrencyPipe,
     ReactiveFormsModule
   ],
@@ -52,7 +50,7 @@ export class SingleOfferComponent implements OnInit {
     productName: "Product Name123",
     materialType: "Cotton",
     colour: "Red",
-    composition: 'cotton 100%',
+    fabricType: 'cotton 100%',
     safety: 'REACH',
     technology: 'Easy clean',
     shortDescription: "Short description of the product",
@@ -73,7 +71,7 @@ export class SingleOfferComponent implements OnInit {
     { label: 'Quantity', value: this.listingData.quantity },
     { label: 'Width', value: this.listingData.width },
     { label: 'Material', value: this.listingData.materialType },
-    { label: 'Composition', value: this.listingData.composition },
+    { label: 'Composition', value: this.listingData.fabricType },
     { label: 'Colour', value: this.listingData.colour },
     { label: 'Technology', value: this.listingData.technology },
     { label: 'Safety', value: this.listingData.safety }

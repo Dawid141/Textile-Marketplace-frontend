@@ -1,10 +1,70 @@
-<mat-expansion-panel *ngIf="categories">
-  <mat-expansion-panel-header>
-      <mat-panel-title> CATEGORIES </mat-panel-title>
-  </mat-expansion-panel-header>
-  <mat-selection-list [multiple] = "false">
-    <mat-list-option *ngFor="let category of categories" [value] = "category" >
-      <button (click)="ShowCategory(category)"> {{category}} </button>
-    </mat-list-option>
-  </mat-selection-list>
-</mat-expansion-panel>
+<p class="text-center">Price Range: {{ minPrice }} $ - {{ maxPriceSelected }} $</p>
+<div class="flex items-center p-4">
+  <span>0 $</span>
+  <mat-slider
+    class="mx-4 flex-1"
+    [min]="0"
+    [max]="maxPrice"
+    step="10"
+    [displayWith]="displayValue"
+  >
+    <input matSliderStartThumb [(ngModel)]="minPrice" (input)="onPriceChange()" />
+    <input matSliderEndThumb [(ngModel)]="maxPriceSelected" (input)="onPriceChange()" />
+  </mat-slider>
+
+  <span>{{ maxAmount }} $</span>
+</div>
+
+<p class="text-center">Quantity Range: {{ minAmount }} - {{ maxAmountSelected }}</p>
+<div class="flex items-center px-4 mb-5">
+  <span>0</span>
+  <mat-slider
+    class="mx-4 flex-1"
+    [min]="0"
+    [max]="maxAmount"
+    step="1"
+    [displayWith]="displayValue"
+  >
+    <input matSliderStartThumb [(ngModel)]="minAmount" (input)="onAmountChange()" />
+    <input matSliderEndThumb [(ngModel)]="maxAmountSelected" (input)="onAmountChange()" />
+  </mat-slider>
+  <span>{{ maxAmount }}</span>
+</div>
+
+  <div>
+    <h3 class="text-xl font-bold text-center mb-2">Fabric Composition</h3>
+    <div *ngFor="let item of section1Items">
+      <mat-checkbox [(ngModel)]="selectedSection1Items[item]" (change)="onCheckboxChange()">
+        {{ item }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-bold text-center mb-2">Fabric Type</h3>
+    <div *ngFor="let item of section2Items">
+      <mat-checkbox [(ngModel)]="selectedSection2Items[item]" (change)="onCheckboxChange()">
+        {{ item }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-bold text-center mb-2">Fabric Technology</h3>
+    <div *ngFor="let item of section3Items">
+      <mat-checkbox [(ngModel)]="selectedSection3Items[item]" (change)="onCheckboxChange()">
+        {{ item }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="text-xl font-bold text-center mb-2">Fabric Safety</h3>
+    <div *ngFor="let item of section4Items">
+      <mat-checkbox [(ngModel)]="selectedSection4Items[item]" (change)="onCheckboxChange()">
+        {{ item }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+

@@ -16,7 +16,7 @@ import {
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {MatTooltip} from '@angular/material/tooltip';
-import {StatusFilterComponent} from './statusFilter/status-filter/status-filter.component';
+import {StatusFilterComponent} from './status-filter/status-filter.component';
 
 
 @Component({
