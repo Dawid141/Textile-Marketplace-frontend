@@ -1,8 +1,8 @@
 <div class="flex flex-col justify-center items-center min-h-screen bg-white">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-6 bg-gray-100 shadow-md rounded-md">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="p-4 bg-gray-100 shadow-md rounded-md">
     <!-- Email Field -->
     <div class="email-field">
-      <mat-form-field appearance="fill" class="w-full">
+      <mat-form-field class="w-full">
         <mat-label>Email</mat-label>
         <input matInput id="email" formControlName="email" type="email" />
         <mat-error *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</mat-error>
@@ -11,15 +11,15 @@
     </div>
 
     <!-- Password Field -->
-    <div class="password-field mt-4">
-      <mat-form-field appearance="fill" class="w-full">
+    <div class="password-field mt-2">
+      <mat-form-field class="w-full">
         <mat-label>Password</mat-label>
         <input matInput id="password" formControlName="password" type="password" />
         <mat-error *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</mat-error>
       </mat-form-field>
     </div>
 
-    <div class="">
+    <div class="text-sm p-2">
       <p>Don't have an account? <a href="/register" class="text-blue-600 decoration-2 hover:underline font-medium">Register</a></p>
       <p>Forgot password? <a href="/submit-password-reset" class="text-blue-600 decoration-2 hover:underline font-medium">Reset password</a></p>
     </div>

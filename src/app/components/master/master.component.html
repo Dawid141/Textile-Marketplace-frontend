@@ -1,9 +1,10 @@
 <mat-toolbar class="max-w-7xl mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
     <button
       mat-flat-button class="mx-16"
-      [disabled]="this.permissionService.isExpired()"
+      [disabledInteractive]="this.permissionService.isExpired()"
       matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!this.permissionService.isExpired()"
+      routerLink = "/add-product"
     >
       Add Offer
     </button>
@@ -27,7 +28,7 @@
       mat-icon-button
       class="mx-2"
       routerLink="/my-account"
-      [disabled]="this.permissionService.isExpired()"
+      [disabledInteractive]="this.permissionService.isExpired()"
       matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!this.permissionService.isExpired()"
     >
@@ -35,7 +36,7 @@
         account_circle
       </mat-icon>
     </button>
-    <button mat-icon-button class="mx-2" (click)="jwtService.logOut()">
+    <button mat-icon-button class="mx-2" [disabledInteractive]="this.permissionService.isExpired()" (click)="jwtService.logOut()">
       <mat-icon>
         login
       </mat-icon>
