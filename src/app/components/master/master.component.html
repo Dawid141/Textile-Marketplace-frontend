@@ -1,5 +1,9 @@
 <mat-toolbar class="w-full mx-auto border-x justify-between !bg-green-200" mat-align-tabs="center">
-    <button mat-flat-button class="mx-16" >
+    <button mat-flat-button class="mx-16" 
+      [disabled]="this.permissionService.isExpired()"
+      matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
+      [matTooltipDisabled]="!this.permissionService.isExpired()"
+    >
       Add Offer
     </button>
   <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs ml-20">
@@ -9,18 +13,28 @@
       [routerLink]="link.path"
       routerLinkActive #rla="routerLinkActive"
       [active]="rla.isActive"
+      [disabled]="isLinkDisabled(link.path)"
+      matTooltip="{{ isLinkDisabled(link.path) ? 'You need to be logged in to view this page' : '' }}"
+      [matTooltipDisabled]="!isLinkDisabled(link.path)"
     >
       {{ link.label }}
     </a>
   </nav>
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
   <div>
-    <button mat-icon-button class="mx-2" routerLink="/my-account">
+    <button
+      mat-icon-button
+      class="mx-2"
+      routerLink="/my-account"
+      [disabled]="this.permissionService.isExpired()"
+      matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
+      [matTooltipDisabled]="!this.permissionService.isExpired()"
+    >
       <mat-icon>
         account_circle
       </mat-icon>
     </button>
-    <button mat-icon-button >
+    <button mat-icon-button class="mx-2" (click)="jwtService.logOut()">
       <mat-icon>
         login
       </mat-icon>

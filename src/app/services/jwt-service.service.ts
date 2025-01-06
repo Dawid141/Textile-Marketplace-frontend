@@ -10,11 +10,12 @@ export class JwtService {
   constructor(private router: Router) { }
 
   getAuthHeaders() {
-    return new HttpHeaders({ 'Authorization': "Bearer " + String(localStorage.getItem("jwtToken")) });
+    let token = localStorage.getItem("jwtToken")
+    return new HttpHeaders({ 'Authorization': `Bearer ${token}` });
   }
 
   logOut() {
     localStorage.removeItem("jwtToken");
-    this.router.navigate(["/"]);
+    this.router.navigate(["/products"]);
   }
 }
