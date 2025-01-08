@@ -1,0 +1,53 @@
+@let imageArrayLength = imageArray.length;
+@let arrayIterPlaceholder = Array(4 - imageArrayLength).fill(0);
+<!--The user can add at most 4 photos to their listing-->
+
+<div class="p-4">
+  <h2 class="text-lg font-bold mb-2">Photos</h2>
+  <p class="text-sm text-gray-500 mb-4">
+    The first photo will be the main one displayed on the listings page.
+  </p>
+
+  <div class="grid grid-cols-4 gap-4">
+
+    @for (img of imageArray; track $index) {
+      <div class="relative flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg bg-yellow-50">
+        <img
+          [ngSrc]="img"
+          class="max-w-full max-h-full object-contain p-2"
+          alt="image-{{ $index }}" fill>
+      </div>
+    }
+
+    @for (_ of arrayIterPlaceholder; track $index) {
+      @if ($index==0) {
+        <!-- Add Photo Button -->
+        <div class="flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg bg-yellow-50">
+
+          @if (displayAddPhotoButton) {
+            <label for="actual-btn" class="text-neutral-700 underline font-bold cursor-pointer">
+              Add photo
+            </label>
+            <input
+              id="actual-btn"
+              type="file"
+              accept="image/png, image/jpeg"
+              class="hidden"
+              (change)="onFileSubmit($event)">
+          } @else {
+            <mat-spinner [diameter]="60"></mat-spinner>
+          }
+
+        </div>
+      } @else {
+        <div class="flex items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg bg-gray-100">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+          </svg>
+        </div>
+      }
+    }
+
+  </div>
+</div>
+

@@ -9,6 +9,7 @@ import {NgIf} from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {Router} from '@angular/router';
 import {LoginResponse} from '../../../models/interface/loginResponse';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -32,28 +33,24 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required])
   });
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router, private _snackBar: MatSnackBar) {}
 
   onSubmit() {
     const formData: LoginRequest = this.loginForm.value as LoginRequest;
     console.log(formData);
     this.authService.login(formData).pipe(
       tap((response: LoginResponse) => {
+        console.log(response)
         localStorage.setItem("jwtToken", response.token);
         console.log("Login successful. Token saved.");
+        console.log("Navigating to dashboard...");
+        this.router.navigate(["/products"]);
       }),
       catchError((error) => {
         console.error("Login failed:", error);
-        alert("Login failed. Please check your credentials.");
+        this._snackBar.open("Login failed. Please check your credentials.", "Ok");
         return throwError(() => error);
       })
-    ).subscribe({
-      next: () => {
-        console.log("Navigating to dashboard...");
-        this.router.navigate(["/products"]);
-      },
-      error: () => {
-      }
-    });
+    ).subscribe();
   }
 }

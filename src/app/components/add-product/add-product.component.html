@@ -1,0 +1,115 @@
+<div class="flex flex-col justify-center items-center min-h-screen bg-white">
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()"  class="p-3 bg-gray-100 !shadow-md !rounded-md mt-3">
+    <h1 class="text-2xl font-bold left-0 top-0 mb-3">Add product</h1>
+    <div class="grid grid-cols-4 gap-4">
+      <div class="pb-1 col-start-1 col-end-4">
+        <mat-form-field class="w-full">
+          <mat-label>Product name</mat-label>
+          <input matInput id="productName" formControlName="productName" type="text"/>
+          <mat-error *ngIf="productForm.get('productName')?.errors?.['required']">Product name is required.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-subgrid col-span-4">
+        <div class="pb-1 col-start-1 col-end-3">
+          <mat-form-field class="w-full">
+            <mat-label>Price</mat-label>
+            <input matInput id="price" formControlName="price" type="number" step="any"/>
+            <mat-error *ngIf="productForm.get('price')?.errors?.['required']">Price is required.</mat-error>
+            <mat-error *ngIf="productForm.get('price')?.errors?.['min']">Price must be at least one.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="pb-1 col-start-3 col-end-5">
+          <mat-form-field class="w-full">
+            <mat-label>Quantity</mat-label>
+            <input matInput id="quantity" formControlName="quantity" type="number"/>
+            <mat-error *ngIf="productForm.get('quantity')?.errors?.['required']">Quantity is required.</mat-error>
+            <mat-error *ngIf="productForm.get('quantity')?.errors?.['min']">Quantity must be at least one.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="col-span-4">
+        <h2 class="text-lg font-bold mb-2">Descriptions</h2>
+        <p class="text-sm text-gray-500 col-span-4">
+          Short description will be displayed on the listings page and the long description on the product page itself.
+        </p>
+      </div>
+
+      <div class="pb-1 grid grid-cols-4 gap-4 col-span-4">
+        <mat-form-field class="w-full col-span-2">
+          <mat-label>Short description</mat-label>
+          <textarea matInput formControlName="shortDescription" rows="4" cols="28"></textarea>
+          <mat-error *ngIf="productForm.get('shortDescription')?.errors?.['required']">
+            Short description is required.
+          </mat-error>
+          <mat-error *ngIf="productForm.get('shortDescription')?.errors?.['minLength'] || productForm.get('shortDescription')?.errors?.['maxLength']">
+            Short description need to be between 10 and 2048 characters long.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-full col-span-2">
+          <mat-label>Long description</mat-label>
+          <textarea matInput formControlName="longDescription" rows="4" cols="28"></textarea>
+          <mat-error *ngIf="productForm.get('longDescription')?.errors?.['required']">
+            Long description is required.
+          </mat-error>
+          <mat-error *ngIf="productForm.get('longDescription')?.errors?.['minLength'] || productForm.get('longDescription')?.errors?.['maxLength']">
+            Long description need to be between 10 and 2048 characters long.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="col-span-4">
+        <h2 class="text-lg font-bold mb-2">Product details</h2>
+        <p class="text-sm text-gray-500 col-span-4">
+          Product details describe what the product is made of etc.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-subgrid col-span-4">
+
+      @for (key of productEnumsMap.keys(); track $index) {
+        <div class="pb-1" formGroupName="enumForms">
+          <mat-form-field class="w-full">
+            <mat-label>{{ key | titlecase }}</mat-label>
+              <mat-select [formControlName]="key">
+                @for (enumValue of productEnumsMap.get(key); track $index) {
+                  <mat-option [value]="enumValue" > {{ this.formatEnum(enumValue) }}</mat-option>
+                }
+              </mat-select>
+            <mat-error *ngIf="productForm['controls'].enumForms.errors">{{ key }} is required.</mat-error>
+          </mat-form-field>
+        </div>
+      }
+      </div>
+
+      <app-image-upload class="col-span-4" (imageEvent)="handleImageEvent($event)"></app-image-upload>
+
+      <div class="grid grid-cols-subgrid col-span-3">
+        <div class="pb-1 col-span-1">
+          <mat-form-field class="w-full">
+            <mat-label>Colour</mat-label>
+            <input matInput id="colour" formControlName="colour"/>
+            <mat-error *ngIf="productForm.get('colour')?.errors?.['required']">Colour is required.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="pb-1 col-span-2">
+          <mat-form-field class="w-full">
+            <mat-label>Width</mat-label>
+            <input matInput id="width" formControlName="width" type="number" step="any"/>
+            <mat-error *ngIf="productForm.get('width')?.errors?.['required']">Width is required.</mat-error>
+            <mat-error *ngIf="productForm.get('width')?.errors?.['min']">Width must be at least one.</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button class="col-start-4 col-end-5" [disabled]="!productForm.valid" mat-raised-button type="submit">Submit</button>
+
+    </div>
+
+  </form>
+</div>

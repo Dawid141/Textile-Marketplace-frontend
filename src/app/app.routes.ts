@@ -11,6 +11,8 @@ import {SubmitPasswordResetComponent} from './components/auth/submit-password-re
 import {PasswordResetComponent} from './components/auth/password-reset/password-reset.component';
 import {MyOffersComponent} from './components/my-offers/my-offers.component';
 import {IsLoginGuard} from './guards/login.guard';
+import {AddProductComponent} from './components/add-product/add-product.component';
+import {ImageUploadComponent} from './components/image-upload/image-upload.component';
 
 
 export const routes: Routes = [
@@ -26,4 +28,7 @@ export const routes: Routes = [
   {path: 'password-reset', component: PasswordResetComponent},
   {path: 'my-offers', component: MyOffersComponent, canActivate: [IsLoginGuard]},
   { path: 'single-offer/:id', component: SingleOfferComponent },
+  {path: 'single-offer', component: SingleOfferComponent, canActivate: [IsLoginGuard]},
+  {path: 'add-product', component: AddProductComponent, canActivate: [IsLoginGuard]},
+  {path: 'image-upload-test', component: ImageUploadComponent, canActivate: [IsLoginGuard]}
 ];
