@@ -13,6 +13,7 @@ import {MyOffersComponent} from './components/my-offers/my-offers.component';
 import {IsLoginGuard} from './guards/login.guard';
 import {AddProductComponent} from './components/add-product/add-product.component';
 import {ImageUploadComponent} from './components/image-upload/image-upload.component';
+import {SpinBarDialogComponent} from './components/spin-bar-dialog/spin-bar-dialog.component';
 
 
 export const routes: Routes = [
