@@ -5,8 +5,8 @@
 >
   <mat-drawer mode="side" opened class="p-6">
     <app-product-sidebar-filter
-      (filterChange)="onFilterChange($event)"
       [products]="products"
+      (filterChange)="onFilterChange($event)"
       (priceRangeChange)="onPriceRangeChange($event)"
     ></app-product-sidebar-filter>
 
@@ -20,7 +20,7 @@
         [colspan]="1"
         [rowspan]="1"
       >
-        <app-product-box
+        <app-product-box class="w-full"
           [products]="[product]"
           [fullWidthMode]="cols === 1"
         ></app-product-box>
@@ -28,7 +28,6 @@
     </mat-grid-list>
   </mat-drawer-content>
 </mat-drawer-container>
-
 <footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto">
   <p class="text-sm text-gray-600">
     © 2025 Your Company. All rights reserved.

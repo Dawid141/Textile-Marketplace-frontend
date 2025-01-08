@@ -1,12 +1,12 @@
 export interface listingData {
   id: number;
-  imageLink: string[];
+  images: string[];
   productName: string;
-  materialType: string;
+  composition: string;
   colour: string;
   fabricType: string;
-  safety: string;
-  technology: string;
+  safetyRequirements : string;
+  technologies : string;
   shortDescription: string;
   longDescription: string;
   price: number;

@@ -6,6 +6,9 @@ import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {sellerData} from '../../models/interface/sellerDetails';
 import {MatList, MatListItem} from '@angular/material/list';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {ProductsSingleOfferService} from '../../services/single-offer.service';
+import {catchError, tap, throwError} from 'rxjs';
 
 @Component({
     selector: 'app-main-page',
@@ -30,8 +33,22 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 
 
 export class SingleOfferComponent implements OnInit {
-
   selectedImageIndex: number = 0;
+  listingData: listingData | null = null;  // Zmienna na dane oferty, początkowo null
+
+  sellerData: sellerData = {
+    id: 1,
+    email: 'idkidk@gmail.com',
+    nip: '123123123',
+    company: 'Drutex.SA'
+  };
+
+  properties: any[] = [];
+  companyProperties = [
+    { label: 'Email', value: this.sellerData.email},
+    { label: 'NIP', value: this.sellerData.nip },
+    { label: 'Company', value: this.sellerData.company },
+  ];
 
   orderForm = new FormGroup({
     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
@@ -39,50 +56,43 @@ export class SingleOfferComponent implements OnInit {
     yourSuggestions: new FormControl('', [Validators.required])
   });
 
-  listingData : listingData = {
-    id: 1,
-    imageLink:  [
-      "http://via.placeholder.com/150",
-      "http://via.placeholder.com/200",
-      "http://via.placeholder.com/300x300",
-      "http://via.placeholder.com/200",
-    ],
-    productName: "Product Name123",
-    materialType: "Cotton",
-    colour: "Red",
-    fabricType: 'cotton 100%',
-    safety: 'REACH',
-    technology: 'Easy clean',
-    shortDescription: "Short description of the product",
-    longDescription: "Long description of the product Long description of the product Long description of the product Long description of the product Long description of the product Long description of the product",
-    price: 199.99,
-    quantity: 10,
-    width: '2m'
-  };
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductsSingleOfferService  // Wstrzykiwanie serwisu
+  ) {
+  }
 
-  sellerData : sellerData = {
-    id: 1,
-    email: 'idkidk@gmail.com',
-    nip: '123123123',
-    company: 'Drutex.SA'
-  };
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id')!;
+      this.fetchListingData(id);  // Pobranie danych na podstawie id
+    });
+  }
 
-  properties = [
-    { label: 'Quantity', value: this.listingData.quantity },
-    { label: 'Width', value: this.listingData.width },
-    { label: 'Material', value: this.listingData.materialType },
-    { label: 'Composition', value: this.listingData.fabricType },
-    { label: 'Colour', value: this.listingData.colour },
-    { label: 'Technology', value: this.listingData.technology },
-    { label: 'Safety', value: this.listingData.safety }
-  ];
+  fetchListingData(id: string): void {
+    this.productService.getListingById(id).pipe(tap((response: any) => {
+        this.listingData = response.data;
+        this.updateProperties();
+      }),
+      catchError((error) => {
+        console.error("Fetching user data failed:", error);
+        return throwError(() => error);
+      })).subscribe()
+  }
 
-  companyProperties = [
-    { label: 'Email', value: this.sellerData.email},
-    { label: 'NIP', value: this.sellerData.nip },
-    { label: 'Company', value: this.sellerData.company },
-  ];
-
+  updateProperties() {
+    if (this.listingData) {
+      this.properties = [
+        { label: 'Quantity', value: this.listingData.quantity },
+        { label: 'Width', value: this.listingData.width },
+        { label: 'Material', value: this.listingData.composition },
+        { label: 'Composition', value: this.listingData.fabricType },
+        { label: 'Colour', value: this.listingData.colour },
+        { label: 'Technology', value: this.listingData.technologies },
+        { label: 'Safety', value: this.listingData.safetyRequirements }
+      ];
+    }
+  }
 
   selectImage(index: number): void {
     this.selectedImageIndex = index;
@@ -97,7 +107,7 @@ export class SingleOfferComponent implements OnInit {
 
   increaseQuantity() {
     const currentValue = this.orderForm.get('quantity')?.value || 1;
-    const maxStock = this.listingData.quantity;
+    const maxStock = this.listingData?.quantity || 0;
 
     if (currentValue < maxStock) {
       this.orderForm.get('quantity')?.setValue(currentValue + 1);
@@ -109,8 +119,4 @@ export class SingleOfferComponent implements OnInit {
       console.log('Form Data:', this.orderForm.value);
     }
   }
-
-  ngOnInit() {
-  }
-
 }

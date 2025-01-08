@@ -25,5 +25,5 @@ export const routes: Routes = [
   {path: 'submit-password-reset', component: SubmitPasswordResetComponent},
   {path: 'password-reset', component: PasswordResetComponent},
   {path: 'my-offers', component: MyOffersComponent, canActivate: [IsLoginGuard]},
-  {path: 'single-offer', component: SingleOfferComponent}
+  { path: 'single-offer/:id', component: SingleOfferComponent },
 ];

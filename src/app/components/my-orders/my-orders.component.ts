@@ -63,7 +63,7 @@ export class MyOrdersComponent implements OnInit {
       listingQuantity: 10,
       orderQuantity: 2,
       brand:'Drutex.SA',
-      listingId: 1, //link here to the product offer
+      listingId: 1,
       newOrderPrice: 15,
       oldOrderPrice: 20,
       orderStatus: 'PENDING',

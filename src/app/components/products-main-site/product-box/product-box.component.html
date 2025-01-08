@@ -1,33 +1,37 @@
-<div *ngFor="let product of products" class="mb-4">
-  <mat-card [ngClass]="{'text-center !shadow-lg !rounded-lg': !fullWidthMode}">
-    <div [ngClass]="{'flex ': fullWidthMode}">
+<div *ngFor="let product of products; let i = index" class="mb-4 mx-auto">
+  <mat-card [ngClass]="{'text-center !shadow-lg !rounded-lg mx-auto' : !fullWidthMode}">
+    <div [ngClass]="{'flex  ': fullWidthMode}">
       <img
         class="mx-auto h-[250px] p-3"
         [ngClass]="{'h-250px mt-5': !fullWidthMode, 'h-[370px]': fullWidthMode}"
-        [src]="product.imageLink[0]"
+        [src]="product.images[0] || 'assets/placeholder.png'"
         alt="{{ product.productName }}"
       />
       <div
-        class="w-full "
+        class="w-full"
         [ngClass]="{'px-6 flex flex-col justify-between': fullWidthMode}"
       >
         <div [ngClass]="{'p-4': fullWidthMode}">
           <h5
-            [ngClass]="{'font-bold text-xl': fullWidthMode, 'font-semibold text-lg': !fullWidthMode}"> {{ product.productName }} </h5>
-          <p class="truncate hover:whitespace-normal ">{{ product.shortDescription }}</p>
-          <p> Available Quantity: {{ product.quantity }}</p>
+            [ngClass]="{'font-bold text-xl': fullWidthMode, 'font-semibold text-lg': !fullWidthMode}">
+            {{ product.productName }}
+          </h5>
+          <p class="truncate hover:whitespace-normal">
+            {{ product.shortDescription }}
+          </p>
+          <p>Available Quantity: {{ product.quantity }}</p>
           <div *ngIf="fullWidthMode" class="mt-3">
-            <p>Fabric Composition: {{ product.materialType }}</p>
+            <p>Fabric Composition: {{ product.composition }}</p>
             <p>Color: {{ product.colour }}</p>
             <p>Fabric Type: {{ product.fabricType }}</p>
-            <p>Safety: {{ product.safety }}</p>
-            <p>Technology: {{ product.technology }}</p>
+            <p>Safety: {{ product.safetyRequirements }}</p>
+            <p>Technology: {{ product.technologies }}</p>
             <p>Width: {{ product.width }}</p>
           </div>
         </div>
         <div class="flex justify-between p-2 my-3">
-          <span class="text-red-400"> {{ product.price | currency }} / m </span>
-          <button mat-mini-fab class="-mt-3 mx-2" [routerLink]="'/single-offer'">
+          <span class="text-red-400">{{ product.price | currency }} / m</span>
+          <button mat-mini-fab class="-mt-3 mx-2" [routerLink]="'/single-offer/' + product.id">
             <mat-icon class="text-gray-500">shopping_bag</mat-icon>
           </button>
         </div>

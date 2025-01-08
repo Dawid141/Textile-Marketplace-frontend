@@ -2,7 +2,7 @@ import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Iuser } from '../../models/interface/myAccount';
 import { UserService } from '../../services/user.service';
-import {NgIf} from '@angular/common';
+import {JsonPipe, NgIf} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
 import {catchError, tap, throwError} from 'rxjs';
 
@@ -11,7 +11,8 @@ import {catchError, tap, throwError} from 'rxjs';
   imports: [
     MatGridList,
     MatGridTile,
-    NgIf
+    NgIf,
+    JsonPipe
   ],
   templateUrl: './my-account.component.html',
   standalone: true,

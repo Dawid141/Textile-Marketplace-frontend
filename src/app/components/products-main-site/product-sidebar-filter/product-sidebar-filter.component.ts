@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatExpansionPanel, MatExpansionPanelTitle,MatExpansionPanelHeader} from '@angular/material/expansion';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
 import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from '@angular/material/slider';
@@ -57,18 +57,24 @@ export class ProductSidebarFilterComponent implements OnInit {
     this.calculateMaxQuantity();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['products'] && this.products.length > 0) {
+      this.calculateMaxPrice();
+      this.calculateMaxQuantity();
+    }
+  }
+
   calculateMaxPrice() {
-    if (this.products && this.products.length > 0) {
-      const maxPriceFromProducts = Math.max(...this.products.map((product) => product.price));
+    if (this.products.length > 0) {
+      const maxPriceFromProducts = Math.max(...this.products.map((product) => product.price || 0));
       this.maxPrice = Math.ceil(maxPriceFromProducts / 10) * 10;
       this.maxPriceSelected = this.maxPrice;
     }
   }
 
   calculateMaxQuantity() {
-    if (this.products && this.products.length > 0) {
-      const maxQuantityFromProducts = Math.max(...this.products.map((product) => product.quantity));
-      this.maxAmount = maxQuantityFromProducts;
+    if (this.products.length > 0) {
+      this.maxAmount = Math.max(...this.products.map((product) => product.quantity || 0));
       this.maxAmountSelected = this.maxAmount;
     }
   }
@@ -109,7 +115,7 @@ export class ProductSidebarFilterComponent implements OnInit {
     const isSection4Empty = Object.values(this.selectedSection4Items).every((value) => !value);
 
     filtered = filtered.filter((product) => {
-      const section1Match = this.getSelectedItems(this.selectedSection1Items).includes(product.materialType?.toLowerCase());
+      const section1Match = this.getSelectedItems(this.selectedSection1Items).includes(product.composition?.toLowerCase());
       const section2Match = this.getSelectedItems(this.selectedSection2Items).includes(product.fabricType?.toLowerCase());
       const section3Match = this.getSelectedItems(this.selectedSection3Items).includes(product.technology?.toLowerCase());
       const section4Match = this.getSelectedItems(this.selectedSection4Items).includes(product.safety?.toLowerCase());
