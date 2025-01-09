@@ -11,7 +11,6 @@ export class JwtService {
 
   getAuthHeaders() {
     let token = localStorage.getItem("jwtToken")
-    console.log(token)
     return new HttpHeaders({ 'Authorization': `Bearer ${token}` });
   }
 

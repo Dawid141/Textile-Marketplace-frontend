@@ -13,6 +13,7 @@ import {MyOffersComponent} from './components/my-offers/my-offers.component';
 import {IsLoginGuard} from './guards/login.guard';
 import {AddProductComponent} from './components/add-product/add-product.component';
 import {ImageUploadComponent} from './components/image-upload/image-upload.component';
+import {canDeactivateGuard} from './guards/form-protect.guard';
 
 
 export const routes: Routes = [
@@ -29,6 +30,6 @@ export const routes: Routes = [
   {path: 'my-offers', component: MyOffersComponent, canActivate: [IsLoginGuard]},
   { path: 'single-offer/:id', component: SingleOfferComponent },
   {path: 'single-offer', component: SingleOfferComponent, canActivate: [IsLoginGuard]},
-  {path: 'add-product', component: AddProductComponent, canActivate: [IsLoginGuard]},
+  {path: 'add-product', component: AddProductComponent, canActivate: [IsLoginGuard], canDeactivate: [canDeactivateGuard]},
   {path: 'image-upload-test', component: ImageUploadComponent, canActivate: [IsLoginGuard]}
 ];

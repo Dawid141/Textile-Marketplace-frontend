@@ -4,25 +4,19 @@ import {listingData} from '../../models/interface/listingData';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {sellerData} from '../../models/interface/sellerDetails';
-import {MatList, MatListItem} from '@angular/material/list';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {ProductsSingleOfferService} from '../../services/single-offer.service';
 import {catchError, tap, throwError} from 'rxjs';
+import {ProductsSingleOfferService} from '../../services/single-offer.service';
 
 @Component({
     selector: 'app-main-page',
   imports: [
-    MatDrawerContainer,
-    MatDrawer,
-    MatDrawerContent,
     MatGridList,
     MatGridTile,
     NgIf,
     NgForOf,
     NgClass,
-    MatList,
-    MatListItem,
     CurrencyPipe,
     ReactiveFormsModule
   ],

@@ -1,11 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {catchError, tap, throwError} from 'rxjs';
-import {BackendResponse} from '../../models/interface/backendResponse';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ImageServiceResponse} from '../../models/interface/imageServiceResponse';
-import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {NgOptimizedImage} from '@angular/common';
 
@@ -18,19 +15,26 @@ import {NgOptimizedImage} from '@angular/common';
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.css'
 })
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnDestroy {
 
   imageArray: string[] = []
   displayAddPhotoButton = true;
 
   @Output() imageEvent = new EventEmitter<string[]>();
 
-  constructor(private imageService: ImageUploadService, private _snackBar: MatSnackBar, private dialog: MatDialog) {
+  constructor(private imageService: ImageUploadService, private _snackBar: MatSnackBar) {
   }
 
-  /*openSpinBarDialog() {
-    this.dialog.open(SpinBarDialogComponent);
-  }*/
+  ngOnDestroy(): void {
+    this.imageService.deleteAllImages(this.imageArray).subscribe({
+      next: () => {
+        this._snackBar.open("Images deleted", "Ok");
+        this.imageArray = []
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('complete')
+    });
+  }
 
   onFileSubmit(event: any) {
     console.log(event)
@@ -66,4 +70,23 @@ export class ImageUploadComponent {
 
 
   protected readonly Array = Array;
+
+  deleteImage($index: number) {
+    const fileName = this.imageArray[$index].split("/").pop();
+
+    if (!fileName) {
+      this._snackBar.open("Error while deleting the image");
+      return;
+    }
+
+    this.imageService.deleteImage(fileName).subscribe({
+      next: () => {
+        this._snackBar.open("Image deleted", "Ok");
+        this.imageArray.splice($index, 1);
+      },
+      error: (e) => console.error(e),
+      complete: () => console.info('complete')
+    })
+  }
+
 }

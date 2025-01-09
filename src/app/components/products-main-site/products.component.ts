@@ -15,14 +15,15 @@ import {ProductSidebarFilterComponent} from './product-sidebar-filter/product-si
 import {ProductBoxComponent} from './product-box/product-box.component';
 import {listingData} from '../../models/interface/listingData';
 import {JsonPipe, NgForOf} from '@angular/common';
-import {ProductsMainPageService} from '../../services/products-main-page.service.service';
 import {catchError, tap, throwError} from 'rxjs';
+import {ProductsService} from '../../services/products.service';
+import {ProductsMainPageService} from '../../services/products-main-page.service.service';
 
 const ROWS_HEIGHT: { [id:number] : number } = {1: 400, 3: 400};
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, MatDrawer, MatDrawerContainer, MatSidenavModule, MatGridListModule, MatMenuModule, MatButtonModule, MatCardModule, MatIconModule, MatExpansionModule, MatListModule, MatToolbarModule, MatTableModule, ProductsHeaderComponent, ProductSidebarFilterComponent, ProductBoxComponent, NgForOf, JsonPipe],
+  imports: [FormsModule, MatDrawer, MatDrawerContainer, MatSidenavModule, MatGridListModule, MatMenuModule, MatButtonModule, MatCardModule, MatIconModule, MatExpansionModule, MatListModule, MatToolbarModule, MatTableModule, ProductsHeaderComponent, ProductSidebarFilterComponent, ProductBoxComponent, NgForOf],
   templateUrl: './products.component.html',
   standalone: true
 })
