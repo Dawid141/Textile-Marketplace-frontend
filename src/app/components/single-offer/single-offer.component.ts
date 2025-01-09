@@ -8,6 +8,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ActivatedRoute} from '@angular/router';
 import {catchError, tap, throwError} from 'rxjs';
 import {ProductsSingleOfferService} from '../../services/single-offer.service';
+import {ProductsService} from '../../services/products.service';
 
 @Component({
     selector: 'app-main-page',
@@ -52,7 +53,8 @@ export class SingleOfferComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductsSingleOfferService  // Wstrzykiwanie serwisu
+    private productService: ProductsSingleOfferService,  // Wstrzykiwanie serwisu
+    private productsService: ProductsService
   ) {
   }
 
@@ -64,7 +66,7 @@ export class SingleOfferComponent implements OnInit {
   }
 
   fetchListingData(id: string): void {
-    this.productService.getListingById(id).pipe(tap((response: any) => {
+    this.productsService.getListingById(id).pipe(tap((response: any) => {
         this.listingData = response.data;
         this.updateProperties();
       }),

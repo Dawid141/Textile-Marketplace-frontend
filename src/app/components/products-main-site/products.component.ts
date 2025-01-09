@@ -30,7 +30,7 @@ const ROWS_HEIGHT: { [id:number] : number } = {1: 400, 3: 400};
 export class ProductsComponent implements OnInit{
 
   products: listingData[] = [];
-  constructor(private productsService: ProductsMainPageService) {}
+  constructor(private productsService: ProductsService) {}
   filteredProducts : listingData[] = [];
   cols = 3;
   rowHeight = ROWS_HEIGHT[this.cols];
@@ -43,7 +43,7 @@ export class ProductsComponent implements OnInit{
   ngOnInit() {
     this.filteredProducts = this.products;
 
-    this.productsService.getAllListings().pipe(
+    this.productsService.getAllProducts().pipe(
       tap((response: any) => {
         this.products = response.data;
         this.filteredProducts = this.products;

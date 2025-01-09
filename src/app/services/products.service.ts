@@ -11,17 +11,36 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }
 
-  getAllProducts() {
-    return this.http.get("http://localhost:8080/api/v1/auth/offers");
+
+  getListingById(id: string): Observable<any> {
+    let headers = this.jwtService.getAuthHeaders();
+
+    return this.http.get(`http://localhost:8080/api/v1/products/${id}`, {
+      observe: 'body',
+      responseType: 'json',
+      headers: headers,
+      withCredentials: true
+    });
+  }
+
+  getAllProducts(): Observable<any> {
+    let headers = this.jwtService.getAuthHeaders();
+
+    return this.http.get('http://localhost:8080/api/v1/products/get_all', {
+      observe: 'body',
+      responseType: 'json',
+      headers: headers,
+      withCredentials: true
+    });
   }
 
   getListingEnums(): Observable<any> {
     const headers = this.jwtService.getAuthHeaders();
-    return this.http.get("http://localhost:8080/api/v1/listings/get-listing-enums", {headers, observe: "body", responseType: "json"})
+    return this.http.get("http://localhost:8080/api/v1/products/get-listing-enums", {headers, observe: "body", responseType: "json"})
   }
 
   publishProduct(product: ListingDTO): Observable<any> {
     const headers = this.jwtService.getAuthHeaders();
-    return this.http.post("http://localhost:8080/api/v1/listings/add", product, {headers, observe: "body", responseType: "json"})
+    return this.http.post("http://localhost:8080/api/v1/products/add", product, {headers, observe: "body", responseType: "json"})
   }
 }
