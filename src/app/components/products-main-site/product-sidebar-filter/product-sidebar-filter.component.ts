@@ -3,22 +3,18 @@ import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from
 import {MatListOption, MatSelectionList} from '@angular/material/list';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from '@angular/material/slider';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {ProductsService} from '../../../services/products.service';
+import {catchError, tap, throwError} from 'rxjs';
+import {ProductEnumResponse} from '../../../models/interface/productEnumResponse';
 
 @Component({
   selector: 'app-product-sidebar-filter',
   imports: [
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
-    MatSelectionList,
-    MatListOption,
     NgForOf,
-    NgIf,
     MatSlider,
     FormsModule,
-    MatSliderThumb,
     MatSliderRangeThumb,
     MatCheckbox
   ],
@@ -42,19 +38,23 @@ export class ProductSidebarFilterComponent implements OnInit {
   maxAmount = 100;
   maxAmountSelected = this.maxAmount;
 
-  section1Items = ['POLYESTER', 'COTTON', 'ACRYLIC FIBER','POLYAMIDE','LINEN','VISCOSE','OTHER'];
-  section2Items = ['VELOUR', 'VELVET', 'MICROFIBER FABRIC','MICROFIBER KNIT','CHENILLE','BOUCLE','STRUCTURAL FABRIC','ECO LEATHER','OTHER'];
-  section3Items = ['EASY CLEAN', 'WATER REPELLENT', 'PET FRIENDLY','RECYCLED','OTHER'];
-  section4Items = ['REACH', 'OEKO TEX STANDARD CLASS I', 'OEKO TEX STANDARD CLASS II','OEKO TEX STANDARD CLASS III','OEKO TEX STANDARD CLASS VI',];
+  section1Items: string[] = [];
+  section2Items: string[] = [];
+  section3Items: string[] = [];
+  section4Items: string[] = [];
 
   selectedSection1Items: { [key: string]: boolean } = {};
   selectedSection2Items: { [key: string]: boolean } = {};
   selectedSection3Items: { [key: string]: boolean } = {};
   selectedSection4Items: { [key: string]: boolean } = {};
 
+  constructor(private productsService: ProductsService) {
+  }
+
   ngOnInit() {
     this.calculateMaxPrice();
     this.calculateMaxQuantity();
+    this.getListingEnums();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -97,6 +97,29 @@ export class ProductSidebarFilterComponent implements OnInit {
     this.filterProducts();
   }
 
+  getListingEnums() {
+    this.productsService.getListingEnums().pipe(tap(response => {
+        const responseData: ProductEnumResponse = response.data;
+        console.log(response.data)
+        Object.entries(responseData).forEach(([key, values]) => {
+
+          if (key === 'compositions') {
+            this.section1Items.push(...(values as string[]).map(value => this.productsService.formatEnum(value)));
+          } else if (key === 'fabricTypes') {
+            this.section2Items.push(...(values as string[]).map(value => this.productsService.formatEnum(value)));
+          } else if (key === 'technologies') {
+            this.section3Items.push(...(values as string[]).map(value => this.productsService.formatEnum(value)));
+          } else if (key === 'safetyRequirements') {
+            this.section4Items.push(...(values as string[]).map(value => this.productsService.formatEnum(value)));
+          }
+        })
+      }),
+      catchError((error) => {
+        console.error("Fetching enums failed:", error);
+        return throwError(() => error);
+      })).subscribe()
+  }
+
   filterProducts() {
     let filtered = this.products;
 
@@ -115,10 +138,10 @@ export class ProductSidebarFilterComponent implements OnInit {
     const isSection4Empty = Object.values(this.selectedSection4Items).every((value) => !value);
 
     filtered = filtered.filter((product) => {
-      const section1Match = this.getSelectedItems(this.selectedSection1Items).includes(product.composition?.toLowerCase());
-      const section2Match = this.getSelectedItems(this.selectedSection2Items).includes(product.fabricType?.toLowerCase());
-      const section3Match = this.getSelectedItems(this.selectedSection3Items).includes(product.technology?.toLowerCase());
-      const section4Match = this.getSelectedItems(this.selectedSection4Items).includes(product.safety?.toLowerCase());
+      const section1Match = this.getSelectedItems(this.selectedSection1Items).includes(this.productsService.formatEnum(product.composition));
+      const section2Match = this.getSelectedItems(this.selectedSection2Items).includes(this.productsService.formatEnum(product.fabricType));
+      const section3Match = this.getSelectedItems(this.selectedSection3Items).includes(this.productsService.formatEnum(product.technologies));
+      const section4Match = this.getSelectedItems(this.selectedSection4Items).includes(this.productsService.formatEnum(product.safetyRequirements));
 
       return (
         (section1Match || isSection1Empty) &&
@@ -132,6 +155,6 @@ export class ProductSidebarFilterComponent implements OnInit {
   }
 
   getSelectedItems(selectedItems: { [key: string]: boolean }): string[] {
-    return Object.keys(selectedItems).filter((item) => selectedItems[item]).map((item) => item.toLowerCase());
+    return Object.keys(selectedItems).filter((item) => selectedItems[item]);
   }
 }

@@ -77,7 +77,7 @@
             <mat-label>{{ key | titlecase }}</mat-label>
               <mat-select [formControlName]="key">
                 @for (enumValue of productEnumsMap.get(key); track $index) {
-                  <mat-option [value]="enumValue" > {{ this.formatEnum(enumValue) }}</mat-option>
+                  <mat-option [value]="enumValue" > {{ this.productService.formatEnum(enumValue) }}</mat-option>
                 }
               </mat-select>
             <mat-error *ngIf="productForm['controls'].enumForms.errors">{{ key }} is required.</mat-error>

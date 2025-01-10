@@ -43,4 +43,21 @@ export class ProductsService {
     const headers = this.jwtService.getAuthHeaders();
     return this.http.post("http://localhost:8080/api/v1/products/add", product, {headers, observe: "body", responseType: "json"})
   }
+
+  formatEnum(formEnum: string) {
+    return formEnum
+      .toLowerCase()
+      .split("_")
+      .map((word, index, arr) => {
+        // Check if the word is a Roman numeral (appears after "class")
+        if (
+          index === arr.length - 1 && // Last word in the array
+          /^i{1,3}|iv|v$/i.test(word) // Matches Roman numerals I, II, III, IV, or V
+        ) {
+          return word.toUpperCase(); // Keep Roman numerals uppercase
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1); // Capitalize other words
+      })
+      .join(" ");
+  }
 }

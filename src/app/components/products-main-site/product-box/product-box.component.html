@@ -2,10 +2,11 @@
   <mat-card [ngClass]="{'text-center !shadow-lg !rounded-lg mx-auto' : !fullWidthMode}">
     <div [ngClass]="{'flex  ': fullWidthMode}">
       <img
-        class="mx-auto h-[250px] p-3"
+        class="mx-auto h-[250px] p-3 cursor-pointer"
         [ngClass]="{'h-250px mt-5': !fullWidthMode, 'h-[370px]': fullWidthMode}"
         [src]="product.images[0] || 'assets/placeholder.png'"
         alt="{{ product.productName }}"
+        [routerLink]="'/single-offer/' + product.id"
       />
       <div
         class="w-full"
@@ -13,6 +14,8 @@
       >
         <div [ngClass]="{'p-4': fullWidthMode}">
           <h5
+            class="hover:underline cursor-pointer"
+            [routerLink]="'/single-offer/' + product.id"
             [ngClass]="{'font-bold text-xl': fullWidthMode, 'font-semibold text-lg': !fullWidthMode}">
             {{ product.productName }}
           </h5>

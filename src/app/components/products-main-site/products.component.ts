@@ -14,10 +14,9 @@ import {ProductsHeaderComponent} from './products-header/products-header.compone
 import {ProductSidebarFilterComponent} from './product-sidebar-filter/product-sidebar-filter.component';
 import {ProductBoxComponent} from './product-box/product-box.component';
 import {listingData} from '../../models/interface/listingData';
-import {JsonPipe, NgForOf} from '@angular/common';
+import {NgForOf} from '@angular/common';
 import {catchError, tap, throwError} from 'rxjs';
 import {ProductsService} from '../../services/products.service';
-import {ProductsMainPageService} from '../../services/products-main-page.service.service';
 
 const ROWS_HEIGHT: { [id:number] : number } = {1: 400, 3: 400};
 
