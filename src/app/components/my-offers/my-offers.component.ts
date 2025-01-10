@@ -17,6 +17,9 @@ import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {MatTooltip} from '@angular/material/tooltip';
 import {StatusFilterComponent} from './status-filter/status-filter.component';
+import {MyOffersService} from '../../services/my-offers.service';
+import {catchError, tap, throwError} from 'rxjs';
+import {ActionButtonsService} from '../../services/action-buttons.service';
 
 
 @Component({
@@ -59,84 +62,16 @@ import {StatusFilterComponent} from './status-filter/status-filter.component';
 })
 export class MyOffersComponent implements OnInit {
 
-  orderListingDetails: OrderListing = {listingData: [{
-      productImage : "http://via.placeholder.com/150",
-      listingName: 'linen',
-      id: 1,
-      listingQuantity: 100,
-      orderQuantity: 2,
-      brand:'Drutex.SA',
-      listingId: 1, //link here to the product offer
-      newOrderPrice: 15,
-      oldOrderPrice: 20,
-      orderStatus: 'PENDING',
-    },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'linen',
-        id: 6,
-        listingQuantity: 100,
-        orderQuantity: 2,
-        brand:'Drutex.SA',
-        listingId: 1, //link here to the product offer
-        newOrderPrice: 15,
-        oldOrderPrice: 20,
-        orderStatus: 'PENDING',
-      },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'linen',
-        id: 2,
-        listingQuantity: 100,
-        orderQuantity: 5,
-        brand:'Butex.SA',
-        listingId: 1, //link here to the product offer
-        newOrderPrice: 24,
-        oldOrderPrice: 20,
-        orderStatus: 'ACCEPTED',
-      },
-      {
-        productImage : "http://via.placeholder.com/250",
-        listingName: 'super duper test d             ddddddddddddddd',
-        id: 5,
-        listingQuantity: 21,
-        orderQuantity: 37,
-        brand:'dupa.sa',
-        listingId: 5, //link here to the product offer
-        newOrderPrice: 24,
-        oldOrderPrice: 20,
-        orderStatus: 'NEGOTIATION',
-      },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'idkidktest',
-        id: 4,
-        listingQuantity: 20,
-        orderQuantity: 15,
-        brand:'Futex.SA',
-        listingId: 2, //link here to the product offer
-        newOrderPrice: 21,
-        oldOrderPrice: 28,
-        orderStatus: 'PENDING',
-      },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'linen',
-        id: 3,
-        listingQuantity: 100,
-        orderQuantity: 2,
-        brand:'Drutex.SA',
-        listingId: 1, //link here to the product offer
-        newOrderPrice: 15,
-        oldOrderPrice: 20,
-        orderStatus: 'REJECTED',
-      }]};
+  constructor(
+    private myOffersService: MyOffersService,
+    private actionButtonsService: ActionButtonsService
+) {}
 
+  orderListingDetails: OrderListing = { listingData: [] };
   groupedData: any[] = [];
   filteredData: any[] = [];
   selectedStatuses: string[] = [];
 
-  dataSource: Array<OrderListingDetails> = [];
   displayColumns: Array<string> = [
     'productImage',
     'listingName',
@@ -149,8 +84,18 @@ export class MyOffersComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
-    this.filteredData = this.groupedData;
+    this.myOffersService.getMyOffers().pipe(
+      tap((response: any) => {
+        this.orderListingDetails.listingData = response.data;
+        this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
+        this.filteredData = this.groupedData;
+      }),
+      catchError((error) => {
+        console.error('Błąd podczas pobierania zamówień:', error);
+        return throwError(() => error);
+      })
+    ).subscribe();
+
   }
 
   groupByListingId(data: OrderListingDetails[]): any[] {
@@ -200,4 +145,29 @@ export class MyOffersComponent implements OnInit {
         return 'text-gray-500';
     }
   }
+
+  acceptOrder(orderId: number): void {
+    this.actionButtonsService.acceptOrder(orderId).subscribe({
+      next: () => {
+        console.log("Status changed to accepted");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error('Failed to accept the order', err);
+      }
+    });
+  }
+
+  rejectOrder(orderId: number): void {
+    this.actionButtonsService.rejectOrder(orderId).subscribe({
+      next: () => {
+        console.log("Status changed to rejected");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error('Failed to reject the order', err);
+      }
+    });
+  }
+
 }
