@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Order, OrderData, OrderListing, OrderListingDetails} from '../../models/interface/order.model';
+import {Order} from '../../models/interface/order.model';
 import {MatCard} from '@angular/material/card';
 import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
@@ -16,6 +16,11 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
+import {catchError, tap, throwError} from 'rxjs';
+import {MyOrdersService} from '../../services/my-orders.service';
+import {ActionButtonsService} from '../../services/action-buttons.service';
+import {MatDialog} from '@angular/material/dialog';
+import {NegotiationDialogWindowComponent} from '../negotiation-dialog-window/negotiation-dialog-window.component';
 
 @Component({
   selector: 'app-my-orders',
@@ -49,65 +54,35 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './my-orders.component.css'
 })
 export class MyOrdersComponent implements OnInit {
-  order: Order = {data: [{
-      id: 1,
-      orderQuantity: 10,
-      listingId: 2,
-      newOrderPrice: 25,
-      orderStatus: 'PENDING'}]};
+  order: Order[] = [];
+  constructor(
+    private myOrdersService: MyOrdersService,
+    private actionButtonsService: ActionButtonsService,
+    public dialog: MatDialog
+  ) {}
 
-  orderListingDetails: OrderListing = {listingData: [{
-      productImage : "http://via.placeholder.com/150",
-      listingName: 'linen',
-      id: 1,
-      listingQuantity: 10,
-      orderQuantity: 2,
-      brand:'Drutex.SA',
-      listingId: 1,
-      newOrderPrice: 15,
-      oldOrderPrice: 20,
-      orderStatus: 'PENDING',
-    },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'linen',
-        id: 2,
-        listingQuantity: 15,
-        orderQuantity: 5,
-        brand:'Butex.SA',
-        listingId: 1, //link here to the product offer
-        newOrderPrice: 24,
-        oldOrderPrice: 222,
-        orderStatus: 'ACCEPTED',
-      },
-      {
-        productImage : "http://via.placeholder.com/150",
-        listingName: 'linen',
-        id: 1,
-        listingQuantity: 120,
-        orderQuantity: 2,
-        brand:'Drutex.SA',
-        listingId: 1, //link here to the product offer
-        newOrderPrice: 15,
-        oldOrderPrice: 20,
-        orderStatus: 'REJECTED',
-      }]};
-  dataSource: Array<OrderListingDetails> = [];
   displayColumns: Array<string> = [
     'productImage',
     'listingName',
-    'brand',
     'listingQuantity',
     'oldOrderPrice',
     'orderQuantity',
     'newOrderPrice',
     'orderStatus',
-    'Action'
+    'action'
   ];
 
-  ngOnInit() {
-    //this.dataSource = this.order.data;
-    this.dataSource = this.orderListingDetails.listingData;
+  ngOnInit(): void {
+    this.myOrdersService.getMyOrders().pipe(
+      tap((response: any) => {
+        this.order = response.data;
+        console.log(response.data)
+      }),
+      catchError((error) => {
+        console.error('Błąd podczas pobierania zamówień:', error);
+        return throwError(() => error);
+      })
+    ).subscribe();
   }
 
   getStatusClass(status: string): string {
@@ -123,5 +98,52 @@ export class MyOrdersComponent implements OnInit {
       default:
         return 'text-gray-500'; // Default gray
     }
+  }
+
+  acceptOrder(orderId: number): void {
+    this.actionButtonsService.acceptOrder(orderId).subscribe({
+      next: () => {
+        console.log("Status changed to accepted");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error('Failed to accept the order', err);
+      }
+    });
+  }
+
+  rejectOrder(orderId: number): void {
+    this.actionButtonsService.rejectOrder(orderId).subscribe({
+      next: () => {
+        console.log("Status changed to rejected");
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error('Failed to reject the order', err);
+      }
+    });
+  }
+
+  openChangePriceDialog(order: any): void {
+    const dialogRef = this.dialog.open(NegotiationDialogWindowComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.changePrice(order.id, result);
+      }
+    });
+  }
+
+  changePrice(orderId: number, newPrice: number): void {
+    this.actionButtonsService.changeOrderPrice(orderId, newPrice).subscribe({
+      next: () => {
+        console.log('Price changed successfully');
+      },
+      error: (err) => {
+        console.error('Failed to change the price', err);
+      }
+    });
   }
 }

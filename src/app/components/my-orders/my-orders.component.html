@@ -1,10 +1,15 @@
-<mat-card class="max-w-7xl mx-auto min-h-full" *ngIf=(order.data.length)>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-full">
+<mat-card class="max-w-7xl mx-auto min-h-full" *ngIf="order.length">
+  <table mat-table [dataSource]="order" class="mat-elevation-z8 w-full">
 
+    <!-- Product Image Column -->
     <ng-container matColumnDef="productImage" class="mb-1">
       <th mat-header-cell *matHeaderCellDef class="text-center">Product</th>
       <td mat-cell *matCellDef="let element">
-          <img src="{{element.productImage}}" alt="productImage" class="w-[150px] my-3 ml-14"/>
+        <img
+          src="{{ element.productImage ? element.productImage : 'https://picsum.photos/150' }}"
+          alt="productImage"
+          class="w-[150px] my-3 ml-14"
+        />
       </td>
       <td mat-footer-cell *matFooterCellDef>
         <button mat-raised-button routerLink="/products">
@@ -12,31 +17,32 @@
         </button>
       </td>
     </ng-container>
-  <!--this will be link that will redirect to offer page-->
+
+    <!-- Product Name Column -->
     <ng-container matColumnDef="listingName">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">
-        <p class="truncate max-w-xs block">{{element.listingName}}</p>
+        <button
+          mat-button
+          [routerLink]="'/single-offer/' + element.listingId"
+          class="truncate max-w-xs block"
+        >
+          {{ element.listingName }}
+        </button>
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-    <ng-container matColumnDef="brand">
-      <th mat-header-cell *matHeaderCellDef>Brand</th>
-      <td mat-cell *matCellDef="let element">
-        <p class="truncate max-w-xs block">{{element.brand}}</p>
-      </td>
-      <td mat-footer-cell *matFooterCellDef></td>
-    </ng-container>
-
+    <!-- Listing Quantity Column -->
     <ng-container matColumnDef="listingQuantity">
       <th mat-header-cell *matHeaderCellDef>Listing Quantity</th>
-      <td mat-cell *matCellDef="let element"  class="text-center">
+      <td mat-cell *matCellDef="let element" class="text-center">
         {{element.listingQuantity}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+    <!-- Old Order Price Column -->
     <ng-container matColumnDef="oldOrderPrice">
       <th mat-header-cell *matHeaderCellDef>Old Price</th>
       <td mat-cell *matCellDef="let element">
@@ -45,14 +51,16 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+    <!-- Order Quantity Column -->
     <ng-container matColumnDef="orderQuantity">
-      <th mat-header-cell *matHeaderCellDef >Ordered Quantity</th>
-      <td mat-cell *matCellDef="let element"  class="text-center">
+      <th mat-header-cell *matHeaderCellDef>Ordered Quantity</th>
+      <td mat-cell *matCellDef="let element" class="text-center">
         {{element.orderQuantity}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+    <!-- New Order Price Column -->
     <ng-container matColumnDef="newOrderPrice">
       <th mat-header-cell *matHeaderCellDef>New Price</th>
       <td mat-cell *matCellDef="let element">
@@ -61,29 +69,48 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+    <!-- Order Status Column -->
     <ng-container matColumnDef="orderStatus">
       <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.orderStatus)">
-        {{ element.orderStatus }}
+        {{element.orderStatus}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-    <ng-container matColumnDef="Action">
+    <!-- Actions Column -->
+    <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="align-middle space-x-2">
         <!-- Approved Button -->
-        <button mat-fab class="!bg-green-500 !text-white">
+        <button mat-fab
+                [ngClass]="{
+                '!bg-green-500 text-white': !(element.orderStatus === 'ACCEPTED' || element.orderStatus === 'REJECTED'),
+                '!bg-gray-400 text-gray-200': element.orderStatus === 'ACCEPTED' || element.orderStatus === 'REJECTED'}"
+                [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
+                (click)="acceptOrder(element.id)">
           <mat-icon>check</mat-icon>
         </button>
 
         <!-- Rejected Button -->
-        <button mat-fab class="!bg-red-500 !text-white">
+        <button mat-fab
+                [ngClass]="{
+                '!bg-red-500 text-white': !(element.orderStatus === 'ACCEPTED' || element.orderStatus === 'REJECTED'),
+                '!bg-gray-400 text-gray-200': element.orderStatus === 'ACCEPTED' || element.orderStatus === 'REJECTED'}"
+                [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED'"
+                (click)="rejectOrder(element.id)">
           <mat-icon>close</mat-icon>
         </button>
 
         <!-- Negotiate Button -->
-        <button mat-fab extended class="!bg-blue-500 !text-white">
+        <button mat-fab extended
+                [ngClass]="{
+          '!bg-blue-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION' || element.orderQuantity === 0),
+          '!bg-gray-300 text-gray-500': element.orderStatus === 'NEGOTIATION' || element.orderQuantity === 0,
+          '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderQuantity === 0
+        }"
+                [disabled]="element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'NEGOTIATION' || element.orderQuantity === 0"
+                (click)="openChangePriceDialog(element)">
           <mat-icon>chat</mat-icon>
           Negotiate
         </button>
@@ -91,13 +118,15 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
-
+    <!-- Table Header, Row, and Footer -->
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
     <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
   </table>
 </mat-card>
-<mat-card class="max-w-7xl mx-auto items-center p-1 min-h-full" *ngIf=!(order.data.length)>
+
+<!-- No Orders Message -->
+<mat-card class="max-w-7xl mx-auto items-center p-1 min-h-full" *ngIf="!order.length">
   <div class="mt-96">
     <a class="mx-10">
       You don't have any orders :(
@@ -108,6 +137,7 @@
   </div>
 </mat-card>
 
+<!-- Footer -->
 <footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto">
   <p class="text-sm text-gray-600">
     © 2025 Your Company. All rights reserved.
