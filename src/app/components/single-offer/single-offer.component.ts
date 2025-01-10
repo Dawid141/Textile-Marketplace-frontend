@@ -1,14 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDrawer, MatDrawerContainer, MatDrawerContent} from '@angular/material/sidenav';
 import {listingData} from '../../models/interface/listingData';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {sellerData} from '../../models/interface/sellerDetails';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {catchError, tap, throwError} from 'rxjs';
-import {ProductsSingleOfferService} from '../../services/single-offer.service';
 import {ProductsService} from '../../services/products.service';
+import {OrderService} from '../../services/order.service';
+import {BackendResponse} from '../../models/interface/backendResponse';
+import {OrderDTO} from '../../models/interface/OrderDTO';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatButton} from '@angular/material/button';
+import {MatDialog} from '@angular/material/dialog';
+import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.component';
 
 @Component({
     selector: 'app-main-page',
@@ -19,7 +24,8 @@ import {ProductsService} from '../../services/products.service';
     NgForOf,
     NgClass,
     CurrencyPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatButton
   ],
     templateUrl: './single-offer.component.html',
     standalone: true,
@@ -29,7 +35,8 @@ import {ProductsService} from '../../services/products.service';
 
 export class SingleOfferComponent implements OnInit {
   selectedImageIndex: number = 0;
-  listingData: listingData | null = null;  // Zmienna na dane oferty, początkowo null
+  listingData: listingData | null = null;
+  id!: string;
 
   sellerData: sellerData = {
     id: 1,
@@ -47,21 +54,17 @@ export class SingleOfferComponent implements OnInit {
 
   orderForm = new FormGroup({
     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
-    yourPrice: new FormControl('', [Validators.required]),
+    yourPrice: new FormControl(0, [Validators.required]),
     yourSuggestions: new FormControl('', [Validators.required])
   });
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductsSingleOfferService,  // Wstrzykiwanie serwisu
-    private productsService: ProductsService
-  ) {
+  constructor(private route: ActivatedRoute, private productsService: ProductsService, private orderService: OrderService, private _snack: MatSnackBar, private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id')!;
-      this.fetchListingData(id);  // Pobranie danych na podstawie id
+      this.id = params.get('id')!;
+      this.fetchListingData(this.id);  // Pobranie danych na podstawie id
     });
   }
 
@@ -112,7 +115,33 @@ export class SingleOfferComponent implements OnInit {
 
   onSubmit() {
     if (this.orderForm.valid) {
+      this.dialog.open(SpinBarDialogComponent, {
+        data: {
+          text: "Creating order..."
+        }
+      })
       console.log('Form Data:', this.orderForm.value);
+      const order = this.mapFormValuesToOrderDTO();
+      this.orderService.createOrderFromProduct(order).pipe(tap((response: BackendResponse) => {
+        console.log(response)
+        this._snack.open("Order has been created", "Ok")
+        this.dialog.closeAll()
+        this.router.navigate(['/products'])
+      }),
+        catchError((error) => {
+          console.error("Creating order has failed:", error);
+          this._snack.open("Creating your order has failed", "Ok")
+          this.dialog.closeAll()
+          return throwError(() => error);
+        })).subscribe();
+    }
+  }
+
+  private mapFormValuesToOrderDTO(): OrderDTO {
+    return {
+      orderQuantity: this.orderForm.controls['quantity'].value as number,
+      listingId: this.id,
+      newOrderPrice: this.orderForm.controls['yourPrice'].value as number
     }
   }
 }

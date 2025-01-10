@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {ProductsService} from '../../services/products.service';
-import {catchError, tap, throwError} from 'rxjs';
+import {catchError, tap, throwError, window} from 'rxjs';
 import {ProductEnumResponse} from '../../models/interface/productEnumResponse';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -16,6 +16,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {BackendResponse} from '../../models/interface/backendResponse';
 import {MatDialog} from '@angular/material/dialog';
 import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.component';
+import {ImageUploadService} from '../../services/image-upload.service';
 
 @Component({
   selector: 'app-add-product',
@@ -35,9 +36,9 @@ import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.compone
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css'
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent implements OnInit, OnDestroy {
 
-  constructor(public productService: ProductsService, private router: Router, private cdr: ChangeDetectorRef, private _snack: MatSnackBar, private dialog: MatDialog) {}
+  constructor(public productService: ProductsService, private router: Router, private cdr: ChangeDetectorRef, private _snack: MatSnackBar, private dialog: MatDialog, private imageService: ImageUploadService) {}
 
   productForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),
@@ -88,6 +89,18 @@ export class AddProductComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    const imageArray = this.productForm.controls['images'].value;
+
+    if (!this.productPostSuccess && imageArray && imageArray.length!=0) {
+      this.imageService.deleteAllImages(imageArray).subscribe({
+        next: () => console.log("Images deleted", "Ok"),
+        error: (e) => console.error(e),
+        complete: () => console.info('complete')
+      });
+    }
+  }
+
   onSubmit() {
     const product = this.mapFormToListingDTO();
 
@@ -96,7 +109,11 @@ export class AddProductComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(SpinBarDialogComponent);
+    this.dialog.open(SpinBarDialogComponent, {
+      data: {
+        text: "Adding product..."
+      }
+    });
 
     console.log(product);
 
@@ -123,13 +140,15 @@ export class AddProductComponent implements OnInit {
 
   canDeactivate(): CanDeactivateType {
     if (this.productForm.touched && !this.productPostSuccess) {
-      return window.confirm('You have unsaved changes. Do you really want to leave?');
+      return confirm('You have unsaved changes. Do you really want to leave?');
     } else {
       return true;
     }
   }
 
   private mapFormToListingDTO(): ListingDTO | null {
+    // probably needs overhaul weird way of mapping the request
+
     if (this.productForm.valid) {
       const formValues = this.productForm.value;
 
