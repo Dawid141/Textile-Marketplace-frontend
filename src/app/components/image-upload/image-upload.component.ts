@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {catchError, tap, throwError} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -15,7 +15,7 @@ import {NgOptimizedImage} from '@angular/common';
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.css'
 })
-export class ImageUploadComponent implements OnDestroy {
+export class ImageUploadComponent {
 
   imageArray: string[] = []
   displayAddPhotoButton = true;
@@ -23,17 +23,6 @@ export class ImageUploadComponent implements OnDestroy {
   @Output() imageEvent = new EventEmitter<string[]>();
 
   constructor(private imageService: ImageUploadService, private _snackBar: MatSnackBar) {
-  }
-
-  ngOnDestroy(): void {
-    this.imageService.deleteAllImages(this.imageArray).subscribe({
-      next: () => {
-        this._snackBar.open("Images deleted", "Ok");
-        this.imageArray = []
-      },
-      error: (e) => console.error(e),
-      complete: () => console.info('complete')
-    });
   }
 
   onFileSubmit(event: any) {

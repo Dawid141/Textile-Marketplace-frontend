@@ -51,7 +51,7 @@
   <!-- Sticky container-->
   <div class="col-span-4 gap-8">
     <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*1.30)]">
-      <div class="bg-gray-100 max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md" [formGroup]="orderForm">
+      <form class="bg-gray-100 max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
         <!--price and quantity-->
         <div class="mb-4">
           <p class="text-4xl font-bold py-4">Price: {{listingData.price | currency}}</p>
@@ -80,8 +80,8 @@
           <textarea id="yourSuggestions" formControlName="yourSuggestions" class="w-full border rounded px-3 py-2" rows="4" placeholder="Enter your suggestions"></textarea>
         </div>
         <!-- buy button -->
-        <button id="buyButton" type="submit" class="bg-blue-500 text-white w-full py-2 px-10 rounded hover:bg-blue-600" [disabled]="orderForm.invalid">BUY</button>
-      </div>
+        <button mat-raised-button id="buyButton" color="primary" type="submit" class="bg-blue-500 text-black w-full py-2 px-10 rounded hover:bg-blue-600" [disabled]="this.orderForm.invalid">PLACE ORDER</button>
+      </form>
       <!-- Company info-->
       <div class="bg-gray-200 flex items-center justify-center h-[calc(theme(height.custom)*0.4)] rounded-lg shadow-md">
         <div class="px-2 w-full">

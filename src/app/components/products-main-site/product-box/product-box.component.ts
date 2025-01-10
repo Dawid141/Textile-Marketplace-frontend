@@ -10,7 +10,6 @@ import {listingData} from '../../../models/interface/listingData';
   selector: 'app-product-box',
   imports: [
     MatCard,
-    NgOptimizedImage,
     CurrencyPipe,
     MatIcon,
     NgClass,
@@ -18,7 +17,6 @@ import {listingData} from '../../../models/interface/listingData';
     RouterLink,
     NgForOf,
     NgIf,
-    JsonPipe
   ],
   templateUrl: './product-box.component.html',
   standalone: true,

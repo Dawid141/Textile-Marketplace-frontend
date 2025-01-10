@@ -1,8 +1,9 @@
+<!--maybe set max width for image and if it doesnt fit scale down-->
 <div *ngFor="let product of products; let i = index" class="mb-4 mx-auto">
   <mat-card [ngClass]="{'text-center !shadow-lg !rounded-lg mx-auto' : !fullWidthMode}">
     <div [ngClass]="{'flex  ': fullWidthMode}">
       <img
-        class="mx-auto h-[250px] p-3 cursor-pointer"
+        class="mx-auto h-[250px] p-3 cursor-pointer object-scale-down"
         [ngClass]="{'h-250px mt-5': !fullWidthMode, 'h-[370px]': fullWidthMode}"
         [src]="product.images[0] || 'https://picsum.photos/150'"
         alt="{{ product.productName }}"
