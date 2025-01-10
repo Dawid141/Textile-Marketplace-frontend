@@ -96,7 +96,11 @@ export class AddProductComponent implements OnInit {
       return;
     }
 
-    this.dialog.open(SpinBarDialogComponent);
+    this.dialog.open(SpinBarDialogComponent, {
+      data: {
+        text: "Adding product..."
+      }
+    });
 
     console.log(product);
 
