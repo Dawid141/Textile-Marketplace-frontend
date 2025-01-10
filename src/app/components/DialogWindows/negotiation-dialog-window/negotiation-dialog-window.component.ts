@@ -32,6 +32,10 @@ export class NegotiationDialogWindowComponent {
   }
 
   onConfirm(): void {
-    this.dialogRef.close(this.newPrice);
+    if (this.newPrice > 0) {
+      this.dialogRef.close(this.newPrice);
+    } else {
+      alert('Price must be a positive number');
+    }
   }
 }

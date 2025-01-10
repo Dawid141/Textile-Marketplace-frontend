@@ -20,6 +20,9 @@ import {StatusFilterComponent} from './status-filter/status-filter.component';
 import {MyOffersService} from '../../services/my-offers.service';
 import {catchError, tap, throwError} from 'rxjs';
 import {ActionButtonsService} from '../../services/action-buttons.service';
+import {MatDialog} from '@angular/material/dialog';
+import {NegotiationDialogWindowComponent} from '../DialogWindows/negotiation-dialog-window/negotiation-dialog-window.component';
+import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -64,7 +67,9 @@ export class MyOffersComponent implements OnInit {
 
   constructor(
     private myOffersService: MyOffersService,
-    private actionButtonsService: ActionButtonsService
+    private actionButtonsService: ActionButtonsService,
+    public dialog: MatDialog,
+    public doubleConfirmation: MatDialog,
 ) {}
 
   orderListingDetails: OrderListing = { listingData: [] };
@@ -73,7 +78,6 @@ export class MyOffersComponent implements OnInit {
   selectedStatuses: string[] = [];
 
   displayColumns: Array<string> = [
-    'productImage',
     'listingName',
     'listingQuantity',
     'oldOrderPrice',
@@ -99,19 +103,29 @@ export class MyOffersComponent implements OnInit {
   }
 
   groupByListingId(data: OrderListingDetails[]): any[] {
-    const grouped: { [key: number]: { listingId: number; items: OrderListingDetails[] } } = {};
+    const grouped: { [key: number]: { listingId: number; items: OrderListingDetails[]; totalOrderQuantity: number } } = {};
 
     data.forEach((current) => {
       if (!grouped[current.listingId]) {
         grouped[current.listingId] = {
           listingId: current.listingId,
           items: [],
+          totalOrderQuantity: 0,
         };
       }
       grouped[current.listingId].items.push(current);
+      grouped[current.listingId].totalOrderQuantity += current.orderQuantity || 0; // Sumuje orderQuantity
     });
 
-    return Object.values(grouped);
+    return Object.values(grouped).sort((a, b) => {
+      if (a.totalOrderQuantity === 0 && b.totalOrderQuantity > 0) {
+        return 1;
+      }
+      if (b.totalOrderQuantity === 0 && a.totalOrderQuantity > 0) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
   onStatusFilterChange(selectedStatuses: string[]): void {
@@ -129,13 +143,28 @@ export class MyOffersComponent implements OnInit {
     } else {
       this.filteredData = this.groupedData;
     }
+
+    this.filteredData = this.filteredData.sort((a, b) => {
+      const aTotalOrderQuantity = a.items.reduce((sum: number, item: OrderListingDetails) => sum + (item.orderQuantity || 0), 0);
+      const bTotalOrderQuantity = b.items.reduce((sum: number, item: OrderListingDetails) => sum + (item.orderQuantity || 0), 0);
+
+      if (aTotalOrderQuantity === 0 && bTotalOrderQuantity > 0) {
+        return 1;
+      }
+      if (bTotalOrderQuantity === 0 && aTotalOrderQuantity > 0) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
   getStatusClass(status: string): string {
     switch (status) {
       case 'PENDING':
         return 'text-yellow-500';
-      case 'NEGOTIATION':
+      case 'BUYER_NEGOTIATION':
+        return 'text-blue-500';
+      case 'SELLER_NEGOTIATION':
         return 'text-blue-500';
       case 'ACCEPTED':
         return 'text-green-500';
@@ -146,7 +175,50 @@ export class MyOffersComponent implements OnInit {
     }
   }
 
+  getDisplayStatus(status: string): string {
+    if (status === 'BUYER_NEGOTIATION' || status === 'SELLER_NEGOTIATION') {
+      return 'NEGOTIATION';
+    }
+    return status;
+  }
+
   acceptOrder(orderId: number): void {
+    const dialogRef = this.doubleConfirmation.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Attention!',
+        message: 'Do you want to accept the buyer\'s offer?',
+        orderId: orderId,
+        onConfirm: this.handleAcceptOrder.bind(this)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.handleAcceptOrder(orderId);
+        this.ngOnInit();
+      }
+    });
+  }
+
+  rejectOrder(orderId: number): void {
+    const dialogRef = this.doubleConfirmation.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Attention!',
+        message: 'Do you want to reject the buyer\'s offer?',
+        orderId: orderId,
+        onConfirm: this.handleRejectOrder.bind(this)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.handleRejectOrder(orderId);
+        this.ngOnInit();
+      }
+    });
+  }
+
+  handleAcceptOrder(orderId: number): void {
     this.actionButtonsService.acceptOrder(orderId).subscribe({
       next: () => {
         console.log("Status changed to accepted");
@@ -158,7 +230,7 @@ export class MyOffersComponent implements OnInit {
     });
   }
 
-  rejectOrder(orderId: number): void {
+  handleRejectOrder(orderId: number): void {
     this.actionButtonsService.rejectOrder(orderId).subscribe({
       next: () => {
         console.log("Status changed to rejected");
@@ -170,4 +242,36 @@ export class MyOffersComponent implements OnInit {
     });
   }
 
+  //Negotiation window
+  openChangePriceDialog(order: any): void {
+    const dialogRef = this.dialog.open(NegotiationDialogWindowComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.changePrice(order.id, result);
+      }
+    });
+  }
+
+  changePrice(orderId: number, newPrice: number): void {
+    this.actionButtonsService.changeOrderPrice(orderId, newPrice).subscribe({
+      next: () => {
+        console.log('Price changed successfully');
+        this.ngOnInit();
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          console.error('Invalid price or bad request', err);
+        } else if (err.status === 403) {
+          console.error('Unauthorized action', err);
+        } else if (err.status === 404) {
+          console.error('Order not found', err);
+        } else {
+          console.error('Failed to change the price', err);
+        }
+      }
+    });
+  }
 }

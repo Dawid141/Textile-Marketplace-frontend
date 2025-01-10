@@ -20,7 +20,8 @@ import {catchError, tap, throwError} from 'rxjs';
 import {MyOrdersService} from '../../services/my-orders.service';
 import {ActionButtonsService} from '../../services/action-buttons.service';
 import {MatDialog} from '@angular/material/dialog';
-import {NegotiationDialogWindowComponent} from '../negotiation-dialog-window/negotiation-dialog-window.component';
+import {NegotiationDialogWindowComponent} from '../DialogWindows/negotiation-dialog-window/negotiation-dialog-window.component';
+import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-my-orders',
@@ -58,7 +59,8 @@ export class MyOrdersComponent implements OnInit {
   constructor(
     private myOrdersService: MyOrdersService,
     private actionButtonsService: ActionButtonsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public doubleConfirmation: MatDialog,
   ) {}
 
   displayColumns: Array<string> = [
@@ -88,19 +90,64 @@ export class MyOrdersComponent implements OnInit {
   getStatusClass(status: string): string {
     switch (status) {
       case 'PENDING':
-        return 'text-yellow-500'; // Tailwind yellow
-      case 'NEGOTIATION':
-        return 'text-blue-500'; // Tailwind blue
+        return 'text-yellow-500';
+      case 'BUYER_NEGOTIATION':
+        return 'text-blue-500';
+      case 'SELLER_NEGOTIATION':
+        return 'text-blue-500';
       case 'ACCEPTED':
-        return 'text-green-500'; // Tailwind green
+        return 'text-green-500';
       case 'REJECTED':
-        return 'text-red-500'; // Tailwind red
+        return 'text-red-500';
       default:
-        return 'text-gray-500'; // Default gray
+        return 'text-gray-500';
     }
   }
 
+  getDisplayStatus(status: string): string {
+    if (status === 'BUYER_NEGOTIATION' || status === 'SELLER_NEGOTIATION') {
+      return 'NEGOTIATION';
+    }
+    return status;
+  }
+
   acceptOrder(orderId: number): void {
+    const dialogRef = this.doubleConfirmation.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Attention!',
+        message: 'Do you want to accept the seller\'s offer?',
+        orderId: orderId,
+        onConfirm: this.handleAcceptOrder.bind(this)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.handleAcceptOrder(orderId);
+        this.ngOnInit();
+      }
+    });
+  }
+
+  rejectOrder(orderId: number): void {
+    const dialogRef = this.doubleConfirmation.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Attention!',
+        message: 'Do you want to reject the seller\'s offer?',
+        orderId: orderId,
+        onConfirm: this.handleRejectOrder.bind(this)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.handleRejectOrder(orderId);
+        this.ngOnInit();
+      }
+    });
+  }
+
+  handleAcceptOrder(orderId: number): void {
     this.actionButtonsService.acceptOrder(orderId).subscribe({
       next: () => {
         console.log("Status changed to accepted");
@@ -112,7 +159,7 @@ export class MyOrdersComponent implements OnInit {
     });
   }
 
-  rejectOrder(orderId: number): void {
+  handleRejectOrder(orderId: number): void {
     this.actionButtonsService.rejectOrder(orderId).subscribe({
       next: () => {
         console.log("Status changed to rejected");
@@ -140,9 +187,18 @@ export class MyOrdersComponent implements OnInit {
     this.actionButtonsService.changeOrderPrice(orderId, newPrice).subscribe({
       next: () => {
         console.log('Price changed successfully');
+        this.ngOnInit();
       },
       error: (err) => {
-        console.error('Failed to change the price', err);
+        if (err.status === 400) {
+          console.error('Invalid price or bad request', err);
+        } else if (err.status === 403) {
+          console.error('Unauthorized action', err);
+        } else if (err.status === 404) {
+          console.error('Order not found', err);
+        } else {
+          console.error('Failed to change the price', err);
+        }
       }
     });
   }
