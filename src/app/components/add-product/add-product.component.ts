@@ -37,7 +37,7 @@ import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.compone
 })
 export class AddProductComponent implements OnInit {
 
-  constructor(private productService: ProductsService, private router: Router, private cdr: ChangeDetectorRef, private _snack: MatSnackBar, private dialog: MatDialog) {}
+  constructor(public productService: ProductsService, private router: Router, private cdr: ChangeDetectorRef, private _snack: MatSnackBar, private dialog: MatDialog) {}
 
   productForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),
@@ -119,23 +119,6 @@ export class AddProductComponent implements OnInit {
 
   handleImageEvent($event: string[]) {
     this.productForm.get('images')?.setValue($event);
-  }
-
-  formatEnum(formEnum: string) {
-    return formEnum
-      .toLowerCase()
-      .split("_")
-      .map((word, index, arr) => {
-        // Check if the word is a Roman numeral (appears after "class")
-        if (
-          index === arr.length - 1 && // Last word in the array
-          /^i{1,3}|iv|v$/i.test(word) // Matches Roman numerals I, II, III, IV, or V
-        ) {
-          return word.toUpperCase(); // Keep Roman numerals uppercase
-        }
-        return word.charAt(0).toUpperCase() + word.slice(1); // Capitalize other words
-      })
-      .join(" ");
   }
 
   canDeactivate(): CanDeactivateType {
