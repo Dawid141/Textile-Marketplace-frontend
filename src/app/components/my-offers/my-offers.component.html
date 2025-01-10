@@ -1,18 +1,17 @@
-<div class="min-h-full max-w-7xl mx-auto border-x flex">
+<div class="min-h-full max-w-7xl mx-auto border-x flex !bg-gray-100">
   <!-- Side Panel -->
   <mat-sidenav-container class="w-72">
-    <mat-sidenav mode="side" opened class="!bg-gray-100">
+    <mat-sidenav mode="side" opened class="!bg-gray-200">
       <app-status-filter (showStatus)="onStatusFilterChange($event)"></app-status-filter>
     </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>
   </mat-sidenav-container>
 
   <!-- Main Content -->
-  <mat-card class="w-full mx-auto h-full mt-2" *ngIf="filteredData.length">
-    <div *ngFor="let group of filteredData">
-      <div class="border-1 p-4 mb-4 border-black rounded-lg shadow-md">
-        <table mat-table [dataSource]="group.items" class="mat-elevation-z8 w-full table-fixed ">
+  <mat-card class="w-full mx-auto h-full" *ngIf="filteredData.length">
 
+      <div *ngFor="let group of filteredData" class="border-1 p-4 mt-4 min-h-full border-black rounded-lg shadow-md">
+        <table mat-table [dataSource]="group.items" class=" w-full table-fixed ">
 
         <!-- Listing Name Column -->
           <ng-container matColumnDef="listingName">
@@ -126,7 +125,6 @@
           <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
       </div>
-    </div>
   </mat-card>
 
   <!-- Fallback for No Data -->
@@ -138,4 +136,8 @@
   </mat-card>
 </div>
 
-
+<footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto mt-auto">
+  <p class="text-sm text-gray-600">
+    © 2025 Your Company. All rights reserved.
+  </p>
+</footer>
