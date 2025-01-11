@@ -1,6 +1,6 @@
 <div *ngIf="listingData" class="min-h-full max-w-7xl mx-auto  gap-10 align-top grid grid-cols-11 p-5 ">
   <div class="col-span-7 grid ">
-    <div class="!bg-container border h-custom mb-8 flex items-center rounded-lg shadow-md">
+    <div class="!bg-container border h-custom mb-8 flex items-center rounded-lg hover:shadow-lg transition">
       <div class="flex flex-col items-center mx-5 my-5">
         <h1 class="text-4xl font-bold uppercase">{{listingData.productName}}</h1>
         <img [src]="listingData.images[selectedImageIndex]" alt="productImage" class="min-w-[400px] max-h-[400px] min-h-[400px] max-w-[400px]  my-4 border object-fit-contain !bg-image-background" />
@@ -24,13 +24,13 @@
       </div>
     </div>
 
-    <div class="!bg-container border h-fit mb-8 px-2 rounded-lg shadow-md">
+    <div class="!bg-container border h-fit mb-8 px-2 rounded-lg hover:shadow-lg transition">
       <div class="my-3 px-2 w-full">
-        <h1 class="text-xl font-bold uppercase mx-3">Product properties</h1>
-        <table class="w-full">
+        <h1 class="text-xl font-bold uppercase mb-3 mx-3">Product properties</h1>
+        <table class="w-full table-auto">
           <tbody>
-          <tr *ngFor="let property of properties; let last = last" class="border-b-2 border-gray-600">
-            <td class="text-gray-500 py-2">{{ property.label }}</td>
+          <tr *ngFor="let property of properties; let last = last" class="border-gray-600 odd:bg-side-container">
+            <td class="text-gray-500 px-4 py-2 font-medium">{{ property.label }}</td>
             <td class="py-2">{{ property.value }}</td>
           </tr>
           </tbody>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="!bg-container border h-fit flex items-center justify-center rounded-lg shadow-md">
+    <div class="!bg-container border h-fit flex items-center justify-center rounded-lg shadow-md hover:shadow-lg transition">
       <div class="my-3 px-2 w-full">
         <h1 class="text-xl font-bold uppercase mx-3">Product description</h1>
         <div class="w-full px-4 py-5">
@@ -50,13 +50,13 @@
 
   <!-- Sticky container-->
   <div class="col-span-4 gap-8">
-    <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*1.30)]">
+    <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*1.05)]">
       <form class="!bg-side-container max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md border" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
         <!--price and quantity-->
         <div class="mb-4">
           <p class="text-4xl font-bold py-4">Price: {{listingData.price | currency}}</p>
           <div class="flex items-center mt-2">
-            <p class="text-lg mr-2">Quantity:</p>
+            <p class="text-lg mr-2 font-medium">Quantity:</p>
             <button id="decreaseQty" type="button" class="bg-red text-white px-2 py-1 rounded" (click)="decreaseQuantity()">-</button>
             <input
               id="quantityInput"
@@ -83,7 +83,7 @@
         <button mat-raised-button id="buyButton" color="primary" type="submit" class="bg-blue-500 text-black w-full py-2 px-10 rounded hover:bg-blue-600" [disabled]="this.orderForm.invalid">PLACE ORDER</button>
       </form>
       <!-- Company info-->
-      <div class="!bg-side-container flex items-center justify-center h-[calc(theme(height.custom)*0.4)] rounded-lg shadow-md border">
+      <!--<div class="!bg-side-container flex items-center justify-center h-[calc(theme(height.custom)*0.4)] rounded-lg shadow-md border">
         <div class="px-2 w-full">
           <h1 class="text-xl font-bold uppercase mx-3">Company Info</h1>
           <table class="w-full">
@@ -95,7 +95,7 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>
