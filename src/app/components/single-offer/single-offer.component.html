@@ -1,9 +1,9 @@
-<div *ngIf="listingData" class="min-h-full max-w-7xl mx-auto border-x gap-10 align-top grid grid-cols-11 p-5 ">
+<div *ngIf="listingData" class="min-h-full max-w-7xl mx-auto  gap-10 align-top grid grid-cols-11 p-5 ">
   <div class="col-span-7 grid ">
-    <div class="!bg-green-100 border h-custom mb-8 flex items-center rounded-lg shadow-md">
+    <div class="!bg-container border h-custom mb-8 flex items-center rounded-lg shadow-md">
       <div class="flex flex-col items-center mx-5 my-5">
         <h1 class="text-4xl font-bold uppercase">{{listingData.productName}}</h1>
-        <img [src]="listingData.images[selectedImageIndex]" alt="productImage" class="w-[400px] my-4 border-4 border-black" />
+        <img [src]="listingData.images[selectedImageIndex]" alt="productImage" class="min-w-[400px] max-h-[400px] min-h-[400px] max-w-[400px]  my-4 border object-fit-contain !bg-image-background" />
       </div>
       <div class="flex-1 mx-5">
         <mat-grid-list cols="1" rowHeight="100" gutterSize="5">
@@ -12,10 +12,10 @@
               <img
                 [src]="image"
                 alt="productImage"
-                class="w-[100px] my-2"
+                class="min-w-[100px]  max-w-[100px] max-h-[100px] min-h-[100px]  my-2 !bg-image-background object-fit-contain border-2"
                 [ngClass]="{
-                  'border-4 border-red-300': selectedImageIndex === i,
-                  'border-0': selectedImageIndex !== i
+                  'border-2 border-red': selectedImageIndex === i,
+                  'border': selectedImageIndex !== i
                 }"
               />
             </button>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="!bg-blue-100 border h-fit mb-8 px-2 rounded-lg shadow-md">
+    <div class="!bg-container border h-fit mb-8 px-2 rounded-lg shadow-md">
       <div class="my-3 px-2 w-full">
         <h1 class="text-xl font-bold uppercase mx-3">Product properties</h1>
         <table class="w-full">
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="!bg-blue-100 border h-fit flex items-center justify-center rounded-lg shadow-md">
+    <div class="!bg-container border h-fit flex items-center justify-center rounded-lg shadow-md">
       <div class="my-3 px-2 w-full">
         <h1 class="text-xl font-bold uppercase mx-3">Product description</h1>
         <div class="w-full px-4 py-5">
@@ -51,13 +51,13 @@
   <!-- Sticky container-->
   <div class="col-span-4 gap-8">
     <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*1.30)]">
-      <form class="bg-gray-100 max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+      <form class="!bg-side-container max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md border" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
         <!--price and quantity-->
         <div class="mb-4">
           <p class="text-4xl font-bold py-4">Price: {{listingData.price | currency}}</p>
           <div class="flex items-center mt-2">
             <p class="text-lg mr-2">Quantity:</p>
-            <button id="decreaseQty" type="button" class="bg-red-500 text-white px-2 py-1 rounded" (click)="decreaseQuantity()">-</button>
+            <button id="decreaseQty" type="button" class="bg-red text-white px-2 py-1 rounded" (click)="decreaseQuantity()">-</button>
             <input
               id="quantityInput"
               type="number"
@@ -66,7 +66,7 @@
               min="1"
               [max]="listingData.quantity || 10"
             />
-            <button id="increaseQty" type="button" class="bg-green-500 text-white px-2 py-1 rounded" (click)="increaseQuantity()">+</button>
+            <button id="increaseQty" type="button" class="bg-green text-white px-2 py-1 rounded" (click)="increaseQuantity()">+</button>
           </div>
         </div>
         <!--your price-->
@@ -83,7 +83,7 @@
         <button mat-raised-button id="buyButton" color="primary" type="submit" class="bg-blue-500 text-black w-full py-2 px-10 rounded hover:bg-blue-600" [disabled]="this.orderForm.invalid">PLACE ORDER</button>
       </form>
       <!-- Company info-->
-      <div class="bg-gray-200 flex items-center justify-center h-[calc(theme(height.custom)*0.4)] rounded-lg shadow-md">
+      <div class="!bg-side-container flex items-center justify-center h-[calc(theme(height.custom)*0.4)] rounded-lg shadow-md border">
         <div class="px-2 w-full">
           <h1 class="text-xl font-bold uppercase mx-3">Company Info</h1>
           <table class="w-full">
@@ -100,7 +100,7 @@
   </div>
 </div>
 
-<footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto mt-auto">
+<footer class="bg-footer text-center py-4 border-t  rounded-t-lg shadow-md max-w-10xl mx-auto mt-auto">
   <p class="text-sm text-gray-600">
     © 2025 Your Company. All rights reserved.
   </p>

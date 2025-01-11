@@ -1,10 +1,10 @@
 <!--maybe set max width for image and if it doesnt fit scale down-->
 <div *ngFor="let product of products; let i = index" class="mb-4 mx-auto">
-  <mat-card [ngClass]="{'text-center g mx-auto' : !fullWidthMode}">
+  <mat-card [ngClass]="{'text-center  mx-auto' : !fullWidthMode}">
     <div [ngClass]="{'flex  ': fullWidthMode}">
       <img
-        class="mx-auto h-[250px] w-[250px] p-3 cursor-pointer object-scale-down"
-        [ngClass]="{'h-250px w-250px mt-5': !fullWidthMode, 'min-h-[370px] min-w-[370px]': fullWidthMode}"
+        class="mx-auto min-h-[250px] min-w-[250px] max-h-[250px] max-w-[250px]  cursor-pointer object-fit-contain border-1 bg-image-background"
+        [ngClass]="{'mt-5 mb-1': !fullWidthMode, 'min-h-[370px] min-w-[370px] max-h-[370px] max-w-[370px] ': fullWidthMode}"
         [src]="product.images[0] || 'https://picsum.photos/150'"
         alt="{{ product.productName }}"
         [routerLink]="'/single-offer/' + product.id"
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="flex justify-between p-2 my-3">
-          <span class="text-red-400">{{ product.price | currency }} / m</span>
+          <span class="text-red">{{ product.price | currency }} / m</span>
           <button mat-mini-fab class="-mt-3 mx-2" [routerLink]="'/single-offer/' + product.id">
             <mat-icon class="text-gray-500">shopping_bag</mat-icon>
           </button>

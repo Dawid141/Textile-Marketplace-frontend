@@ -13,6 +13,7 @@ import {NgOptimizedImage} from '@angular/common';
     NgOptimizedImage
   ],
   templateUrl: './image-upload.component.html',
+  standalone: true,
   styleUrl: './image-upload.component.css'
 })
 export class ImageUploadComponent {
