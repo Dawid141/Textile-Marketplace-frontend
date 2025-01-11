@@ -1,11 +1,11 @@
 <!--maybe set max width for image and if it doesnt fit scale down-->
-<div *ngFor="let product of products; let i = index" class="mb-4 mx-auto">
-  <mat-card [ngClass]="{'text-center  mx-auto' : !fullWidthMode}">
-    <div [ngClass]="{'flex  ': fullWidthMode}">
+<div *ngFor="let product of products; let i = index" class=" mx-auto !bg-component">
+  <mat-card [ngClass]="{'text-center  mx-auto border shadow-md  mb-4' : !fullWidthMode}">
+    <div [ngClass]="{'flex border ': fullWidthMode}">
       <img
-        class="mx-auto min-h-[250px] min-w-[250px] max-h-[250px] max-w-[250px]  cursor-pointer object-fit-contain border-1 bg-image-background"
-        [ngClass]="{'mt-5 mb-1': !fullWidthMode, 'min-h-[370px] min-w-[370px] max-h-[370px] max-w-[370px] ': fullWidthMode}"
-        [src]="product.images[0] || 'https://picsum.photos/150'"
+        class="m-auto min-h-[250px] min-w-[250px] max-h-[250px] max-w-[250px]  cursor-pointer object-fit-contain border bg-image-background "
+        [ngClass]="{'mt-5 mb-1': !fullWidthMode, 'min-h-[370px] min-w-[370px] max-h-[370px] max-w-[370px] !mx-4 !my-4 ': fullWidthMode}"
+        [src]="product.images[0] || 'https://picsum.photos/250'"
         alt="{{ product.productName }}"
         [routerLink]="'/single-offer/' + product.id"
       />

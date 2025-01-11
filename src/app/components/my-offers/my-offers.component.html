@@ -1,17 +1,16 @@
-<div class="min-h-full max-w-7xl mx-auto border-x flex !bg-gray-100">
+<div class="min-h-full max-w-7xl mx-auto flex mt-2  ">
   <!-- Side Panel -->
   <mat-sidenav-container class="w-72">
-    <mat-sidenav mode="side" opened class="!bg-gray-200">
+    <mat-sidenav mode="push" opened class="!bg-side-container !rounded-lg !shadow-md !border">
       <app-status-filter (showStatus)="onStatusFilterChange($event)"></app-status-filter>
     </mat-sidenav>
     <mat-sidenav-content></mat-sidenav-content>
   </mat-sidenav-container>
 
   <!-- Main Content -->
-  <mat-card class="w-full mx-auto h-full" *ngIf="filteredData.length">
-
-      <div *ngFor="let group of filteredData" class="border-1 p-4 mt-4 min-h-full border-black rounded-lg shadow-md">
-        <table mat-table [dataSource]="group.items" class=" w-full table-fixed ">
+  <mat-card class="w-full mx-2 h-full !bg-white" *ngIf="filteredData.length">
+      <div *ngFor="let group of filteredData" class="pl-2 border p-2 min-h-full bg-container  rounded-lg shadow-md">
+        <table mat-table [dataSource]="group.items" class="  w-full table-fixed ">
 
         <!-- Listing Name Column -->
           <ng-container matColumnDef="listingName">
@@ -87,7 +86,7 @@
             <td mat-cell *matCellDef="let element" class="align-middle space-x-1">
               <button mat-mini-fab
                       [ngClass]="{
-              '!bg-green-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
+              '!bg-green text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
               '!bg-gray-300 text-gray-500': element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0,
               '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderQuantity === 0
             }"
@@ -98,7 +97,7 @@
 
               <button mat-mini-fab
                       [ngClass]="{
-              '!bg-red-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
+              '!bg-red text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
               '!bg-gray-300 text-gray-500': element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0,
               '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderQuantity === 0
             }"
@@ -109,7 +108,7 @@
 
               <button mat-mini-fab
                       [ngClass]="{
-              '!bg-blue-500 text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
+              '!bg-blue text-white': !(element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0),
               '!bg-gray-300 text-gray-500': element.orderStatus === 'SELLER_NEGOTIATION' || element.orderQuantity === 0,
               '!bg-gray-400 text-gray-200': element.orderStatus === 'REJECTED' || element.orderStatus === 'ACCEPTED' || element.orderQuantity === 0
             }"
@@ -136,7 +135,7 @@
   </mat-card>
 </div>
 
-<footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto mt-auto">
+<footer class="bg-footer text-center py-4 border-t  rounded-t-lg shadow-md max-w-10xl mx-auto mt-auto">
   <p class="text-sm text-gray-600">
     © 2025 Your Company. All rights reserved.
   </p>

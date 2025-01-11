@@ -163,13 +163,13 @@ export class MyOffersComponent implements OnInit {
       case 'PENDING':
         return 'text-yellow-500';
       case 'BUYER_NEGOTIATION':
-        return 'text-blue-500';
+        return 'text-blue';
       case 'SELLER_NEGOTIATION':
-        return 'text-blue-500';
+        return 'text-blue';
       case 'ACCEPTED':
-        return 'text-green-500';
+        return 'text-green';
       case 'REJECTED':
-        return 'text-red-500';
+        return 'text-red';
       default:
         return 'text-gray-500';
     }
