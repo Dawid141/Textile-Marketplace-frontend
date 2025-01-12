@@ -2,6 +2,7 @@ export interface Order {
   listingName: string;
   productImage : string;
   id: number;
+  messages : string;
   listingQuantity: number;
   orderQuantity: number;
   listingId: number;

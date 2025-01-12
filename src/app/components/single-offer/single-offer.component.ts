@@ -47,9 +47,8 @@ export class SingleOfferComponent implements OnInit {
 
   properties: any[] = [];
   companyProperties = [
-    { label: 'Email', value: this.sellerData.email},
-    { label: 'NIP', value: this.sellerData.nip },
-    { label: 'Company', value: this.sellerData.company },
+    { label: 'Importer', value: this.sellerData.email},
+    { label: 'Oryginalna nazwa produktu', value: this.sellerData.company },
   ];
 
   orderForm = new FormGroup({
