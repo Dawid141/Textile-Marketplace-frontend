@@ -3,7 +3,13 @@
     <mat-label>New Price</mat-label>
     <input matInput [(ngModel)]="newPrice" type="number" min="0" />
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Your Message</mat-label>
+    <textarea matInput [(ngModel)]="message"></textarea>
+  </mat-form-field>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancel</button>
   <button mat-button (click)="onConfirm()">Confirm</button>

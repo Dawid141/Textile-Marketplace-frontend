@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Order} from '../../models/interfaces/order/order.model';
 import {MatCard} from '@angular/material/card';
-import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
-import {CurrencyPipe, NgClass, NgIf} from '@angular/common';
+import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {
   MatCell, MatCellDef,
   MatColumnDef, MatFooterCell, MatFooterCellDef,
@@ -51,7 +51,10 @@ import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
     MatMiniFabButton,
     MatFabButton,
     MatMenuTrigger,
-    MatMenu
+    MatMenu,
+    DatePipe,
+    NgForOf,
+    MatIconButton
   ],
   templateUrl: './my-orders.component.html',
   standalone: true,
@@ -188,13 +191,14 @@ export class MyOrdersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.changePrice(order.id, result);
+        this.changePrice(order.id, result.price, result.message);
       }
     });
   }
 
-  changePrice(orderId: number, newPrice: number): void {
-    this.actionButtonsService.changeOrderPrice(orderId, newPrice).subscribe({
+
+  changePrice(orderId: number, newPrice: number, message: string): void {
+    this.actionButtonsService.changeOrderPrice(orderId, newPrice,message).subscribe({
       next: () => {
         console.log('Price changed successfully');
         this.ngOnInit();
