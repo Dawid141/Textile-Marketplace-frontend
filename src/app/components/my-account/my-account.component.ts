@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { Iuser } from '../../models/interface/myAccount';
+import { Iuser } from '../../models/interfaces/user/myAccount';
 import { UserService } from '../../services/user.service';
 import {JsonPipe, NgIf} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
@@ -28,12 +28,21 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUserData().pipe(tap((response: any)=> {
-      console.log(response);
       this.userDataList = response.data;
+      console.log(this.userDataList)
     }),
       catchError((error) => {
         console.error("Fetching user data failed:", error);
         return throwError(() => error);
       })).subscribe()
+  }
+
+  checkSubscriptionValidity(): boolean {
+    if (this.userDataList?.subscription.endDate) {
+      const endDate = new Date(this.userDataList.subscription.endDate);
+      const now = new Date();
+      return endDate.getTime() >= now.getTime();
+    }
+    return false;
   }
 }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {ImageUploadService} from '../../services/image-upload.service';
 import {catchError, tap, throwError} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {ImageServiceResponse} from '../../models/interface/imageServiceResponse';
+import {ImageServiceResponse} from '../../models/interfaces/product/imageServiceResponse';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {NgOptimizedImage} from '@angular/common';
 

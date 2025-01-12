@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtService} from './jwt-service.service';
 import {Observable} from 'rxjs';
-import {ListingDTO} from '../models/interface/ListingDTO';
+import {ListingDTO} from '../models/interfaces/product/ListingDTO';
 
 @Injectable({
   providedIn: 'root'

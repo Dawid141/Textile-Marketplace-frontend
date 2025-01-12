@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Order} from '../../models/interface/order.model';
+import {Order} from '../../models/interfaces/order/order.model';
 import {MatCard} from '@angular/material/card';
 import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';

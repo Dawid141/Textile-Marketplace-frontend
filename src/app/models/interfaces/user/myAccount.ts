@@ -11,6 +11,11 @@ export interface Iuser {
   firstName: string;
   lastName: string;
   nip: string;
+  subscription: Subscription
+}
+
+interface Subscription {
+  endDate: Date
 }
 
 export interface IuserResponse {

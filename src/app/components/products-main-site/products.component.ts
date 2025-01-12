@@ -13,7 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import {ProductsHeaderComponent} from './products-header/products-header.component';
 import {ProductSidebarFilterComponent} from './product-sidebar-filter/product-sidebar-filter.component';
 import {ProductBoxComponent} from './product-box/product-box.component';
-import {listingData} from '../../models/interface/listingData';
+import {listingData} from '../../models/interfaces/product/listingData';
 import {NgForOf} from '@angular/common';
 import {catchError, tap, throwError} from 'rxjs';
 import {ProductsService} from '../../services/products.service';
