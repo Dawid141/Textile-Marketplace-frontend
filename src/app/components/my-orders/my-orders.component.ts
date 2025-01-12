@@ -22,6 +22,7 @@ import {ActionButtonsService} from '../../services/action-buttons.service';
 import {MatDialog} from '@angular/material/dialog';
 import {NegotiationDialogWindowComponent} from '../DialogWindows/negotiation-dialog-window/negotiation-dialog-window.component';
 import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-dialog.component';
+import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-my-orders',
@@ -48,7 +49,9 @@ import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-di
     NgClass,
     MatIcon,
     MatMiniFabButton,
-    MatFabButton
+    MatFabButton,
+    MatMenuTrigger,
+    MatMenu
   ],
   templateUrl: './my-orders.component.html',
   standalone: true,
@@ -62,6 +65,10 @@ export class MyOrdersComponent implements OnInit {
     public dialog: MatDialog,
     public doubleConfirmation: MatDialog,
   ) {}
+
+  toggleDetails(element: any): void {
+    element.showDetails = !element.showDetails;
+  }
 
   displayColumns: Array<string> = [
     'productImage',
@@ -79,6 +86,7 @@ export class MyOrdersComponent implements OnInit {
       tap((response: any) => {
         this.order = response.data;
         console.log(response.data)
+        console.log(response.messages)
       }),
       catchError((error) => {
         console.error('Błąd podczas pobierania zamówień:', error);
@@ -86,6 +94,8 @@ export class MyOrdersComponent implements OnInit {
       })
     ).subscribe();
   }
+
+
 
   getStatusClass(status: string): string {
     switch (status) {

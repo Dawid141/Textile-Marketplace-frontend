@@ -9,13 +9,13 @@
 
   <!-- Main Content -->
   <mat-card class="w-full mx-2 h-full !bg-white" *ngIf="filteredData.length">
-      <div *ngFor="let group of filteredData" class="pl-2 border p-2 min-h-full bg-container  rounded-lg shadow-md">
-        <table mat-table [dataSource]="group.items" class="  w-full table-fixed ">
+      <div *ngFor="let group of filteredData" class="pl-2 border mt-2 p-2 min-h-full bg-container  rounded-lg shadow-md">
+        <table mat-table [dataSource]="group.items" class=" w-full table-fixed ">
 
         <!-- Listing Name Column -->
           <ng-container matColumnDef="listingName">
             <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">Name</th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="text-center w-1/7">
               <button mat-button class="w-full"
                       [routerLink]="'/single-offer/' + element.listingId"
                       matTooltip="{{ element.listingName }}">
@@ -32,10 +32,10 @@
             <td
               mat-cell
               *matCellDef="let element"
-              class="text-center h-[80px]"
+              class="text-center w-1/7 h-[80px]"
               [ngClass]="{
-      'text-green-500': element.listingQuantity > 0,
-      'text-red-500': element.listingQuantity === 0
+      'text-green': element.listingQuantity > 0,
+      'text-red': element.listingQuantity === 0
     }"
             >
               <ng-container *ngIf="element.listingQuantity > 0">
@@ -49,8 +49,8 @@
 
           <!-- Old Price Column -->
           <ng-container matColumnDef="oldOrderPrice">
-            <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">Old Price</th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">Listing Price</th>
+            <td mat-cell *matCellDef="let element" class="text-center w-1/7">
               {{ element.oldOrderPrice | currency }}
             </td>
           </ng-container>
@@ -58,7 +58,7 @@
           <!-- Ordered Quantity Column -->
           <ng-container matColumnDef="orderQuantity">
             <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">Ordered Quantity</th>
-            <td mat-cell *matCellDef="let element" class="text-center">
+            <td mat-cell *matCellDef="let element" class="text-center w-1/7">
               {{ element.orderQuantity > 0 ? element.orderQuantity : '' }}
             </td>
           </ng-container>
@@ -66,7 +66,7 @@
           <!-- New Price Column -->
           <ng-container matColumnDef="newOrderPrice">
             <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">New Price</th>
-            <td mat-cell *matCellDef="let element" class="text-center">
+            <td mat-cell *matCellDef="let element" class="text-center w-1/7">
               {{ element.orderQuantity > 0 ? (element.newOrderPrice | currency) : '' }}
             </td>
           </ng-container>
@@ -74,7 +74,7 @@
           <!-- Order Status Column -->
           <ng-container matColumnDef="orderStatus">
             <th mat-header-cell *matHeaderCellDef class="text-center w-1/7">Status</th>
-            <td mat-cell *matCellDef="let element" class="text-center"
+            <td mat-cell *matCellDef="let element" class="text-center w-1/7"
                 [ngClass]="element.orderQuantity > 0 ? getStatusClass(element.orderStatus) : ''">
               {{ element.orderQuantity > 0 ? getDisplayStatus(element.orderStatus) : '' }}
             </td>

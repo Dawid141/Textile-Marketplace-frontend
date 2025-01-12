@@ -40,7 +40,9 @@ export class ActionButtonsService {
     const headers = this.jwtService.getAuthHeaders();
     const url = `${this.baseUrl}/${orderId}/change-price`;
 
-    return this.http.patch(url, newPrice, {
+    const requestBody = {price: newPrice};
+
+    return this.http.patch(url, requestBody, {
       headers: headers,
       observe: 'body',
       responseType: 'json',

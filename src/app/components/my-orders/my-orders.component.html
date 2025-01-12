@@ -1,27 +1,33 @@
 <mat-card class="max-w-7xl mx-auto min-h-full !pt-2 " *ngIf="order.length">
-  <table mat-table [dataSource]="order" class=" w-full">
+  <table mat-table [dataSource]="order" class="  w-full table-fixed ">
 
     <!-- Product Image Column -->
-    <ng-container matColumnDef="productImage" class="mb-1">
-      <th mat-header-cell *matHeaderCellDef class="text-center">Product</th>
-      <td mat-cell *matCellDef="let element">
+    <ng-container matColumnDef="productImage" class="mb-1 !text-center !w-1/8">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8"></th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         <img
           src="{{ element.productImage ? element.productImage : 'https://picsum.photos/150' }}"
           alt="productImage"
-          class="w-[150px] my-3 ml-14"
+          class="ml-4 min-w-[150px]  max-w-[150px] max-h-[150px] min-h-[150px] my-3 object-fit-contain border !bg-image-background"
         />
+        <!-- Button with dropdown -->
+        <button mat-button [matMenuTriggerFor]="menu" class="mb-2">Show Price History</button>
+
+        <!-- Dropdown menu -->
+        <mat-menu #menu="matMenu" class="px-24 py-10 !min-w-[800px]">
+          <div class="px-24 py-10 !min-w-[800px]">
+            This is your dropdown content! asd asdasdasdasd asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdasdasdasdasdasdasd
+          </div>
+        </mat-menu>
+
       </td>
-      <td mat-footer-cell *matFooterCellDef>
-        <button mat-raised-button routerLink="/products">
-          Continue Shopping
-        </button>
-      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <!-- Product Name Column -->
     <ng-container matColumnDef="listingName">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Listing Name</th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         <button
           mat-button
           [routerLink]="'/single-offer/' + element.listingId"
@@ -35,8 +41,8 @@
 
     <!-- Listing Quantity Column -->
     <ng-container matColumnDef="listingQuantity">
-      <th mat-header-cell *matHeaderCellDef>Listing Quantity</th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Listing Quantity</th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         {{element.listingQuantity}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -44,17 +50,19 @@
 
     <!-- Old Order Price Column -->
     <ng-container matColumnDef="oldOrderPrice">
-      <th mat-header-cell *matHeaderCellDef>Old Price</th>
-      <td mat-cell *matCellDef="let element">
-        {{element.oldOrderPrice | currency}}
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Listing Price</th>
+      <td mat-cell *matCellDef="let element" class="text-center ">
+        {{ element.oldOrderPrice | currency }}
+
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
+
     <!-- Order Quantity Column -->
     <ng-container matColumnDef="orderQuantity">
-      <th mat-header-cell *matHeaderCellDef>Ordered Quantity</th>
-      <td mat-cell *matCellDef="let element" class="text-center">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Ordered Quantity</th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         {{element.orderQuantity}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -62,8 +70,8 @@
 
     <!-- New Order Price Column -->
     <ng-container matColumnDef="newOrderPrice">
-      <th mat-header-cell *matHeaderCellDef>New Price</th>
-      <td mat-cell *matCellDef="let element">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">New Price</th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         {{element.newOrderPrice | currency}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -71,8 +79,8 @@
 
     <!-- Order Status Column -->
     <ng-container matColumnDef="orderStatus">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let element" [ngClass]="getStatusClass(element.orderStatus)">
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Status</th>
+      <td mat-cell *matCellDef="let element" class="text-center w-1/8" [ngClass]="getStatusClass(element.orderStatus)">
         {{getDisplayStatus(element.orderStatus)}}
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -81,7 +89,7 @@
     <!-- Actions Column -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element" class="align-middle space-x-2">
+      <td mat-cell *matCellDef="let element" class="space-x-2 text-center w-1/8">
         <!-- Approved Button -->
         <button mat-fab
                 [ngClass]="{
@@ -119,13 +127,18 @@
           Negotiate
         </button>
       </td>
-      <td mat-footer-cell *matFooterCellDef></td>
+      <td mat-footer-cell *matFooterCellDef class="text-center w-1/8">
+        <button mat-raised-button routerLink="/products">
+          Continue Shopping
+        </button>
+      </td>
     </ng-container>
 
     <!-- Table Header, Row, and Footer -->
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
     <tr mat-footer-row *matFooterRowDef="displayColumns"></tr>
+
   </table>
 </mat-card>
 

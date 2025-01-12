@@ -49,9 +49,9 @@
   </div>
 
   <!-- Sticky container-->
-  <div class="col-span-4 gap-8">
-    <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*1.05)]">
-      <form class="!bg-side-container max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)] mb-8 p-4 rounded-lg shadow-md border" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
+  <div class="col-span-4 gap-8 ">
+    <div class="sticky top-0 flex flex-col justify-center h-[calc(theme(height.custom)*0.9)] hover:shadow-lg transition">
+      <form class="!bg-side-container max-w-md flex flex-col items-center justify-center h-[calc(theme(height.custom)*0.9)]  p-4 rounded-lg shadow-md border" (ngSubmit)="onSubmit()" [formGroup]="orderForm">
         <!--price and quantity-->
         <div class="mb-4">
           <p class="text-4xl font-bold py-4">Price: {{listingData.price | currency}}</p>

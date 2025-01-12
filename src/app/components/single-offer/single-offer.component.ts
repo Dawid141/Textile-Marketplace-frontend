@@ -52,9 +52,8 @@ export class SingleOfferComponent implements OnInit {
 
   properties: any[] = [];
   companyProperties = [
-    { label: 'Email', value: this.sellerData.email},
-    { label: 'NIP', value: this.sellerData.nip },
-    { label: 'Company', value: this.sellerData.company },
+    { label: 'Importer', value: this.sellerData.email},
+    { label: 'Oryginalna nazwa produktu', value: this.sellerData.company },
   ];
 
   orderForm = new FormGroup({
@@ -146,7 +145,7 @@ export class SingleOfferComponent implements OnInit {
     return {
       orderQuantity: this.orderForm.controls['quantity'].value as number,
       listingId: this.id,
-      newOrderPrice: this.orderForm.controls['yourPrice'].value as number
+      price: this.orderForm.controls['yourPrice'].value as number
     }
   }
 }
