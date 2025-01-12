@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {OrderListing, OrderListingDetails} from '../../models/interfaces/order/order.model';
 import {MatSidenav, MatSidenavContainer, MatSidenavModule} from '@angular/material/sidenav';
-import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
-import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
+import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {MatButton, MatFabButton, MatIconButton, MatMiniFabButton} from '@angular/material/button';
 import {MatCard} from '@angular/material/card';
 import {
   MatCell,
@@ -23,6 +23,7 @@ import {ActionButtonsService} from '../../services/action-buttons.service';
 import {MatDialog} from '@angular/material/dialog';
 import {NegotiationDialogWindowComponent} from '../DialogWindows/negotiation-dialog-window/negotiation-dialog-window.component';
 import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-dialog.component';
+import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
 
 
 @Component({
@@ -57,6 +58,10 @@ import {ConfirmDialogComponent} from '../DialogWindows/confirm-dialog/confirm-di
     NgForOf,
     MatTooltip,
     StatusFilterComponent,
+    DatePipe,
+    MatIconButton,
+    MatMenu,
+    MatMenuTrigger,
 
   ],
   templateUrl: './my-offers.component.html',
@@ -251,13 +256,13 @@ export class MyOffersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.changePrice(order.id, result);
+        this.changePrice(order.id, result.price, result.message);
       }
     });
   }
 
-  changePrice(orderId: number, newPrice: number): void {
-    this.actionButtonsService.changeOrderPrice(orderId, newPrice).subscribe({
+  changePrice(orderId: number, newPrice: number, message: string): void {
+    this.actionButtonsService.changeOrderPrice(orderId, newPrice,message).subscribe({
       next: () => {
         console.log('Price changed successfully');
         this.ngOnInit();

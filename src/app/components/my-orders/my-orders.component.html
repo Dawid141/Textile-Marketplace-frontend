@@ -11,15 +11,33 @@
           class="ml-4 min-w-[150px]  max-w-[150px] max-h-[150px] min-h-[150px] my-3 object-fit-contain border !bg-image-background"
         />
         <!-- Button with dropdown -->
-        <button mat-button [matMenuTriggerFor]="menu" class="mb-2">Show Price History</button>
+        <div class="text-xl mb-2 !text-black">
+          <button mat-flat-button [matMenuTriggerFor]="menu" class="!bg-gray-200 text-black p-3">
+            Price History
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+        </div>
 
         <!-- Dropdown menu -->
-        <mat-menu #menu="matMenu" class="px-24 py-10 !min-w-[800px]">
-          <div class="px-24 py-10 !min-w-[800px]">
-            This is your dropdown content! asd asdasdasdasd asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdasdasdasdasdasdasd
+        <mat-menu #menu="matMenu" class="p-2 !min-h-[200px] !min-w-[800px] border rounded-lg hover:shadow-lg transition">
+          <div
+            class="break-words overflow-auto"
+            style="word-wrap: break-word; white-space: normal; max-height: 500px; max-width: 800px;"
+          >
+            <ng-container *ngFor="let msg of element.messages; let i = index">
+              <!-- Message container -->
+              <div
+                class="mb-4 border-1 p-2 rounded-lg hover:shadow-lg transition max-w-[500px]"
+                [ngClass]="{'mr-auto ': i % 2 !== 0, 'ml-auto': i % 2 === 0}"
+              >
+                <strong>Sender:</strong> {{ msg.sender }} <br>
+                <strong>Date:</strong> {{ msg.date | date:'short' }} <br>
+                <strong>Message:</strong> {{ msg.message }} <br>
+                <strong class="'text-green'">New Price:</strong> {{ msg.price }} <br>
+              </div>
+            </ng-container>
           </div>
         </mat-menu>
-
       </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
@@ -70,7 +88,7 @@
 
     <!-- New Order Price Column -->
     <ng-container matColumnDef="newOrderPrice">
-      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">New Price</th>
+      <th mat-header-cell *matHeaderCellDef class="text-center w-1/8">Selling Price</th>
       <td mat-cell *matCellDef="let element" class="text-center w-1/8">
         {{element.newOrderPrice | currency}}
       </td>

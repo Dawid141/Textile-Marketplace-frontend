@@ -36,11 +36,14 @@ export class ActionButtonsService {
     });
   }
 
-  changeOrderPrice(orderId: number, newPrice: number): Observable<any> {
+  changeOrderPrice(orderId: number, newPrice: number, message: string): Observable<any> {
     const headers = this.jwtService.getAuthHeaders();
     const url = `${this.baseUrl}/${orderId}/change-price`;
 
-    const requestBody = {price: newPrice};
+    const requestBody = {
+      price: newPrice,
+      message: message
+    };
 
     return this.http.patch(url, requestBody, {
       headers: headers,
@@ -49,4 +52,5 @@ export class ActionButtonsService {
       withCredentials: true
     });
   }
+
 }

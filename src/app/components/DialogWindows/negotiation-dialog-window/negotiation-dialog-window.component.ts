@@ -24,6 +24,7 @@ import {MatLabel} from '@angular/material/form-field';
 })
 export class NegotiationDialogWindowComponent {
   newPrice: number = 0;
+  message: string = '';
 
   constructor(public dialogRef: MatDialogRef<NegotiationDialogWindowComponent>) {}
 
@@ -32,10 +33,10 @@ export class NegotiationDialogWindowComponent {
   }
 
   onConfirm(): void {
-    if (this.newPrice > 0) {
-      this.dialogRef.close(this.newPrice);
+    if (this.newPrice > 0 && this.message.trim() !== '') {
+      this.dialogRef.close({ price: this.newPrice, message: this.message });
     } else {
-      alert('Price must be a positive number');
+      alert('Price must be a positive number and message must not be empty');
     }
   }
 }
