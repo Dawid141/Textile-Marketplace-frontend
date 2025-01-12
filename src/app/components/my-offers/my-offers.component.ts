@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OrderListing, OrderListingDetails} from '../../models/interface/order.model';
+import {OrderListing, OrderListingDetails} from '../../models/interfaces/order/order.model';
 import {MatSidenav, MatSidenavContainer, MatSidenavModule} from '@angular/material/sidenav';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {MatButton, MatFabButton, MatMiniFabButton} from '@angular/material/button';
@@ -91,6 +91,7 @@ export class MyOffersComponent implements OnInit {
     this.myOffersService.getMyOffers().pipe(
       tap((response: any) => {
         this.orderListingDetails.listingData = response.data;
+        console.log(this.orderListingDetails.listingData)
         this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
         this.filteredData = this.groupedData;
       }),

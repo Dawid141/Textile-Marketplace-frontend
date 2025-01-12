@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {RegisterRequest} from '../models/interface/registerRequest';
-import {LoginRequest} from '../models/interface/loginRequest';
+import {RegisterRequest} from '../models/interfaces/auth/registerRequest';
+import {LoginRequest} from '../models/interfaces/auth/loginRequest';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {JwtService} from './jwt-service.service';

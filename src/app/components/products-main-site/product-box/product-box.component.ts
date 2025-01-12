@@ -4,7 +4,7 @@ import {CurrencyPipe, JsonPipe, NgClass, NgForOf, NgIf, NgOptimizedImage} from '
 import {MatIcon} from '@angular/material/icon';
 import {MatMiniFabButton} from '@angular/material/button';
 import {RouterLink} from '@angular/router';
-import {listingData} from '../../../models/interface/listingData';
+import {listingData} from '../../../models/interfaces/product/listingData';
 
 @Component({
   selector: 'app-product-box',

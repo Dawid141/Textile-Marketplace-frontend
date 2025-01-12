@@ -4,7 +4,8 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
       <div>
         <h3>Welcome to Your Account</h3>
-        <p>Subscription details</p>
+        <p>Your subscription is: </p>
+        <p class="font-bold"> {{ checkSubscriptionValidity() ? "Valid until: " + userDataList?.subscription?.endDate : "Invalid" }}</p>
       </div>
     </mat-grid-tile>
 
@@ -27,6 +28,40 @@
     </mat-grid-tile>
   </mat-grid-list>
 </div>
+
+
+<div class="bg-gray-100 p-6 rounded-lg shadow-md max-w-md mx-auto">
+  <div class="flex justify-between items-center">
+    <h2 class="text-lg font-semibold text-gray-700">User Information</h2>
+  </div>
+  <div class="mt-4 grid grid-cols-2 gap-x-40 gap-y-4">
+    <div>
+      <p class="text-sm text-gray-500">Email:</p>
+      <p class="text-lg font-medium text-gray-900">{{ userDataList?.email }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Username:</p>
+      <p class="text-lg font-medium text-gray-900">{{ userDataList?.username }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">First Name:</p>
+      <p class="text-lg font-medium text-gray-900">{{ userDataList?.firstName }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Last Name:</p>
+      <p class="text-lg font-medium text-gray-900">{{ userDataList?.lastName }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">NIP:</p>
+      <p class="text-lg font-medium text-gray-900">{{ userDataList?.nip }}</p>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500">Subscription status:</p>
+      <p class="text-lg font-medium text-gray-900">{{ checkSubscriptionValidity() ? "Valid until: " + userDataList?.subscription?.endDate : "Invalid" }}</p>
+    </div>
+  </div>
+</div>
+
 
 <footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto mt-auto">
   <p class="text-sm text-gray-600">

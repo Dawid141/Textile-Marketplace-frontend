@@ -7,7 +7,7 @@ import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {ProductsService} from '../../../services/products.service';
 import {catchError, tap, throwError} from 'rxjs';
-import {ProductEnumResponse} from '../../../models/interface/productEnumResponse';
+import {ProductEnumResponse} from '../../../models/interfaces/product/productEnumResponse';
 
 @Component({
   selector: 'app-product-sidebar-filter',

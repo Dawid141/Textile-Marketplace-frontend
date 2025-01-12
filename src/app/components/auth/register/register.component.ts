@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
-import {RegisterRequest} from '../../../models/interface/registerRequest';
+import {RegisterRequest} from '../../../models/interfaces/auth/registerRequest';
 import {NgIf} from '@angular/common';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';

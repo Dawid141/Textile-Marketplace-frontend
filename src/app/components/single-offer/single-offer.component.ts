@@ -1,21 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {listingData} from '../../models/interface/listingData';
+import {listingData} from '../../models/interfaces/product/listingData';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
-import {sellerData} from '../../models/interface/sellerDetails';
+import {sellerData} from '../../models/interfaces/sellerDetails';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {catchError, tap, throwError} from 'rxjs';
 import {ProductsService} from '../../services/products.service';
 import {OrderService} from '../../services/order.service';
-import {BackendResponse} from '../../models/interface/backendResponse';
-import {OrderDTO} from '../../models/interface/OrderDTO';
+import {BackendResponse} from '../../models/interfaces/backendResponse';
+import {OrderCreationRequest} from '../../models/interfaces/order/OrderCreationRequest';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {SpinBarDialogComponent} from '../spin-bar-dialog/spin-bar-dialog.component';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
 
 @Component({
     selector: 'app-main-page',
@@ -28,9 +26,6 @@ import {MatInput} from '@angular/material/input';
     CurrencyPipe,
     ReactiveFormsModule,
     MatButton,
-    MatLabel,
-    MatFormField,
-    MatInput
   ],
     templateUrl: './single-offer.component.html',
     standalone: true,
@@ -142,11 +137,12 @@ export class SingleOfferComponent implements OnInit {
     }
   }
 
-  private mapFormValuesToOrderDTO(): OrderDTO {
+  private mapFormValuesToOrderDTO(): OrderCreationRequest {
     return {
       orderQuantity: this.orderForm.controls['quantity'].value as number,
       listingId: this.id,
-      newOrderPrice: this.orderForm.controls['yourPrice'].value as number
+      price: this.orderForm.controls['yourPrice'].value as number,
+      message: this.orderForm.controls['yourSuggestions'].value as string
     }
   }
 }

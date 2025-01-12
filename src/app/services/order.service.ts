@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {JwtService} from './jwt-service.service';
-import {OrderDTO} from '../models/interface/OrderDTO';
+import {OrderCreationRequest} from '../models/interfaces/order/OrderCreationRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class OrderService {
 
   constructor(private http: HttpClient, private jwtService: JwtService) { }
 
-  createOrderFromProduct(order: OrderDTO): Observable<any> {
+  createOrderFromProduct(order: OrderCreationRequest): Observable<any> {
     const headers = this.jwtService.getAuthHeaders();
     return this.http.post(`${this.url}/create`, order, {headers, observe: "body", withCredentials: true});
   }
