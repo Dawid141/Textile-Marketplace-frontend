@@ -54,6 +54,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
       compositions: new FormControl('', [Validators.required]),
       technologies: new FormControl('', [Validators.required]),
       safetyRequirements: new FormControl('', [Validators.required]),
+      exporters: new FormControl('', [Validators.required]),
+      originalProductNames: new FormControl('', [Validators.required])
     })
   });
 
@@ -146,6 +148,12 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }
   }
 
+  camelCaseToRegularText(camelCase: string): string {
+    return camelCase
+      .replace(/([a-z])([A-Z])/g, '$1 $2') // Insert a space between lowercase and uppercase letters
+      .replace(/^./, (char) => char.toUpperCase()); // Capitalize the first letter
+  }
+
   private mapFormToListingDTO(): ListingDTO | null {
     // probably needs overhaul weird way of mapping the request
 
@@ -163,6 +171,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
         composition: formValues.enumForms?.compositions as string,
         technologies: formValues.enumForms?.technologies as string,
         safetyRequirements: formValues.enumForms?.safetyRequirements as string,
+        exporters: formValues.enumForms?.exporters as string,
+        originalProductNames: formValues.enumForms?.originalProductNames as string,
         colour: formValues.colour as string,
         width: formValues.width as number
       };

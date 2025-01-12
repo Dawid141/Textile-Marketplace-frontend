@@ -9,6 +9,8 @@ export interface ListingDTO {
   composition: string; // Required, must not be null
   technologies: string; // Required, must not be null
   safetyRequirements: string; // Required, must not be null
+  exporters: string // Required, must not be null
+  originalProductNames: string // Required, must not be null
   colour: string; // Required, must not be blank
   width: number; // Required, must not be blank
 }

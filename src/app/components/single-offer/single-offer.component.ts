@@ -70,6 +70,7 @@ export class SingleOfferComponent implements OnInit {
   fetchListingData(id: string): void {
     this.productsService.getListingById(id).pipe(tap((response: any) => {
         this.listingData = response.data;
+        console.log(response.data)
         this.updateProperties();
       }),
       catchError((error) => {
@@ -79,15 +80,18 @@ export class SingleOfferComponent implements OnInit {
   }
 
   updateProperties() {
+    // TODO needs changing properties should come in an array from the off
     if (this.listingData) {
       this.properties = [
+        {label: 'Original product name', value: this.productsService.formatEnum(this.listingData.originalProductNames)},
+        {label: 'Exporter', value: this.productsService.formatEnum(this.listingData.exporters)},
         { label: 'Quantity', value: this.listingData.quantity },
         { label: 'Width', value: this.listingData.width },
-        { label: 'Material', value: this.listingData.composition },
-        { label: 'Composition', value: this.listingData.fabricType },
+        { label: 'Material', value: this.productsService.formatEnum(this.listingData.composition) },
+        { label: 'Composition', value: this.productsService.formatEnum(this.listingData.fabricType) },
         { label: 'Colour', value: this.listingData.colour },
-        { label: 'Technology', value: this.listingData.technologies },
-        { label: 'Safety', value: this.listingData.safetyRequirements }
+        { label: 'Technology', value: this.productsService.formatEnum(this.listingData.technologies) },
+        { label: 'Safety', value: this.productsService.formatEnum(this.listingData.safetyRequirements) },
       ];
     }
   }

@@ -74,7 +74,7 @@
       @for (key of productEnumsMap.keys(); track $index) {
         <div class="pb-1" formGroupName="enumForms">
           <mat-form-field class="w-full">
-            <mat-label>{{ key | titlecase }}</mat-label>
+            <mat-label>{{ this.camelCaseToRegularText(key) }}</mat-label>
               <mat-select [formControlName]="key">
                 @for (enumValue of productEnumsMap.get(key); track $index) {
                   <mat-option [value]="enumValue" > {{ this.productService.formatEnum(enumValue) }}</mat-option>
@@ -84,28 +84,26 @@
           </mat-form-field>
         </div>
       }
+          <div class="pb-1 col-span-1">
+            <mat-form-field class="w-full">
+              <mat-label>Colour</mat-label>
+              <input matInput id="colour" formControlName="colour"/>
+              <mat-error *ngIf="productForm.get('colour')?.errors?.['required']">Colour is required.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="pb-1 col-span-1">
+            <mat-form-field class="w-full">
+              <mat-label>Width</mat-label>
+              <input matInput id="width" formControlName="width" type="number" step="any"/>
+              <mat-error *ngIf="productForm.get('width')?.errors?.['required']">Width is required.</mat-error>
+              <mat-error *ngIf="productForm.get('width')?.errors?.['min']">Width must be at least one.</mat-error>
+            </mat-form-field>
+          </div>
       </div>
 
       <app-image-upload class="col-span-4" (imageEvent)="handleImageEvent($event)"></app-image-upload>
 
-      <div class="grid grid-cols-subgrid col-span-3">
-        <div class="pb-1 col-span-1">
-          <mat-form-field class="w-full">
-            <mat-label>Colour</mat-label>
-            <input matInput id="colour" formControlName="colour"/>
-            <mat-error *ngIf="productForm.get('colour')?.errors?.['required']">Colour is required.</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="pb-1 col-span-2">
-          <mat-form-field class="w-full">
-            <mat-label>Width</mat-label>
-            <input matInput id="width" formControlName="width" type="number" step="any"/>
-            <mat-error *ngIf="productForm.get('width')?.errors?.['required']">Width is required.</mat-error>
-            <mat-error *ngIf="productForm.get('width')?.errors?.['min']">Width must be at least one.</mat-error>
-          </mat-form-field>
-        </div>
-      </div>
 
       <button class="col-start-4 col-end-5" [disabled]="!productForm.valid" mat-raised-button type="submit">Submit</button>
 

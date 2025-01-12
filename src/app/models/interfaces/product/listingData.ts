@@ -9,6 +9,8 @@ export interface listingData {
   technologies : string;
   shortDescription: string;
   longDescription: string;
+  originalProductNames: string;
+  exporters: string;
   price: number;
   quantity: number;
   width: string;
