@@ -14,4 +14,5 @@ export interface listingData {
   price: number;
   quantity: number;
   width: string;
+  seller: boolean
 }

@@ -70,7 +70,7 @@ export class SingleOfferComponent implements OnInit {
   fetchListingData(id: string): void {
     this.productsService.getListingById(id).pipe(tap((response: any) => {
         this.listingData = response.data;
-        console.log(response.data)
+        console.log(this.listingData)
         this.updateProperties();
       }),
       catchError((error) => {

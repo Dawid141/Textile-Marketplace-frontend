@@ -1,66 +1,62 @@
-<div class="min-h-full max-w-7xl mx-auto border-x mt-5">
-  <mat-grid-list cols="2" rowHeight="23vh" gutterSize="1.5vw">
-    <!-- First tile: wide across both columns -->
-    <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">
+<div class="flex flex-col justify-center items-center min-h-screen bg-gray-50">
+  <!-- Container -->
+
+
+  <!-- Card -->
+  <div class="w-full max-w-fit">
+
+    <div class="flex items-center mb-6 gap-x-4">
+      <!-- SVG -->
+      <svg class="w-20 h-20" xmlns="http://www.w3.org/2000/svg"
+           width="96.000000pt" height="96.000000pt" viewBox="0 0 96.000000 96.000000"
+           preserveAspectRatio="xMidYMid meet">
+
+        <g transform="translate(0.000000,96.000000) scale(0.100000,-0.100000)"
+           fill="#000000" stroke="none">
+            <path d="M413 719 c-50 -25 -81 -70 -89 -131 -5 -35 -2 -48 12 -63 19 -18 19 -18 24 20 l5 39 90 28 90 27 27 -26 c21 -20 28 -36 28 -65 0 -28 3 -36 14 -32 22 8 27 33 20 83 -7 45 -11 51 -92 121 -29 26 -76 25 -129 -1z"/>
+            <path d="M404 529 c-10 -17 13 -36 27 -22 12 12 4 33 -11 33 -5 0 -12 -5 -16 -11z"/>
+            <path d="M524 529 c-10 -17 13 -36 27 -22 12 12 4 33 -11 33 -5 0 -12 -5 -16 -11z"/>
+            <path d="M336 308 c-49 -33 -82 -80 -88 -128 -3 -20 5 -28 52 -52 30 -16 83 -34 118 -40 78 -14 164 0 242 40 61 31 65 44 31 112 -15 29 -101 100 -122 100 -4 0 -12 -14 -19 -31 -26 -61 -109 -63 -137 -3 -9 19 -19 34 -22 34 -4 0 -28 -15 -55 -32z"/>
+        </g>
+      </svg>
+
+      <!-- Title -->
+      <h2 class="text-xl font-semibold text-gray-700">User Information</h2>
+    </div>
+
+    <div class="bg-gray-100 p-6 rounded-lg shadow-md grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-40">
+      <!-- Fields -->
       <div>
-        <h3>Welcome to Your Account</h3>
-        <p>Your subscription is: </p>
-        <p class="font-bold"> {{ checkSubscriptionValidity() ? "Valid until: " + userDataList?.subscription?.endDate : "Invalid" }}</p>
+        <p class="text-base text-gray-500">Email:</p>
+        <p class="text-xl font-medium text-gray-900">{{ userDataList?.email }}</p>
       </div>
-    </mat-grid-tile>
-
-    <!-- Third tile: another smaller one -->
-    <mat-grid-tile [colspan]="1" [rowspan]="3" [style.background]="'lightgray'">
-      <div class="h-full w-full flex justify-center items-center  bg-gray-200">
+      <div>
+        <p class="text-base text-gray-500">Username:</p>
+        <p class="text-xl font-medium text-gray-900">{{ userDataList?.username }}</p>
       </div>
-    </mat-grid-tile>
-
-    <!-- Second tile: smaller one that displays user data -->
-    <mat-grid-tile class="p-2" [colspan]="1" [rowspan]="2" [style.background]="'lightgreen' ">
-      <div *ngIf="userDataList" >
-        <h3>User Information</h3>
-        <p><strong>Username:</strong> {{ userDataList?.username }}</p>
-        <p><strong>Email:</strong> {{ userDataList?.email }}</p>
-        <p><strong>First Name:</strong> {{ userDataList?.firstName }}</p>
-        <p><strong>Last Name:</strong> {{ userDataList?.lastName }}</p>
-        <p><strong>NIP:</strong> {{ userDataList?.nip }}</p>
+      <div>
+        <p class="text-base text-gray-500">First Name:</p>
+        <p class="text-xl font-medium text-gray-900">{{ userDataList?.firstName }}</p>
       </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
-
-
-<div class="bg-gray-100 p-6 rounded-lg shadow-md max-w-md mx-auto">
-  <div class="flex justify-between items-center">
-    <h2 class="text-lg font-semibold text-gray-700">User Information</h2>
-  </div>
-  <div class="mt-4 grid grid-cols-2 gap-x-40 gap-y-4">
-    <div>
-      <p class="text-sm text-gray-500">Email:</p>
-      <p class="text-lg font-medium text-gray-900">{{ userDataList?.email }}</p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500">Username:</p>
-      <p class="text-lg font-medium text-gray-900">{{ userDataList?.username }}</p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500">First Name:</p>
-      <p class="text-lg font-medium text-gray-900">{{ userDataList?.firstName }}</p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500">Last Name:</p>
-      <p class="text-lg font-medium text-gray-900">{{ userDataList?.lastName }}</p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500">NIP:</p>
-      <p class="text-lg font-medium text-gray-900">{{ userDataList?.nip }}</p>
-    </div>
-    <div>
-      <p class="text-sm text-gray-500">Subscription status:</p>
-      <p class="text-lg font-medium text-gray-900">{{ checkSubscriptionValidity() ? "Valid until: " + userDataList?.subscription?.endDate : "Invalid" }}</p>
+      <div>
+        <p class="text-base text-gray-500">Last Name:</p>
+        <p class="text-xl font-medium text-gray-900">{{ userDataList?.lastName }}</p>
+      </div>
+      <div>
+        <p class="text-base text-gray-500">NIP:</p>
+        <p class="text-xl font-medium text-gray-900">{{ userDataList?.nip }}</p>
+      </div>
+      <div>
+        <p class="text-base text-gray-500">Subscription status:</p>
+        <p class="text-xl font-medium text-gray-900">{{ checkSubscriptionValidity() ? "Valid until: " + userDataList?.subscription?.endDate : "Invalid" }}</p>
+      </div>
     </div>
   </div>
 </div>
+
+
+
+
 
 
 <footer class="bg-gray-200 text-center py-4 border-t max-w-10xl mx-auto mt-auto">
