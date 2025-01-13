@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center gap-2 ">
+<div class="flex flex-col items-center gap-2 mb-5 ">
   <!-- Price Range Section -->
   <p class="text-center">Price Range: {{ minPrice }} $ - {{ maxPriceSelected }} $</p>
   <div class="flex items-center justify-center gap-2 w-full px-4">
@@ -35,40 +35,84 @@
   </div>
 </div>
 
-<div>
-    <h3 class="text-xl font-bold text-center mb-2">Fabric Composition</h3>
-    <div *ngFor="let item of section1Items">
-      <mat-checkbox [(ngModel)]="selectedSection1Items[item]" (change)="onCheckboxChange()">
-        {{ item }}
-      </mat-checkbox>
-    </div>
+
+<button mat-flat-button (click)="toggleDropdown('originalProductName')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4 ">
+  Product Name
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['originalProductName']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section5Items">
+    <mat-checkbox [(ngModel)]="selectedSection5Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
   </div>
+</div>
 
-  <div>
-    <h3 class="text-xl font-bold text-center mb-2">Fabric Type</h3>
-    <div *ngFor="let item of section2Items">
-      <mat-checkbox [(ngModel)]="selectedSection2Items[item]" (change)="onCheckboxChange()">
-        {{ item }}
-      </mat-checkbox>
-    </div>
+
+<!-- Exporter Section -->
+<button mat-flat-button (click)="toggleDropdown('exporter')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4 ">
+  Exporter
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['exporter']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section6Items">
+    <mat-checkbox [(ngModel)]="selectedSection6Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
   </div>
+</div>
 
-  <div>
-    <h3 class="text-xl font-bold text-center mb-2">Fabric Technology</h3>
-    <div *ngFor="let item of section3Items">
-      <mat-checkbox [(ngModel)]="selectedSection3Items[item]" (change)="onCheckboxChange()">
-        {{ item }}
-      </mat-checkbox>
-    </div>
+<!-- Other Sections -->
+<button mat-flat-button (click)="toggleDropdown('fabricComposition')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4">
+  Fabric Composition
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['fabricComposition']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section1Items">
+    <mat-checkbox [(ngModel)]="selectedSection1Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
   </div>
+</div>
 
-  <div>
-    <h3 class="text-xl font-bold text-center mb-2">Fabric Safety</h3>
-    <div *ngFor="let item of section4Items">
-      <mat-checkbox [(ngModel)]="selectedSection4Items[item]" (change)="onCheckboxChange()">
-        {{ item }}
-      </mat-checkbox>
-    </div>
+<button mat-flat-button (click)="toggleDropdown('fabricType')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4 ">
+  Fabric Type
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['fabricType']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section2Items">
+    <mat-checkbox [(ngModel)]="selectedSection2Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
   </div>
+</div>
 
+<button mat-flat-button (click)="toggleDropdown('fabricTechnology')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4 ">
+  Fabric Technology
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['fabricTechnology']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section3Items">
+    <mat-checkbox [(ngModel)]="selectedSection3Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
+  </div>
+</div>
 
+<button mat-flat-button (click)="toggleDropdown('fabricSafety')" class="!items-center w-full mb-2 btn-dropdown hover:shadow-lg transition !text-2xl !bg-gray-200 text-black p-4">
+  Fabric Safety
+  <mat-icon>keyboard_arrow_down</mat-icon>
+</button>
+<div *ngIf="dropdowns['fabricSafety']">
+  <h3 class="text-xl font-bold text-center mb-2"></h3>
+  <div *ngFor="let item of section4Items">
+    <mat-checkbox [(ngModel)]="selectedSection4Items[item]" (change)="onCheckboxChange()">
+      {{ item }}
+    </mat-checkbox>
+  </div>
+</div>
