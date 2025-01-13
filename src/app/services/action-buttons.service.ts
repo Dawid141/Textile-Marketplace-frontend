@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JwtService } from './jwt-service.service';
+import {ConfigService} from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActionButtonsService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/orders';
+  private baseUrl: string | undefined;
 
-  constructor(private http: HttpClient, private jwtService: JwtService) {}
+  constructor(private http: HttpClient, private jwtService: JwtService, private configService: ConfigService) {
+    this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/orders`;
+  }
 
   acceptOrder(orderId: number): Observable<any> {
     const headers = this.jwtService.getAuthHeaders();

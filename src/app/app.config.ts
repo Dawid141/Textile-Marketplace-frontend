@@ -19,9 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} },
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'} }/*,
     provideAppInitializer(() => {
-      const configService = inject(ConfigService);
-      configService.loadConfig().subscribe();
-    })
+      inject(ConfigService).loadConfig().subscribe();
+    })*/
   ]};

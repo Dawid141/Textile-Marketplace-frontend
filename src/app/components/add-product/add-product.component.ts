@@ -26,7 +26,6 @@ import {ImageUploadService} from '../../services/image-upload.service';
     MatInput,
     MatSelect,
     NgIf,
-    TitleCasePipe,
     MatLabel,
     MatError,
     MatOption,
@@ -42,8 +41,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
 
   productForm = new FormGroup({
     productName: new FormControl('', [Validators.required]),
-    longDescription: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(256)]),
-    shortDescription: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(2048)]),
+    longDescription: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(1024)]),
+    shortDescription: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(32)]),
     price: new FormControl(0, [Validators.min(1), Validators.required]),
     quantity: new FormControl(0, [Validators.min(1), Validators.required]),
     images: new FormControl<string[]>([], [Validators.maxLength(4)]),

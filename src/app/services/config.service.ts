@@ -8,20 +8,25 @@ import {IpConfig} from '../models/interfaces/Config';
 })
 export class ConfigService {
 
-  private ipSubject = new BehaviorSubject<string | null>(null);
-  ip$ = this.ipSubject.asObservable();
+  /*private ipSubject = new BehaviorSubject<string | null>(null);
+  ip$ = this.ipSubject.asObservable();*/
+  private url: string | undefined;
+/*
+  constructor(private http: HttpClient) {}*/
 
-  constructor(private http: HttpClient) {}
+  getUrl() {
+    return "";
+  }
 
-  loadConfig() {
+  /*loadConfig() {
     return this.http.get<IpConfig>('config.json', {observe: "body", responseType: "json"}).pipe(tap(config => {
         this.ipSubject.next(config.ip_address);
-        console.log(config.ip_address)
+        this.url = config.ip_address;
       }),
       catchError(err => {
         console.log(err);
         return of(null);
       })
     )
-  }
+  }*/
 }

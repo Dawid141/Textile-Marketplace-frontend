@@ -14,16 +14,7 @@ export class AuthService {
   private baseUrl: string | undefined;
 
   constructor(private http: HttpClient, private configService: ConfigService) {
-    this.configService.ip$.pipe(
-      tap(ip => {
-        if (ip) {
-          this.baseUrl = `${ip}:8080/api/v1/auth`;
-          console.log(this.baseUrl);
-        } else {
-          console.error('IP address is null or undefined');
-        }
-      })
-    ).subscribe();
+    this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/auth`;
   }
 
   login(formData: LoginRequest): Observable<any> {

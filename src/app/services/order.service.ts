@@ -13,12 +13,7 @@ export class OrderService {
   private baseUrl: string | undefined;
 
   constructor(private http: HttpClient, private jwtService: JwtService, private configService: ConfigService) {
-    this.configService.ip$.pipe(
-      tap(ip => {
-        if (ip) {
-          this.baseUrl = `${ip}:8080/api/v1/orders`
-        }
-      })).subscribe();
+    this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/orders`;
   }
 
   createOrderFromProduct(order: OrderCreationRequest): Observable<any> {

@@ -12,12 +12,7 @@ export class UserService {
   private baseUrl: string | undefined;
 
   constructor(private http: HttpClient, private jwtService: JwtService, private configService: ConfigService) {
-    this.configService.ip$.pipe(
-      tap(ip => {
-        if (ip) {
-          this.baseUrl = `${ip}:8080/api/v1/user`
-        }
-      })).subscribe();
+    this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/user`;
   }
 
   getUserData(): Observable<any> {

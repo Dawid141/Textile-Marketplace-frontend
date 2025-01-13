@@ -12,12 +12,7 @@ export class ImageUploadService {
   private baseUrl: string | undefined;
 
   constructor(private http: HttpClient, private jwtService: JwtService, private configService: ConfigService) {
-    this.configService.ip$.pipe(
-      tap(ip => {
-        if (ip) {
-          this.baseUrl = `${ip}:8080/api/v1/image`
-        }
-      })).subscribe();
+    this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/image`;
   }
 
   uploadImage(formData: FormData): Observable<any> {
