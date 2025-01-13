@@ -2,17 +2,29 @@ import { Injectable } from '@angular/core';
 import {RegisterRequest} from '../models/interfaces/auth/registerRequest';
 import {LoginRequest} from '../models/interfaces/auth/loginRequest';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, take, tap} from 'rxjs';
 import {JwtService} from './jwt-service.service';
+import {ConfigService} from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private readonly baseUrl: string = "http://localhost:8080/api/v1/auth"
+  private baseUrl: string | undefined;
 
-  constructor(private http: HttpClient, private jwtService: JwtService) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.configService.ip$.pipe(
+      tap(ip => {
+        if (ip) {
+          this.baseUrl = `${ip}:8080/api/v1/auth`;
+          console.log(this.baseUrl);
+        } else {
+          console.error('IP address is null or undefined');
+        }
+      })
+    ).subscribe();
+  }
 
   login(formData: LoginRequest): Observable<any> {
     let url = `${this.baseUrl}/authenticate`
