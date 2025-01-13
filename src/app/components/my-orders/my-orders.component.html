@@ -28,9 +28,15 @@
               <!-- Message container -->
               <div
                 class="mb-4 border-1 p-2 rounded-lg hover:shadow-lg transition max-w-[500px]"
-                [ngClass]="{'mr-auto ': i % 2 !== 0, 'ml-auto': i % 2 === 0}"
+                [ngClass]="{
+          'ml-auto bg-blue-200': msg.sender === 'BUYER',
+          'mr-auto bg-gray-300': msg.sender === 'SELLER'
+        }"
               >
-                <strong>Sender:</strong> {{ msg.sender }} <br>
+                <strong>Sender:</strong>
+                <span *ngIf="msg.sender === 'BUYER'"> YOU</span>
+                <span *ngIf="msg.sender === 'SELLER'"> SELLER</span>
+                <br>
                 <strong>Date:</strong> {{ msg.date | date:'short' }} <br>
                 <strong>Message:</strong> {{ msg.message }} <br>
                 <strong class="'text-green'">New Price:</strong> {{ msg.price }} <br>
