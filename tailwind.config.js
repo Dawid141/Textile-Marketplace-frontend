@@ -5,11 +5,11 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-      'header': '#f1d1c2',
+      'header': '#8d72e1',
       'container': '#fbfbf7',
-      'side-container': '#faf3d6',
+      'side-container': '#e0ebff',
       'background': '#FFF8E3',
-      'footer': '#E6A4B4',
+      'footer': '#6c4ab6',
       'gray-200': '#e5e7eb',
       'gray-300': '#d6d3d1',
       'gray-400': '#9ca3af',
@@ -19,10 +19,11 @@ module.exports = {
       'white': '#ffffff',
       'image-background': '#ffffff',
       'green': '#84cc16',
-      'red': '#ef4444',
-      'blue':'#22d3ee',
+      'red': '#f43f5e',
+      'blue':'#38bdf8',
       'blue-200':'#cffafe',
-      'yellow-50': '#fefce8'
+      'yellow-50': '#fefce8',
+      'button-color': '#6983ea',
 
     },
     extend: {

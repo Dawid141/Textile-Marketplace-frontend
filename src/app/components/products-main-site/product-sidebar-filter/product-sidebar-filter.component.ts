@@ -1,6 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
-import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
-import {MatListOption, MatSelectionList} from '@angular/material/list';
+import {
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from '@angular/material/expansion';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from '@angular/material/slider';
 import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
@@ -21,7 +25,11 @@ import {MatIcon} from '@angular/material/icon';
     MatCheckbox,
     NgIf,
     MatButton,
-    MatIcon
+    MatIcon,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatExpansionPanelHeader
   ],
   templateUrl: './product-sidebar-filter.component.html',
   standalone: true,
@@ -67,6 +75,16 @@ export class ProductSidebarFilterComponent implements OnInit {
     fabricTechnology: false,
     fabricSafety: false,
   };
+
+  panelOpenState = new Map<string, boolean>();
+
+  set(panelName: string, state: boolean) {
+    this.panelOpenState.set(panelName, state);
+  }
+
+  get(panelName: string): boolean {
+    return this.panelOpenState.get(panelName) || false;
+  }
 
   toggleDropdown(section: string): void {
     this.dropdowns[section] = !this.dropdowns[section];

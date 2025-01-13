@@ -1,14 +1,15 @@
-<mat-toolbar class="max-w-full mx-auto border rounded-b-lg shadow-md justify-between !bg-header" mat-align-tabs="center">
+<mat-toolbar class="max-w-full mx-auto border rounded-b-lg shadow-md justify-between !bg-header items">
     <button
-      mat-flat-button class="mx-16"
+      mat-flat-button class="mx-20 !bg-button-color border text-gray-400"
       [disabledInteractive]="this.permissionService.isExpired()"
       matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!this.permissionService.isExpired()"
       routerLink = "/add-product"
     >
       Add Offer
+      <mat-icon>add</mat-icon>
     </button>
-  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs ml-20">
+  <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="nav-tabs ml-28 !items-center">
     <a
       mat-tab-link
       *ngFor="let link of navLinks"
@@ -18,10 +19,11 @@
       [disabled]="isLinkDisabled(link.path)"
       matTooltip="{{ isLinkDisabled(link.path) ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!isLinkDisabled(link.path)"
-    >
-      {{ link.label }}
+      >
+    {{ link.label }}
     </a>
   </nav>
+
   <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
   <div>
     <button
@@ -32,12 +34,12 @@
       matTooltip="{{ this.permissionService.isExpired() ? 'You need to be logged in to view this page' : '' }}"
       [matTooltipDisabled]="!this.permissionService.isExpired()"
     >
-      <mat-icon>
+      <mat-icon class="text-white">
         account_circle
       </mat-icon>
     </button>
     <button mat-icon-button class="mx-2" [disabledInteractive]="this.permissionService.isExpired()" (click)="jwtService.logOut()">
-      <mat-icon>
+      <mat-icon class="text-white">
         login
       </mat-icon>
     </button>

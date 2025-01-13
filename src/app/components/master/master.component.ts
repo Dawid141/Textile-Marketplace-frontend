@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {ProductsComponent} from '../products-main-site/products.component';
 import {ContactComponent} from '../contact/contact.component';
 import {MyAccountComponent} from '../my-account/my-account.component';
@@ -20,7 +20,8 @@ import {MatTooltip} from '@angular/material/tooltip';
   ],
     templateUrl: './master.component.html',
     standalone: true,
-    styleUrl: './master.component.css'
+    styleUrl: './master.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 
 export class MasterComponent {
@@ -32,7 +33,6 @@ export class MasterComponent {
     { path: '/products', label: 'Main Page' },
     { path: '/my-offers', label: 'My Offers' },
     { path: '/my-orders', label: 'My Orders' },
-    { path: '/contact', label: 'Contact' },
   ];
 
   isLinkDisabled(path: string): boolean {

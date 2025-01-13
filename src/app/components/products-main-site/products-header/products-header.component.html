@@ -1,5 +1,5 @@
-<mat-card class="mb-4 !bg-side-container border rounded-lg shadow-md ">
-  <div class="flex justify-between">
+<mat-card class="mb-4 !bg-side-container border rounded-lg shadow-md">
+  <div class="flex justify-between items-center">
     <!--<div>
         <button mat-button [matMenuTriggerFor]="sortByMenu">
           Sort by {{sort}}
@@ -9,7 +9,6 @@
           <button (click)="SortUpdated('asc')" mat-menu-item>asc</button>
         </mat-menu>
     </div>-->
-    <div class="flex items-center ">
         <!--<div>
           <button mat-button [matMenuTriggerFor]="menu">
               Show {{itemsShowCount}}
@@ -20,14 +19,13 @@
             <button (click)="ItemsUpdated(120)" mat-menu-item>100</button>
           </mat-menu>
         </div>-->
-      <div class="p-2">
-        <button (click)="ColumnsUpdated(1)">
+      <div class="ml-auto flex px-4 p-1">
+        <button (click)="ColumnsUpdated(1)" mat-icon-button>
           <mat-icon>view_list</mat-icon>
         </button>
-        <button (click)="ColumnsUpdated(3)">
+        <button (click)="ColumnsUpdated(3)" mat-icon-button>
           <mat-icon>view_module</mat-icon>
         </button>
       </div>
     </div>
-  </div>
 </mat-card>

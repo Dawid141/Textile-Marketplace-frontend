@@ -1,7 +1,7 @@
 <!--maybe set max width for image and if it doesnt fit scale down-->
 <div *ngFor="let product of products; let i = index" class=" mx-auto !bg-component">
   <mat-card [ngClass]="{'text-center  mx-auto border shadow-md  mb-4' : !fullWidthMode}">
-    <div [ngClass]="{'flex border ': fullWidthMode}">
+    <div [ngClass]="{'flex border': fullWidthMode}">
       <img
         class="m-auto min-h-[250px] min-w-[250px] max-h-[250px] max-w-[250px]  cursor-pointer object-fit-contain border bg-image-background "
         [ngClass]="{'mt-5 mb-1': !fullWidthMode, 'min-h-[370px] min-w-[370px] max-h-[370px] max-w-[370px] !mx-4 !my-4 ': fullWidthMode}"
@@ -25,11 +25,13 @@
           </p>
           <p>Available Quantity: {{ product.quantity }}</p>
           <div *ngIf="fullWidthMode" class="mt-3">
-            <p>Fabric Composition: {{ product.composition }}</p>
+            <p>Product Name: {{ this.formatEnum(product.originalProductNames) }}</p>
+            <p>Exporter: {{ product.exporters }}</p>
+            <p>Fabric Composition: {{this.formatEnum(product.composition) }}</p>
             <p>Color: {{ product.colour }}</p>
-            <p>Fabric Type: {{ product.fabricType }}</p>
-            <p>Safety: {{ product.safetyRequirements }}</p>
-            <p>Technology: {{ product.technologies }}</p>
+            <p>Fabric Type: {{ this.formatEnum(product.fabricType) }}</p>
+            <p>Safety: {{ this.formatEnum(product.safetyRequirements) }}</p>
+            <p>Technology: {{ this.formatEnum(product.technologies) }}</p>
             <p>Width: {{ product.width }}</p>
           </div>
         </div>

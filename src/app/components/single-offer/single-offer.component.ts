@@ -38,6 +38,8 @@ export class SingleOfferComponent implements OnInit {
   listingData: listingData | null = null;
   id!: string;
 
+
+
   sellerData: sellerData = {
     id: 1,
     email: 'idkidk@gmail.com',
