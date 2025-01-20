@@ -96,7 +96,6 @@ export class MyOffersComponent implements OnInit {
     this.myOffersService.getMyOffers().pipe(
       tap((response: any) => {
         this.orderListingDetails.listingData = response.data;
-        console.log(this.orderListingDetails.listingData)
         this.groupedData = this.groupByListingId(this.orderListingDetails.listingData);
         this.filteredData = this.groupedData;
       }),

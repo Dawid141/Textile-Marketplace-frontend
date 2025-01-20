@@ -9,6 +9,8 @@ import {MatInput} from '@angular/material/input';
 import {catchError, of, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {SpinBarDialogComponent} from '../../spin-bar-dialog/spin-bar-dialog.component';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +36,7 @@ export class RegisterComponent {
     nip: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
   });
 
-  constructor(private router: Router, private authService: AuthService, private _snackbar: MatSnackBar) {}
+  constructor(private router: Router, private authService: AuthService, private _snackbar: MatSnackBar, private dialog: MatDialog) {}
 
   onSubmit() {
     if (this.registerForm.invalid) {
@@ -46,13 +48,20 @@ export class RegisterComponent {
     const formData: RegisterRequest = this.registerForm.value as RegisterRequest;
     console.log(formData);
 
+    this.dialog.open(SpinBarDialogComponent, {
+      data: {
+        text: "Registering account..."
+      }
+    });
+
     this.authService.register(formData).pipe(
       tap(response => {
-        console.log(response);
+        this.dialog.closeAll();
         this.router.navigate(['login'])
         this._snackbar.open("Registration successful. An account activation email has been sent.", "Ok")
       }),
       catchError(err => {
+        this.dialog.closeAll();
         console.log(err);
         this._snackbar.open(`Registration unsuccessful - ${err.message}`, "Ok");
         return of(null);

@@ -29,7 +29,6 @@ export class MyAccountComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUserData().pipe(tap((response: any)=> {
       this.userDataList = response.data;
-      console.log(this.userDataList)
     }),
       catchError((error) => {
         console.error("Fetching user data failed:", error);

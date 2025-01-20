@@ -88,8 +88,6 @@ export class MyOrdersComponent implements OnInit {
     this.myOrdersService.getMyOrders().pipe(
       tap((response: any) => {
         this.order = response.data;
-        console.log(response.data)
-        console.log(response.messages)
       }),
       catchError((error) => {
         console.error('Błąd podczas pobierania zamówień:', error);

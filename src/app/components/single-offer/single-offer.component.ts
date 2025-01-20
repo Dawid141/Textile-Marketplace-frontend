@@ -72,7 +72,6 @@ export class SingleOfferComponent implements OnInit {
   fetchListingData(id: string): void {
     this.productsService.getListingById(id).pipe(tap((response: any) => {
         this.listingData = response.data;
-        console.log(this.listingData)
         this.updateProperties();
       }),
       catchError((error) => {
@@ -128,7 +127,6 @@ export class SingleOfferComponent implements OnInit {
       console.log('Form Data:', this.orderForm.value);
       const order = this.mapFormValuesToOrderDTO();
       this.orderService.createOrderFromProduct(order).pipe(tap((response: BackendResponse) => {
-        console.log(response)
         this._snack.open("Order has been created", "Ok")
         this.dialog.closeAll()
         this.router.navigate(['/products'])

@@ -15,7 +15,7 @@ export class ConfigService {
   constructor(private http: HttpClient) {}*/
 
   getUrl() {
-    return "";
+    return "http://localhost";
   }
 
   /*loadConfig() {

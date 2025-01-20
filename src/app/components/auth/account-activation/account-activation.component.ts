@@ -21,7 +21,6 @@ export class AccountActivationComponent implements AfterContentInit {
     this.route.queryParams.pipe(filter(params => params['token']!=null && params['token']!=undefined),
       switchMap(params => this.authService.activateAccount(params['token']).pipe(
         tap(response => {
-          console.log(response);
           this.isSuccessful = true
           this._snackBar.open("Your account has been activated please log in.", "Ok")
           this.router.navigate(['login'])

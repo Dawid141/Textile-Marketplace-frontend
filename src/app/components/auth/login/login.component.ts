@@ -40,7 +40,6 @@ export class LoginComponent {
     console.log(formData);
     this.authService.login(formData).pipe(
       tap((response: LoginResponse) => {
-        console.log(response)
         localStorage.setItem("jwtToken", response.token);
         console.log("Login successful. Token saved.");
         console.log("Navigating to dashboard...");
