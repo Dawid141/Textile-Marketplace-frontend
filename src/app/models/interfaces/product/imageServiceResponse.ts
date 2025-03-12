@@ -1,4 +1,4 @@
 export interface ImageServiceResponse {
-  body: string,
+  data: string,
   statusCode: string
 }

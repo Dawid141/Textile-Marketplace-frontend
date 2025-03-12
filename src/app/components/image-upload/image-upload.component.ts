@@ -42,8 +42,8 @@ export class ImageUploadComponent {
     this.imageEvent.emit([]); // emit empty array to invalid form so that the user cant click submit during upload
 
     this.imageService.uploadImage(formData).pipe(tap((response: ImageServiceResponse) => {
-        let url = response.body // for some reason the image url gets saved in string quotes
-        url = url.replace(/^"(.*)"$/, "$1"); // Removes leading and trailing quotes if present
+        console.log(response)
+        let url = response.data
         this.imageArray.push(url)
         console.log(this.imageArray)
         this.imageEvent.emit(this.imageArray) // emit the populated array

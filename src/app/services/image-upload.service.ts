@@ -9,7 +9,7 @@ import {ConfigService} from './config.service';
 })
 export class ImageUploadService {
 
-  private baseUrl: string | undefined;
+  private readonly baseUrl: string | undefined;
 
   constructor(private http: HttpClient, private jwtService: JwtService, private configService: ConfigService) {
     this.baseUrl = `${this.configService.getUrl()}:8080/api/v1/image`;
